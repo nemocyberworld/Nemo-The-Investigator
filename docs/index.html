@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nemo - The Investigator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-800 p-4 text-center shadow-md">
+    <h1 class="text-3xl font-bold">🕵️ Nemo - The Investigator</h1>
+    <p class="text-gray-400">by <a href="https://github.com/nemocyberworld" target="_blank">Captain Nemo</a> | <a href="https://hacktolive.net/" target="_blank">HackToLive Academy</a></p>
+  </header>
+
+  <!-- Layout -->
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 p-4 overflow-y-auto border-r border-gray-700">
+      <h2 class="text-lg font-semibold mb-4">Categories</h2>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search tools..."
+        class="w-full mb-4 px-3 py-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+
+      <ul id="categoryList" class="space-y-2 text-sm"></ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div id="walkthroughContent" class="bg-gray-800 p-6 rounded-xl shadow-md">
+        <h2 class="text-2xl font-bold mb-4">🧠 Welcome to Nemo's OSINT & Security Arsenal</h2>
+        <p class="text-gray-300 mb-4">
+          Select a category and subcategory from the left to view detailed OSINT tools and techniques.
+        </p>
+        <h3 class="text-xl font-semibold mt-6 mb-2">📂 Main Categories</h3>
+        <ul id="categoryOverview" class="list-disc ml-6 text-gray-400 space-y-1"></ul>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-center text-gray-400 text-sm py-3 px-4 mt-auto border-t border-gray-700 select-none">
+    <p>© 2025 Captain Nemo | Visit <a href="https://hacktolive.net/" class="text-purple-400 underline" target="_blank">HackToLive</a></p>
+  </footer>
+
+<script>
+  const BASE_DIR = "content"; // folder where category folders live
+
+  const walkthroughs = [
+    { main: "OSINT Tools", sub: "Email Recon" },
+    { main: "OSINT Tools", sub: "Username Enumeration" },
+    { main: "OSINT Tools", sub: "Test Tools" },
+    { main: "Domains & DNS", sub: "Domain Recon Basics" },
+    { main: "IP Intel", sub: "Reputation & Geo" },
+    { main: "Images & Geo", sub: "Reverse Image Guide" }
+  ];
+
+  const categoryList = document.getElementById("categoryList");
+  const walkthroughContent = document.getElementById("walkthroughContent");
+  const categoryOverview = document.getElementById("categoryOverview");
+  const searchInput = document.getElementById("searchInput");
+
+  function slug(s) {
+    return (s || "")
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[^a-z0-9\s_-]/g, "")   // ← hyphen placed at end
+      .replace(/[\s_]+/g, "-");
+  }
+
+  async function loadByNames(main, sub) {
+    const resolved = `${BASE_DIR}/${slug(main)}/${slug(sub)}/index.html`;
+    try {
+      const res = await fetch(resolved, { cache: "no-store" });
+      if (!res.ok) throw new Error("File not found");
+      const html = await res.text();
+      walkthroughContent.innerHTML = html;
+    } catch (err) {
+      console.error("Load error:", err);
+      walkthroughContent.innerHTML =
+        `<p class="text-red-400">⚠️ Error loading content: ${err.message}<br/>
+         <span class='text-gray-400 text-xs'>Tried: ${resolved}</span></p>`;
+    }
+  }
+
+  // Build grouped data
+  const grouped = {};
+  walkthroughs.forEach(w => {
+    (grouped[w.main] ||= []).push(w);
+  });
+
+  function updateCategoryOverview(source = null) {
+    categoryOverview.innerHTML = "";
+    const s = source || grouped;
+    Object.keys(s).forEach(mainCat => {
+      const li = document.createElement("li");
+      li.textContent = `${mainCat} (${s[mainCat].length})`;
+      categoryOverview.appendChild(li);
+    });
+  }
+
+  function buildCategoryList(source = null) {
+    categoryList.innerHTML = "";
+    const s = source || grouped;
+    const isFiltered = !!source;
+
+    Object.keys(s).forEach(mainCat => {
+      const container = document.createElement("li");
+      container.innerHTML = `
+        <details class="group" ${isFiltered ? "open" : ""}>
+          <summary class="cursor-pointer px-3 py-2 rounded-md hover:bg-gray-700 font-semibold">${mainCat}</summary>
+          <ul class="pl-4 mt-2 space-y-1 text-sm">
+            ${s[mainCat].map(w => `
+              <li>
+                <button class="text-left w-full px-2 py-1 hover:bg-gray-700 rounded"
+                        data-main="${w.main}" data-sub="${w.sub}">
+                  ${w.sub}
+                </button>
+              </li>
+            `).join("")}
+          </ul>
+        </details>
+      `;
+      categoryList.appendChild(container);
+    });
+
+    // Bind clicks
+    categoryList.querySelectorAll("button[data-main]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        loadByNames(btn.dataset.main, btn.dataset.sub);
+      });
+    });
+
+    updateCategoryOverview(source);
+  }
+
+  buildCategoryList();
+
+  // Live search
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    if (!query) { buildCategoryList(); return; }
+    const filtered = {};
+    Object.keys(grouped).forEach(mainCat => {
+      const subs = grouped[mainCat].filter(w =>
+        w.main.toLowerCase().includes(query) ||
+        w.sub.toLowerCase().includes(query)
+      );
+      if (subs.length) filtered[mainCat] = subs;
+    });
+    buildCategoryList(filtered);
+  });
+</script>
+
+
+</body>
+</html>
