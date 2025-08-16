@@ -1,0 +1,127 @@
+<section class="space-y-4">
+  <h2 class="text-2xl font-bold">Reverse Image Guide</h2>
+  <p class="text-gray-300">Identify sources, clones, and context of an image by searching across engines and forensics tools.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <!-- Meta-aggregators -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">ImgOps (Aggregator)</h3>
+      <p class="text-gray-400 text-sm">One-click hub to send an image to many services.</p>
+      <a target="_blank" href="https://imgops.com/{q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- General reverse image engines -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Google Images</h3>
+      <p class="text-gray-400 text-sm">Reverse search by URL (classic UI).</p>
+      <a target="_blank" href="https://images.google.com/searchbyimage?image_url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Bing Visual Search</h3>
+      <p class="text-gray-400 text-sm">Microsoft's visual match & look-alikes.</p>
+      <a target="_blank" href="https://www.bing.com/images/searchbyimage?cbir=sbi&imgurl={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Yandex Images</h3>
+      <p class="text-gray-400 text-sm">Strong visual similarity & face clustering.</p>
+      <a target="_blank" href="https://yandex.com/images/search?rpt=imageview&url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">TinEye</h3>
+      <p class="text-gray-400 text-sm">Oldest reverse engine; best for earliest seen.</p>
+      <a target="_blank" href="https://tineye.com/search/{q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- Asia-centric engines -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Baidu Image</h3>
+      <p class="text-gray-400 text-sm">China-centric matches; different web coverage.</p>
+      <a target="_blank" href="https://image.baidu.com/pcdutu?queryImageUrl={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Sogou Image</h3>
+      <p class="text-gray-400 text-sm">Alternative CN engine for duplicates.</p>
+      <a target="_blank" href="https://pic.sogou.com/ris?query={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- Social / community specific -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Karma Decay (Reddit)</h3>
+      <p class="text-gray-400 text-sm">Find reposts of an image on Reddit.</p>
+      <a target="_blank" href="https://karmadecay.com/search?q={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- Anime / artwork OSINT -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">SauceNAO</h3>
+      <p class="text-gray-400 text-sm">Anime/art source finder; boorus, Pixiv, etc.</p>
+      <a target="_blank" href="https://saucenao.com/search.php?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">iqdb</h3>
+      <p class="text-gray-400 text-sm">Alternate anime image index for matches.</p>
+      <a target="_blank" href="https://iqdb.org/?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">trace.moe</h3>
+      <p class="text-gray-400 text-sm">Identify anime scene, episode, and timestamp.</p>
+      <a target="_blank" href="https://trace.moe/?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">ascii2d</h3>
+      <p class="text-gray-400 text-sm">Japanese art source finder (color/hash).</p>
+      <a target="_blank" href="https://ascii2d.net/search/url/{q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- Forensics / metadata -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">FotoForensics (ELA)</h3>
+      <p class="text-gray-400 text-sm">Error level analysis + metadata hints.</p>
+      <a target="_blank" href="https://fotoforensics.com/analysis.php?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Jeffrey’s EXIF Viewer</h3>
+      <p class="text-gray-400 text-sm">Deep EXIF/IPTC/XMP by URL.</p>
+      <a target="_blank" href="http://exif.regex.info/exif.cgi?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">EXIF.tools</h3>
+      <p class="text-gray-400 text-sm">Quick metadata readout in browser.</p>
+      <a target="_blank" href="https://exif.tools/?url={q}" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <!-- Visual search & helper platforms (homepages when URL params not public) -->
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Google Lens (Web)</h3>
+      <p class="text-gray-400 text-sm">Upload to detect objects, text, matches.</p>
+      <a target="_blank" href="https://lens.google.com/upload" class="underline text-indigo-400">Open</a>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Forensically (29a.ch)</h3>
+      <p class="text-gray-400 text-sm">Clone, noise, error analyses (upload).</p>
+      <a target="_blank" href="https://29a.ch/photo-forensics/#forensic-magnifier" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <details class="mt-1">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Run the <em>full image</em> first, then crop to faces/objects/logos and re-run to improve matches.</li>
+      <li>Check multiple engines—coverage differs by region, language, and community.</li>
+      <li>Sort results by oldest capture (TinEye) to find original sources & earliest context.</li>
+      <li>Use EXIF/metadata tools to verify timestamps, camera model, and GPS (if present).</li>
+      <li>If metadata is stripped, pivot to ELA/forensics (FotoForensics, Forensically) and web archives.</li>
+      <li>Translate foreign-result pages to uncover original captions and local reporting.</li>
+    </ul>
+  </details>
+</section>
