@@ -1,0 +1,384 @@
+<section class="space-y-6">
+  <h1 class="text-3xl font-bold">Discord OSINT — Complete Guide & Playbook</h1>
+  <p class="text-gray-300">
+    Discord is more than just a chat app — it’s a goldmine of OSINT opportunities.
+    This guide gives you tools, techniques, dorks, and exercises to investigate servers, users, bots, metadata,
+    and artifacts effectively for both real-world OSINT and CTF purposes.
+  </p>
+
+  <!-- 🎯 OVERVIEW -->
+  <div class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+    <h2 class="text-2xl font-bold">What You’ll Learn</h2>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Find servers, invites, and archived messages.</li>
+      <li>Profile users via IDs, timestamps, and activity footprints.</li>
+      <li>Map bot/integration attack surfaces.</li>
+      <li>Use internal Discord search operators (dorks) like a pro.</li>
+      <li>Augment with Google/Bing/Yandex dorks for exposed files & artifacts.</li>
+      <li>Run structured OSINT/CTF workflows with repeatable steps.</li>
+    </ul>
+  </div>
+
+  <!-- 🗂️ SERVER & GROUP DISCOVERY -->
+  <h2 class="text-2xl font-bold mt-6">Server & Group Discovery</h2>
+  <p class="text-gray-300">Find public communities, invites, and archived content to pivot deeper.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Disboard</h3>
+      <p class="text-gray-400 text-sm">Largest server index. Search by tags & keywords.</p>
+      <a target="_blank" href="https://disboard.org/search" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordServers</h3>
+      <p class="text-gray-400 text-sm">Browse & filter public servers.</p>
+      <a target="_blank" href="https://discordservers.com/browse" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordBee</h3>
+      <p class="text-gray-400 text-sm">Alternative server discovery engine.</p>
+      <a target="_blank" href="https://discordbee.com/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord.me</h3>
+      <p class="text-gray-400 text-sm">Older directory with niche topics.</p>
+      <a target="_blank" href="http://discord.me" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordPortal</h3>
+      <p class="text-gray-400 text-sm">Search across categories.</p>
+      <a target="_blank" href="http://discordportal.com" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordLeaks (Unicorn Riot)</h3>
+      <p class="text-gray-400 text-sm">Archived leaks of servers/messages (historic investigations).</p>
+      <a target="_blank" href="https://discordleaks.unicornriot.ninja/discord/users" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- 🤖 BOT DISCOVERY -->
+  <h2 class="text-2xl font-bold mt-6">Bot Discovery</h2>
+  <p class="text-gray-300">Bots reveal integrations, capabilities, and sometimes data exposure.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Top.gg</h3>
+      <p class="text-gray-400 text-sm">#1 directory of bots & servers; filter by features.</p>
+      <a target="_blank" href="https://top.gg/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord Bot List</h3>
+      <p class="text-gray-400 text-sm">Community-curated bot index.</p>
+      <a target="_blank" href="https://discordbotlist.com/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Bots.gg</h3>
+      <p class="text-gray-400 text-sm">Find bots by features; useful for mapping surfaces.</p>
+      <a target="_blank" href="https://discord.bots.gg/" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- 👤 USER LOOKUPS & PROFILING -->
+  <h2 class="text-2xl font-bold mt-6">User Lookups & Profiling</h2>
+  <p class="text-gray-300">Discover registration dates, name/avatar history, and public bios.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordLookup</h3>
+      <p class="text-gray-400 text-sm">Look up users by ID; view creation dates & metadata.</p>
+      <a target="_blank" href="https://discordlookup.com/user" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordTracker</h3>
+      <p class="text-gray-400 text-sm">Activity stats, server/name/avatar history.</p>
+      <a target="_blank" href="https://discord-tracker.com/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discords Profile List</h3>
+      <p class="text-gray-400 text-sm">Search public Discord bios & profiles.</p>
+      <a target="_blank" href="https://discords.com/bio" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">DiscordHub</h3>
+      <p class="text-gray-400 text-sm">User/server search (availability varies).</p>
+      <a target="_blank" href="https://discordhub.com/user/search" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- ⏱ METADATA & SNOWFLAKE IDs -->
+  <h2 class="text-2xl font-bold mt-6">Metadata & Snowflake IDs</h2>
+  <p class="text-gray-300">Every Discord object (user, message, server, attachment) has a Snowflake ID containing a creation timestamp.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Snowflake Timestamp Converter</h3>
+      <p class="text-gray-400 text-sm">Convert IDs to creation dates.</p>
+      <a target="_blank" href="https://pixelatomy.com/snow-stamp/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Unfurl</h3>
+      <p class="text-gray-400 text-sm">Parse Discord URLs; extract timestamp & metadata.</p>
+      <a target="_blank" href="https://dfir.blog/unfurl/" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord History Tracker</h3>
+      <p class="text-gray-400 text-sm">Browser script to archive chat history locally.</p>
+      <a target="_blank" href="https://dht.chylex.com/" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- 🔍 ALL-IN-ONE: DISCORD DORKING -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold mt-6">Discord Dorking (OSINT + CTF)</h2>
+    <p class="text-gray-300">
+      Master both <span class="font-semibold">internal Discord search operators</span> and
+      <span class="font-semibold">external Google/Bing dorks</span> to locate servers, messages, invites, and leaked files.
+    </p>
+
+    <!-- Internal Dorks -->
+    <div class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold text-lg">Internal Discord Dorks</h3>
+      <p class="text-gray-400 text-sm mb-2">Type these directly in Discord’s search bar:</p>
+      <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1">
+        <li><code>from:@user</code> — messages by a user</li>
+        <li><code>mentions:@user</code> — messages where a user is mentioned</li>
+        <li><code>in:#channel</code> — restrict to a channel</li>
+        <li><code>has:link</code> / <code>has:file</code> / <code>has:embed</code> — messages with links/files/embeds</li>
+        <li><code>before:YYYY-MM-DD</code> / <code>after:YYYY-MM-DD</code> / <code>during:YYYY-MM-DD</code> — date filters</li>
+      </ul>
+      <details class="mt-3">
+        <summary class="cursor-pointer text-sm text-gray-300">Power Combos (inside Discord)</summary>
+        <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+          <li><code>from:@target has:link</code> — links shared by target</li>
+          <li><code>in:#general has:file before:2025-01-01</code> — older uploads in #general</li>
+          <li><code>mentions:@alice after:2024-06-01</code> — mentions since a date</li>
+          <li><code>has:file ".pdf"</code> — PDFs shared anywhere</li>
+          <li><code>has:embed "github.com"</code> — embedded GitHub links</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- External Dorks -->
+    <div class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold text-lg">External Dorks (Google/Bing/Yandex)</h3>
+      <p class="text-gray-400 text-sm mb-2">Use these on web search engines to find public artifacts linked to Discord.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <article class="p-3 bg-gray-950 rounded-lg border border-gray-800">
+          <h4 class="font-semibold text-sm">Invites & Servers</h4>
+          <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-1">
+            <li><code>site:discord.com "invite"</code></li>
+            <li><code>site:discord.gg inurl:invite</code></li>
+            <li><code>"discord.gg/" keyword</code></li>
+            <li><code>site:pastebin.com "discord.gg/"</code></li>
+          </ul>
+        </article>
+        <article class="p-3 bg-gray-950 rounded-lg border border-gray-800">
+          <h4 class="font-semibold text-sm">Attachments & CDN</h4>
+          <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-1">
+            <li><code>site:cdn.discordapp.com</code></li>
+            <li><code>site:discordapp.com inurl:/attachments/</code></li>
+            <li><code>site:cdn.discordapp.com "SHA256" OR "MD5"</code></li>
+            <li><code>site:cdn.discordapp.com "confidential"</code></li>
+          </ul>
+        </article>
+        <article class="p-3 bg-gray-950 rounded-lg border border-gray-800">
+          <h4 class="font-semibold text-sm">Sensitive Keywords</h4>
+          <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-1">
+            <li><code>site:discord.com "confidential"</code></li>
+            <li><code>site:discord.com "password"</code></li>
+            <li><code>site:discord.com "private"</code></li>
+            <li><code>site:discord.com "internal use only"</code></li>
+          </ul>
+        </article>
+        <article class="p-3 bg-gray-950 rounded-lg border border-gray-800">
+          <h4 class="font-semibold text-sm">Filetype Hunting (Leaks)</h4>
+          <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-1">
+            <li><code>site:cdn.discordapp.com filetype:pdf</code></li>
+            <li><code>site:cdn.discordapp.com filetype:xlsx</code></li>
+            <li><code>site:cdn.discordapp.com filetype:sql</code></li>
+            <li><code>site:cdn.discordapp.com (filetype:zip OR filetype:7z OR filetype:rar)</code></li>
+            <li><code>site:discordapp.com/attachments filetype:txt</code></li>
+          </ul>
+        </article>
+      </div>
+      <details class="mt-3">
+        <summary class="cursor-pointer text-sm text-gray-300">Targeted Examples</summary>
+        <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+          <li><code>site:discord.gg "bug bounty"</code> — bounty/security chatter</li>
+          <li><code>site:cdn.discordapp.com "invoice" filetype:pdf</code> — exposed invoices</li>
+          <li><code>site:discordapp.com inurl:/attachments/ "report" filetype:pdf</code> — shared reports</li>
+          <li><code>site:discord.com "invite" "keyword"</code> — invite posts tied to topic</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- CTF PLAYBOOK -->
+    <div class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold text-lg">CTF Playbook (Quick Wins)</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1">
+        <li><span class="font-semibold">Find the Invite:</span> <code>site:discord.gg</code> + CTF name → grab code, check vanity.</li>
+        <li><span class="font-semibold">Hunt Attachments:</span> <code>site:cdn.discordapp.com filetype:txt OR filetype:zip</code> + challenge keywords.</li>
+        <li><span class="font-semibold">Timeline Pivot:</span> pull Snowflake IDs from URLs and convert with Snow-Stamp/Unfurl.</li>
+        <li><span class="font-semibold">In-App Filters:</span> <code>from:@bot has:embed</code> or <code>has:file ".flag"</code> to surface drops.</li>
+        <li><span class="font-semibold">Keyword Spray:</span> try <code>"flag{"</code>, <code>"ctf{"</code>, <code>"key:"</code> with <code>has:file</code> (scope-safe only).</li>
+      </ol>
+    </div>
+
+    <!-- PRO TIPS -->
+    <div class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold text-lg">Pro Tips</h3>
+      <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1">
+        <li>Enable <strong>Developer Mode</strong> (Settings → Advanced) to copy IDs.</li>
+        <li>Use <strong>Snowflake timestamps</strong> to reconstruct activity timelines and correlate events.</li>
+        <li>Chain internal + external dorks: find invite on Google → pivot in-app with <code>in:#</code>, <code>from:</code>, <code>has:</code>.</li>
+        <li>Respect scope/ToS & legality. For CTFs, stick strictly to in-scope targets.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 🚨 SCAM LINKS & SECURITY WATCHLISTS -->
+  <h2 class="text-2xl font-bold mt-6">Scam Links & Security Watchlists</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord AntiScam</h3>
+      <p class="text-gray-400 text-sm">Community project tracking scam domains.</p>
+      <a target="_blank" href="https://github.com/Discord-AntiScam/scam-links" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Scam Links DB</h3>
+      <p class="text-gray-400 text-sm">Large GitHub repo of blacklisted domains.</p>
+      <a target="_blank" href="https://github.com/DevSpen/scam-links/" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- 🛡️ ATTACK SURFACE -->
+  <h2 class="text-2xl font-bold mt-6">Discord Attack Surface</h2>
+  <p class="text-gray-300">Map info flows: users, bots, integrations, roles, channels, attachments, invites, and auditing clues.</p>
+  <a target="_blank" href="https://github.com/wddadk/Discord-OSINT/blob/main/sources/Discord%20OSINT%20Attack%20Surface%20(1).pdf" class="underline text-indigo-400">Download PDF</a>
+
+  <!-- 📚 EXTRA RESOURCES -->
+  <h2 class="text-2xl font-bold mt-6">Extra Resources & Wiki</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord Wiki</h3>
+      <p class="text-gray-400 text-sm">In-depth community documentation.</p>
+      <a target="_blank" href="https://discordia.me/en/home" class="underline text-indigo-400">Open</a>
+    </article>
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">Discord Status</h3>
+      <p class="text-gray-400 text-sm">Check global uptime for API, media proxy, search.</p>
+      <a target="_blank" href="https://discordstatus.com/" class="underline text-indigo-400">Open</a>
+    </article>
+  </div>
+
+  <!-- 🧪 HANDS-ON EXERCISES -->
+  <h2 class="text-2xl font-bold mt-6">Hands-On Exercises (OSINT + CTF)</h2>
+  <div class="space-y-4">
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">1) Find & Validate a Server Invite</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Google: <code>site:discord.gg "&lt;your keyword&gt;"</code> to find an invite.</li>
+        <li>Open invite; note server name, member count, and vanity URL (if any).</li>
+        <li>In-app, use <code>in:#welcome</code> + <code>has:link</code> to find onboarding info.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Screenshot of invite page + first intel pivot.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">2) Timeline via Snowflake IDs</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Copy a message link → extract the Snowflake ID.</li>
+        <li>Convert with <a href="https://pixelatomy.com/snow-stamp/" target="_blank" class="underline text-indigo-400">Snow-Stamp</a> or <a href="https://dfir.blog/unfurl/" target="_blank" class="underline text-indigo-400">Unfurl</a>.</li>
+        <li>Build an event timeline (e.g., incident start → escalation → resolution).</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Table of timestamps with 2–3 key correlations.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">3) Internal Dork Hunt</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Run <code>from:@target has:link</code> and catalog domains shared.</li>
+        <li>Apply <code>before:</code>/<code>after:</code> to isolate a date window.</li>
+        <li>Export a short summary: domain → context → likely intent.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Mini IOC list (domains) with brief notes.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">4) Attachment Recon (Web)</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Google: <code>site:cdn.discordapp.com filetype:pdf</code> + topic keyword.</li>
+        <li>Record filenames, timestamps (via headers/URL), and suspected origin.</li>
+        <li>Validate scope/permission before opening anything.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> 3 candidate files with safe metadata notes.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">5) Bot Surface Mapping</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Find bot on <a href="https://top.gg/" target="_blank" class="underline text-indigo-400">Top.gg</a> or <a href="https://discordbotlist.com/" target="_blank" class="underline text-indigo-400">Discord Bot List</a>.</li>
+        <li>List permissions, features, and linked dashboards/APIs.</li>
+        <li>Pivot to GitHub docs to check logging/telemetry behavior.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Short bot dossier: perms, data touched, potential OSINT value.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">6) CTF Artifact Hunt</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Search: <code>site:cdn.discordapp.com (filetype:zip OR filetype:txt)</code> + <em>ctf name</em>.</li>
+        <li>Check for <code>README</code>, <code>flag</code>, <code>key</code> strings in filenames.</li>
+        <li>Use hashes in queries (<code>"SHA256"</code>) to locate mirrors.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> A list of candidate artifacts (no downloading out-of-scope content).</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">7) Scam Pattern Detection</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>In-app: <code>has:link</code> + keywords (e.g., <code>nitro</code>, <code>airdrop</code>, <code>free</code>).</li>
+        <li>Cross-check domains with <a href="https://github.com/Discord-AntiScam/scam-links" target="_blank" class="underline text-indigo-400">Discord AntiScam</a>.</li>
+        <li>Document indicators: new accounts, typos, shortened URLs.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> 3 IOC entries with rationale.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">8) Cross-Platform Handle Pivot</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Take a Discord handle; search on GitHub, Reddit, Steam, etc.</li>
+        <li>Correlate via same avatar/bio/links.</li>
+        <li>Record confidence score and link evidence.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Pivot map of the handle across 2–3 platforms.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">9) Channel-Specific Intel</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Run <code>in:#announcements after:YYYY-MM-DD</code>.</li>
+        <li>Extract key updates, release notes, or policy changes.</li>
+        <li>Create a short changelog summary.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> Changelog with 5 bullet points and timestamps.</p>
+    </article>
+
+    <article class="p-4 bg-gray-900 rounded-xl border border-gray-700">
+      <h3 class="font-semibold">10) Evidence Hygiene & Chain</h3>
+      <ol class="list-decimal ml-6 text-gray-400 text-sm space-y-1 mt-2">
+        <li>Capture URLs, timestamps (Snowflake), and context notes.</li>
+        <li>Store hashes of files (if in-scope) and screenshots with time.</li>
+        <li>Maintain a small <em>who/what/when/where/how</em> ledger.</li>
+      </ol>
+      <p class="text-gray-400 text-xs mt-2"><strong>Win:</strong> A tidy, reproducible evidence pack template.</p>
+    </article>
+  </div>
+
+  <!-- ⚖️ ETHICS & SAFETY -->
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Ethics, Scope & Safety</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Respect platform ToS, privacy, and local laws.</li>
+      <li>For CTF: Only target assets explicitly listed as in-scope.</li>
+      <li>Avoid downloading or distributing sensitive content you do not have permission to access.</li>
+      <li>Preserve evidence integrity (timestamps, hashes) without altering sources.</li>
+    </ul>
+  </details>
+</section>

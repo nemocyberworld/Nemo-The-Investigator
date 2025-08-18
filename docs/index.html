@@ -15,15 +15,15 @@
   </header>
 
   <!-- Layout -->
-  <div class="flex flex-1 overflow-hidden">
+  <div class="flex flex-1 overflow-hidden flex-col md:flex-row min-h-0">
     <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 p-4 overflow-y-auto border-r border-gray-700">
+    <aside class="w-full md:w-64 bg-gray-800 p-4 overflow-y-auto border-b md:border-b-0 md:border-r border-gray-700">
       <h2 class="text-lg font-semibold mb-4">Categories</h2>
 
       <input
         type="text"
         id="searchInput"
-        placeholder="Search tools..."
+        placeholder="Search category..."
         class="w-full mb-4 px-3 py-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
       />
 
@@ -31,7 +31,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 overflow-y-auto">
+    <main class="flex-1 p-4 md:p-6 overflow-y-auto min-h-0">
       <div id="walkthroughContent" class="bg-gray-800 p-6 rounded-xl shadow-md">
         <h2 class="text-2xl font-bold mb-4">🧠 Welcome to Nemo's OSINT & Security Arsenal</h2>
         <p class="text-gray-300 mb-4">
@@ -52,12 +52,17 @@
   const BASE_DIR = "content"; // folder where category folders live
 
   const walkthroughs = [
-    { main: "OSINT Tools", sub: "Email Recon" },
-    { main: "OSINT Tools", sub: "Username Enumeration" },
-    { main: "OSINT Tools", sub: "Test Tools" },
-    { main: "Domains & DNS", sub: "Domain Recon Basics" },
-    { main: "IP Intel", sub: "Reputation & Geo" },
-    { main: "Images & Geo", sub: "Reverse Image Guide" }
+    { main: "Recon Tools", sub: "Email Recon" },
+    { main: "Recon Tools", sub: "Web Tools" },
+    { main: "Recon Tools", sub: "Username Enumeration" },
+    { main: "Domains DNS", sub: "Domain Recon" },
+    { main: "Company Database", sub: "Web Tools" },
+    { main: "Image", sub: "Web Tools" },
+    { main: "Image", sub: "Reverse Image" },
+    { main: "Major Platform", sub: "Discord" },
+    { main: "Major Platform", sub: "Telegram" },
+    { main: "Example Template", sub: "Example Tools" },
+    { main: "Browser Extensions", sub: "OSINT Browser  Extension" }
   ];
 
   const categoryList = document.getElementById("categoryList");
@@ -69,7 +74,7 @@
     return (s || "")
       .toLowerCase()
       .normalize("NFKD")
-      .replace(/[^a-z0-9\s_-]/g, "")   // ← hyphen placed at end
+      .replace(/[^a-z0-9\s_-]/g, "")
       .replace(/[\s_]+/g, "-");
   }
 
@@ -88,7 +93,6 @@
     }
   }
 
-  // Build grouped data
   const grouped = {};
   walkthroughs.forEach(w => {
     (grouped[w.main] ||= []).push(w);
@@ -129,7 +133,6 @@
       categoryList.appendChild(container);
     });
 
-    // Bind clicks
     categoryList.querySelectorAll("button[data-main]").forEach(btn => {
       btn.addEventListener("click", () => {
         loadByNames(btn.dataset.main, btn.dataset.sub);
@@ -141,7 +144,6 @@
 
   buildCategoryList();
 
-  // Live search
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
     if (!query) { buildCategoryList(); return; }
@@ -156,7 +158,6 @@
     buildCategoryList(filtered);
   });
 </script>
-
 
 </body>
 </html>
