@@ -1,0 +1,229 @@
+<section class="space-y-6" id="biology-antibody">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Biology — Antibody</h2>
+      <p class="text-gray-300">
+        Databases, registries, suppliers, and resources for antibodies, reagents, and related biomedical research.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="antibodyQuery" type="text" placeholder="Enter query, e.g. antibody name, protein, catalog ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllAntibody').click();}">
+      <div class="flex gap-2">
+        <button id="openAllAntibody"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#antibodyQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('antibodyQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search antibodies by ID, catalog, or protein</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Compare suppliers & validated reagents</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check PubMed for related research papers</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Antibody Registry</h3>
+          <p class="text-gray-400 text-sm mt-1">Unique identifiers for antibodies.</p>
+        </div>
+        <a data-tool data-url="http://antibodyregistry.org"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://antibodyregistry.org" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">CiteAb</h3>
+          <p class="text-gray-400 text-sm mt-1">Antibody & reagent search database.</p>
+        </div>
+        <a data-tool data-url="http://citeab.com"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://citeab.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Linscott’s Directory</h3>
+          <p class="text-gray-400 text-sm mt-1">Directory of antibodies & reagents.</p>
+        </div>
+        <a data-tool data-url="http://linscottsdirectory.com"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://linscottsdirectory.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Labome</h3>
+          <p class="text-gray-400 text-sm mt-1">Validated antibodies & research protocols.</p>
+        </div>
+        <a data-tool data-url="http://labome.com/index.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://labome.com/index.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Antibodies.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Supplier for antibodies & reagents.</p>
+        </div>
+        <a data-tool data-url="http://antibodies.com"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://antibodies.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Antibodies Online</h3>
+          <p class="text-gray-400 text-sm mt-1">Marketplace for antibodies & ELISA kits.</p>
+        </div>
+        <a data-tool data-url="http://antibodies-online.com"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://antibodies-online.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">BIOZOL</h3>
+          <p class="text-gray-400 text-sm mt-1">Life science products supplier (Germany).</p>
+        </div>
+        <a data-tool data-url="http://biozol.de/de"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://biozol.de/de" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ABclonal</h3>
+          <p class="text-gray-400 text-sm mt-1">Biotech company for antibodies, proteins, assays.</p>
+        </div>
+        <a data-tool data-url="http://abclonal.com"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://abclonal.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Abcam</h3>
+          <p class="text-gray-400 text-sm mt-1">Leading global antibody supplier.</p>
+        </div>
+        <a data-tool data-url="https://www.abcam.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.abcam.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Thermo Fisher Scientific</h3>
+          <p class="text-gray-400 text-sm mt-1">Antibodies, reagents, and lab equipment.</p>
+        </div>
+        <a data-tool data-url="https://www.thermofisher.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.thermofisher.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ATCC</h3>
+          <p class="text-gray-400 text-sm mt-1">Biological materials & cell lines provider.</p>
+        </div>
+        <a data-tool data-url="https://www.atcc.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.atcc.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sigma-Aldrich / Merck</h3>
+          <p class="text-gray-400 text-sm mt-1">Antibodies, chemicals, and life science tools.</p>
+        </div>
+        <a data-tool data-url="https://www.sigmaaldrich.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.sigmaaldrich.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">PubMed Central</h3>
+          <p class="text-gray-400 text-sm mt-1">Research papers on antibodies & biomedical studies.</p>
+        </div>
+        <a data-tool data-url="https://www.ncbi.nlm.nih.gov/pmc/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.ncbi.nlm.nih.gov/pmc/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Research notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use antibody registries (like Antibody Registry, CiteAb) to find unique identifiers.</li>
+      <li>Compare multiple suppliers for validation, price, and availability.</li>
+      <li>Check PubMed Central for peer-reviewed studies on antibody usage and validation.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

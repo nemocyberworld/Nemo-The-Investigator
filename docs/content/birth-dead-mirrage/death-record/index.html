@@ -1,0 +1,185 @@
+<section class="space-y-6" id="death-records">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Birth • Death • Marriage — Death Records</h2>
+      <p class="text-gray-300">
+        Online death record indexes, SSDI databases, cemetery directories, and obituary archives for genealogy and identity verification.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="deathQuery" type="text" placeholder="Enter query, e.g. full name, date of birth, location"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllDeath').click();}">
+      <div class="flex gap-2">
+        <button id="openAllDeath"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#deathQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('deathQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use full name + birth year for best results</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check multiple databases (some may be incomplete)</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Obituaries often provide family & location details</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Core death record databases -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MatchID</h3>
+          <p class="text-gray-400 text-sm mt-1">French death records search database.</p>
+        </div>
+        <a data-tool data-url="https://deces.matchid.io/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://deces.matchid.io/search" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">SSDMF.info</h3>
+          <p class="text-gray-400 text-sm mt-1">Social Security Death Master File (U.S.).</p>
+        </div>
+        <a data-tool data-url="https://ssdmf.info/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://ssdmf.info/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Steve Morse SSDI Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Advanced SSDI & genealogy search forms.</p>
+        </div>
+        <a data-tool data-url="https://stevemorse.org/ssdi/ssdi.html?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://stevemorse.org/ssdi/ssdi.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Cemetery & burial indexes -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Cemetery Directory</h3>
+          <p class="text-gray-400 text-sm mt-1">Global cemetery and burial records database.</p>
+        </div>
+        <a data-tool data-url="https://cemetery.directory/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://cemetery.directory/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sorted By Name</h3>
+          <p class="text-gray-400 text-sm mt-1">Death & burial records sorted alphabetically.</p>
+        </div>
+        <a data-tool data-url="https://sortedbyname.com/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://sortedbyname.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sorted By Birthdate</h3>
+          <p class="text-gray-400 text-sm mt-1">U.S. death index sorted by birthdate.</p>
+        </div>
+        <a data-tool data-url="https://sortedbybirthdate.com/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://sortedbybirthdate.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extended obituary & genealogy sources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Find a Grave</h3>
+          <p class="text-gray-400 text-sm mt-1">Crowdsourced cemetery & tombstone database.</p>
+        </div>
+        <a data-tool data-url="https://www.findagrave.com/memorial/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.findagrave.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FamilySearch</h3>
+          <p class="text-gray-400 text-sm mt-1">Free genealogy & death record collections.</p>
+        </div>
+        <a data-tool data-url="https://www.familysearch.org/search/record/results?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.familysearch.org/search/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Legacy.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Obituaries & memorials worldwide.</p>
+        </div>
+        <a data-tool data-url="https://www.legacy.com/obituaries/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.legacy.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Research notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with SSDI databases for U.S. death verification.</li>
+      <li>French deaths can be queried via MatchID.</li>
+      <li>Cemetery databases (Find a Grave, Cemetery Directory) often include photos.</li>
+      <li>Cross-check obituaries on Legacy.com for relatives and locations.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

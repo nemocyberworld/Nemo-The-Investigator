@@ -1,0 +1,659 @@
+<section class="space-y-6" id="academic-osint-search">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Academic OSINT Search Engines</h2>
+      <p class="text-gray-300">
+        Collection of academic and open-source search engines for scholarly articles, research papers, books, datasets, and grey literature.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. climate change, international law, cybersecurity"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use academic keywords (topic, author, DOI, dataset)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Consensus -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Consensus</h3>
+      <p class="text-gray-400 text-sm mt-1">AI-powered academic research search engine.</p>
+    </div>
+    <a data-tool data-url="https://consensus.app/search/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://consensus.app/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- CORE -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CORE</h3>
+      <p class="text-gray-400 text-sm mt-1">Aggregator of millions of open access research papers.</p>
+    </div>
+    <a data-tool data-url="https://core.ac.uk/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://core.ac.uk/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- BASE -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">BASE</h3>
+      <p class="text-gray-400 text-sm mt-1">Bielefeld Academic Search Engine for scholarly resources.</p>
+    </div>
+    <a data-tool data-url="https://www.base-search.net/Search/Results?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://base-search.net/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Open Library -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Open Library</h3>
+      <p class="text-gray-400 text-sm mt-1">Open book library with millions of free texts.</p>
+    </div>
+    <a data-tool data-url="https://openlibrary.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://openlibrary.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- RefSeek -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">RefSeek</h3>
+      <p class="text-gray-400 text-sm mt-1">Search engine for students and researchers.</p>
+    </div>
+    <a data-tool data-url="https://www.refseek.com/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.refseek.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- UCI Machine Learning Repository -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UCI Machine Learning Repository</h3>
+      <p class="text-gray-400 text-sm mt-1">Popular dataset repository for academic research.</p>
+    </div>
+    <a data-tool data-url="https://archive.ics.uci.edu/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://archive.ics.uci.edu/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Science.gov -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Science.gov</h3>
+      <p class="text-gray-400 text-sm mt-1">US government science information and research.</p>
+    </div>
+    <a data-tool data-url="https://science.gov/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://science.gov/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- WorldCat -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">WorldCat</h3>
+      <p class="text-gray-400 text-sm mt-1">Global library catalog with millions of records.</p>
+    </div>
+    <a data-tool data-url="https://search.worldcat.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://search.worldcat.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- ERIC -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ERIC</h3>
+      <p class="text-gray-400 text-sm mt-1">Education research database from the US Department of Education.</p>
+    </div>
+    <a data-tool data-url="https://eric.ed.gov/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://eric.ed.gov/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Google Scholar -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Google Scholar</h3>
+      <p class="text-gray-400 text-sm mt-1">Most widely used academic search engine.</p>
+    </div>
+    <a data-tool data-url="https://scholar.google.com/scholar?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://scholar.google.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Sci-Hub -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Sci-Hub</h3>
+      <p class="text-gray-400 text-sm mt-1">Provides free access to millions of research papers.</p>
+    </div>
+    <a data-tool data-url="https://sci-hub.ru/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://sci-hub.ru/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Scinapse -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Scinapse</h3>
+      <p class="text-gray-400 text-sm mt-1">Free academic search engine for research articles.</p>
+    </div>
+    <a data-tool data-url="https://www.scinapse.io/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.scinapse.io/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Academic Journals -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Academic Journals</h3>
+      <p class="text-gray-400 text-sm mt-1">Peer-reviewed open access journals across disciplines.</p>
+    </div>
+    <a data-tool data-url="https://academicjournals.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://academicjournals.org/search" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- AES Journal -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">AES Journal</h3>
+      <p class="text-gray-400 text-sm mt-1">Audio Engineering Society journal search.</p>
+    </div>
+    <a data-tool data-url="http://aes.org/journal/search.cfm?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://aes.org/journal/search.cfm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- AGRIS FAO -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">AGRIS (FAO)</h3>
+      <p class="text-gray-400 text-sm mt-1">FAO agricultural research and information system.</p>
+    </div>
+    <a data-tool data-url="http://agris.fao.org/agris-search/index.do?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://agris.fao.org/agris-search/index.do" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- BMJ Journals -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">BMJ Journals</h3>
+      <p class="text-gray-400 text-sm mt-1">British Medical Journal group publications.</p>
+    </div>
+    <a data-tool data-url="https://journals.bmj.com/search?term={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://journals.bmj.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- DOAJ -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">DOAJ</h3>
+      <p class="text-gray-400 text-sm mt-1">Directory of Open Access Journals.</p>
+    </div>
+    <a data-tool data-url="https://doaj.org/search/articles?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://doaj.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Elsevier Journal Finder -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Elsevier Journal Finder</h3>
+      <p class="text-gray-400 text-sm mt-1">Tool to find the best-fit Elsevier journal for your paper.</p>
+    </div>
+    <a data-tool data-url="https://journalfinder.elsevier.com/?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://journalfinder.elsevier.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- OMICS Online -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OMICS Online</h3>
+      <p class="text-gray-400 text-sm mt-1">Open-access scientific journals directory.</p>
+    </div>
+    <a data-tool data-url="https://omicsonline.org/open-access-journals-list.php?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://omicsonline.org/open-access-journals-list.php" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Free Medical Journals -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Free Medical Journals</h3>
+      <p class="text-gray-400 text-sm mt-1">Free access to indexed medical journals.</p>
+    </div>
+    <a data-tool data-url="http://freemedicaljournals.com/f.php?f=index40"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://freemedicaljournals.com/f.php?f=index40" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- JAMA Network -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">JAMA Network</h3>
+      <p class="text-gray-400 text-sm mt-1">Medical journals from the American Medical Association.</p>
+    </div>
+    <a data-tool data-url="https://jamanetwork.com/journals/jamainternalmedicine/searchresults?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://jamanetwork.com/journals/jamainternalmedicine" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Jane Biosemantics -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Jane Biosemantics</h3>
+      <p class="text-gray-400 text-sm mt-1">Find journals, authors, or articles matching your text.</p>
+    </div>
+    <a data-tool data-url="http://jane.biosemantics.org/index.php?structured=true&query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://jane.biosemantics.org/index.php?structured=true" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Oxford Academic -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Oxford Academic Journals</h3>
+      <p class="text-gray-400 text-sm mt-1">Oxford University Press journals.</p>
+    </div>
+    <a data-tool data-url="https://academic.oup.com/journals?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://academic.oup.com/journals" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Journals4Free -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Journals4Free</h3>
+      <p class="text-gray-400 text-sm mt-1">Directory of free scientific journals by subject.</p>
+    </div>
+    <a data-tool data-url="http://journals4free.com/?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://journals4free.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- JournalSeek -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">JournalSeek</h3>
+      <p class="text-gray-400 text-sm mt-1">Database of academic journals with aims and scope.</p>
+    </div>
+    <a data-tool data-url="http://journalseek.net/cgi-bin/journalseek/search.pl?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://journalseek.net" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- JSTOR -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">JSTOR</h3>
+      <p class="text-gray-400 text-sm mt-1">Digital library of academic journals, books, and sources.</p>
+    </div>
+    <a data-tool data-url="https://www.jstor.org/action/doBasicSearch?Query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://jstor.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- MDPI -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">MDPI</h3>
+      <p class="text-gray-400 text-sm mt-1">Publisher of open access scientific journals.</p>
+    </div>
+    <a data-tool data-url="https://www.mdpi.com/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://mdpi.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Oxford Open Access -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Oxford Open Access</h3>
+      <p class="text-gray-400 text-sm mt-1">Open access journals from Oxford University Press.</p>
+    </div>
+    <a data-tool data-url="https://academic.oup.com/journals/pages/open_access?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://academic.oup.com/journals/pages/open_access" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- SAGE Open Access -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">SAGE Open Access</h3>
+      <p class="text-gray-400 text-sm mt-1">SAGE Publishing open access journal collection.</p>
+    </div>
+    <a data-tool data-url="https://us.sagepub.com/en-us/nam/open-access-at-sage?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://us.sagepub.com/en-us/nam/open-access-at-sage" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Wiley Open Access -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Wiley Open Access</h3>
+      <p class="text-gray-400 text-sm mt-1">Open access research from Wiley journals.</p>
+    </div>
+    <a data-tool data-url="https://authorservices.wiley.com/open-research/open-access/index.html?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://authorservices.wiley.com/open-research/open-access/index.html" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Open Access Journals -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Open Access Journals</h3>
+      <p class="text-gray-400 text-sm mt-1">Collection of multidisciplinary open access journals.</p>
+    </div>
+    <a data-tool data-url="https://openaccessjournals.com/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://openaccessjournals.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- OAJSE Psychology -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OAJSE Psychology</h3>
+      <p class="text-gray-400 text-sm mt-1">Open Access Journals Search Engine - Psychology section.</p>
+    </div>
+    <a data-tool data-url="http://oajse.com/subjects/psychology.html?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://oajse.com/subjects/psychology.html" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Elsevier Open Archive -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Elsevier Open Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">Open archive of Elsevier journals.</p>
+    </div>
+    <a data-tool data-url="https://www.elsevier.com/about/open-science/open-access/open-archive?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://elsevier.com/about/open-science/open-access/open-archive" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- SCImago -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">SCImago Journal Rank</h3>
+      <p class="text-gray-400 text-sm mt-1">Journal ranking and metrics from Scopus data.</p>
+    </div>
+    <a data-tool data-url="https://scimagojr.com/journalsearch.php?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://scimagojr.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Taylor & Francis Online -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Taylor & Francis Online</h3>
+      <p class="text-gray-400 text-sm mt-1">Academic journals and books from Taylor & Francis.</p>
+    </div>
+    <a data-tool data-url="https://www.tandfonline.com/action/doSearch?AllField={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://tandfonline.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- NEJM -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">NEJM</h3>
+      <p class="text-gray-400 text-sm mt-1">New England Journal of Medicine publications.</p>
+    </div>
+    <a data-tool data-url="https://www.nejm.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://nejm.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- OJOSE -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OJOSE</h3>
+      <p class="text-gray-400 text-sm mt-1">Open Journal of Search Engine for free academic journals.</p>
+    </div>
+    <a data-tool data-url="http://ojose.com/ojose_home.html?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://ojose.com/ojose_home.html" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Zetoc -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Zetoc</h3>
+      <p class="text-gray-400 text-sm mt-1">British Library’s electronic table of contents service.</p>
+    </div>
+    <a data-tool data-url="http://zetoc.jisc.ac.uk/jnllist.html?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://zetoc.jisc.ac.uk/jnllist.html" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Academia.edu -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Academia.edu</h3>
+      <p class="text-gray-400 text-sm mt-1">Platform for academics to share research papers.</p>
+    </div>
+    <a data-tool data-url="https://www.academia.edu/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.academia.edu" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- AJOL -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">AJOL</h3>
+      <p class="text-gray-400 text-sm mt-1">African Journals Online.</p>
+    </div>
+    <a data-tool data-url="http://www.ajol.info/index.php/index/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://www.ajol.info" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- ASCE Library -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ASCE Library</h3>
+      <p class="text-gray-400 text-sm mt-1">American Society of Civil Engineers library.</p>
+    </div>
+    <a data-tool data-url="http://ascelibrary.org/action/doSearch?AllField={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://ascelibrary.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- ResearchGate -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ResearchGate</h3>
+      <p class="text-gray-400 text-sm mt-1">Professional network for researchers to share papers.</p>
+    </div>
+    <a data-tool data-url="http://www.researchgate.net/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://www.researchgate.net" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Springer Link -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Springer Link</h3>
+      <p class="text-gray-400 text-sm mt-1">Academic journals, books, and protocols from Springer.</p>
+    </div>
+    <a data-tool data-url="http://link.springer.com/search?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://link.springer.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Wiley Online -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Wiley Online Library</h3>
+      <p class="text-gray-400 text-sm mt-1">Wiley’s collection of journals, books, and research.</p>
+    </div>
+    <a data-tool data-url="http://eu.wiley.com/WileyCDA/Section/index.html?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://eu.wiley.com" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- WorldWideScience -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">WorldWideScience</h3>
+      <p class="text-gray-400 text-sm mt-1">Global science gateway for international databases.</p>
+    </div>
+    <a data-tool data-url="http://worldwidescience.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://worldwidescience.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Search Notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use precise academic keywords (topic + author + year).</li>
+      <li>Leverage multiple databases for comprehensive coverage.</li>
+      <li>Cross-validate results between open-access and subscription sources.</li>
+      <li>For restricted access, try preprints (arXiv, CORE) or tools like Sci-Hub.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some academic engines may open multiple tabs. If they are blocked, please enable pop-ups or open them individually.
+  </div>
+</section>

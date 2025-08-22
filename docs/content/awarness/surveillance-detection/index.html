@@ -1,0 +1,147 @@
+<section class="space-y-6" id="awareness-surveillance-detection">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Surveillance Detection</h2>
+      <p class="text-gray-300">
+        Guides and resources to help individuals recognize, avoid, and understand surveillance, counter-surveillance, and situational awareness.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="surveillanceQuery" type="text" placeholder="Enter query (optional: surveillance topic)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllSurveillance').click();}">
+      <div class="flex gap-2">
+        <button id="openAllSurveillance"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#surveillanceQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('surveillanceQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Stay aware of your surroundings</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Vary your routes and routines</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Trust instincts and verify suspicions</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided Tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Protection Circle — Surveillance Detection</h3>
+          <p class="text-gray-400 text-sm mt-1">Brief introduction to surveillance detection.</p>
+        </div>
+        <a data-tool data-url="https://protectioncircle.org/2014/01/03/a-very-brief-introduction-to-surveillance-detection/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://protectioncircle.org/2014/01/03/a-very-brief-introduction-to-surveillance-detection/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Stratfor — Detecting Terrorist Surveillance</h3>
+          <p class="text-gray-400 text-sm mt-1">Situational awareness guide to spotting surveillance indicators.</p>
+        </div>
+        <a data-tool data-url="https://worldview.stratfor.com/article/detecting-terrorist-surveillance"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://worldview.stratfor.com/article/detecting-terrorist-surveillance" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Escape the Wolf — Surveillance Awareness</h3>
+          <p class="text-gray-400 text-sm mt-1">Tips on what to do if you’re under physical surveillance.</p>
+        </div>
+        <a data-tool data-url="https://escapethewolf.com/2296/when-you-under-physical-surveillance/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://escapethewolf.com/2296/when-you-under-physical-surveillance/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Additional Resources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">OSAC — Surveillance Awareness</h3>
+          <p class="text-gray-400 text-sm mt-1">Overseas Security Advisory Council’s guidance on counter-surveillance.</p>
+        </div>
+        <a data-tool data-url="https://www.osac.gov/Content/Report/Detail/2e4d8b9d-0b55-49d3-9c14-82af0d1d6f43"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.osac.gov/Content/Report/Detail/2e4d8b9d-0b55-49d3-9c14-82af0d1d6f43" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">DHS — Surveillance Indicators</h3>
+          <p class="text-gray-400 text-sm mt-1">Department of Homeland Security guide on surveillance indicators.</p>
+        </div>
+        <a data-tool data-url="https://www.dhs.gov/see-something-say-something/suspicious-activity-reporting"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.dhs.gov/see-something-say-something/suspicious-activity-reporting" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Global Security — Counter-Surveillance</h3>
+          <p class="text-gray-400 text-sm mt-1">Counter-surveillance tactics and awareness training.</p>
+        </div>
+        <a data-tool data-url="https://www.globalsecurity.org/security/library/report/2004/counter-surveillance.pdf"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.globalsecurity.org/security/library/report/2004/counter-surveillance.pdf" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Surveillance detection relies on **behavioral patterns**, not single events.</li>
+      <li>Trust your instincts — if something feels wrong, verify.</li>
+      <li>Vary routines and routes to make hostile surveillance harder.</li>
+      <li>Report suspicious activity through proper channels (OSAC, DHS, local authorities).</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

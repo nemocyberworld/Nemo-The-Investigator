@@ -1,0 +1,208 @@
+<section class="space-y-6" id="awareness-crypto">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Crypto</h2>
+      <p class="text-gray-300">
+        Educational resources, research, and best practices for cryptocurrency security, DeFi risks, wallet safety, and attack awareness.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="cryptoQuery" type="text" placeholder="Enter query (optional: wallet address, contract ID)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCrypto').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCrypto"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#cryptoQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('cryptoQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Stay updated with DeFi vulnerabilities</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use hardware wallets for large funds</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Never sign unknown smart contracts</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+<!-- Fixed tools with consistent style -->
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Physical Bitcoin Attacks</h3>
+      <p class="text-gray-400 text-sm mt-1">Catalog of real-world attacks on Bitcoin holders.</p>
+    </div>
+    <a data-tool data-url="https://github.com/jlopp/physical-bitcoin-attacks/blob/master/README.md"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://github.com/jlopp/physical-bitcoin-attacks/blob/master/README.md" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">DeFi Security Best Practices</h3>
+      <p class="text-gray-400 text-sm mt-1">Security awareness guide for DeFi users.</p>
+    </div>
+    <a data-tool data-url="https://defieducation.substack.com/p/defi-security-best-practices-security?s=r"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://defieducation.substack.com/p/defi-security-best-practices-security?s=r" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">MetaMask Attack Vectors</h3>
+      <p class="text-gray-400 text-sm mt-1">Bloom — 6 ways a site can attack MetaMask.</p>
+    </div>
+    <a data-tool data-url="https://bloom.co/blog/6-ways-a-site-can-attack-your-metamask/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://bloom.co/blog/6-ways-a-site-can-attack-your-metamask/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ArXiv — Crypto Threat Paper</h3>
+      <p class="text-gray-400 text-sm mt-1">Research: crypto threats and vulnerabilities.</p>
+    </div>
+    <a data-tool data-url="https://arxiv.org/pdf/2109.06836.pdf"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://arxiv.org/pdf/2109.06836.pdf" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Smart Contract Attacks List</h3>
+      <p class="text-gray-400 text-sm mt-1">Graph.org — All known DeFi & Web3 vulnerabilities.</p>
+    </div>
+    <a data-tool data-url="https://graph.org/All-known-smart-contract-side-and-user-side-attacks-and-vulnerabilities-in-Web30--DeFi-03-31"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://graph.org/All-known-smart-contract-side-and-user-side-attacks-and-vulnerabilities-in-Web30--DeFi-03-31" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Cold Wallet Defense</h3>
+      <p class="text-gray-400 text-sm mt-1">Graph.org — Storage principles & defense methods.</p>
+    </div>
+    <a data-tool data-url="https://graph.org/Key-principles-of-storing-crypto-cold-wallet-attacks-defense-methods-best-practices--Bonus-04-23"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://graph.org/Key-principles-of-storing-crypto-cold-wallet-attacks-defense-methods-best-practices--Bonus-04-23" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Mirror.xyz — CIA’s Notes</h3>
+      <p class="text-gray-400 text-sm mt-1">Officer CIA’s DeFi vulnerabilities article.</p>
+    </div>
+    <a data-tool data-url="https://mirror.xyz/officercia.eth/GtKNkmRDR_hhCqrnSENjqfPDHHb0W1M2SVeXDp4swCQ"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://mirror.xyz/officercia.eth/GtKNkmRDR_hhCqrnSENjqfPDHHb0W1M2SVeXDp4swCQ" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Rekt News</h3>
+      <p class="text-gray-400 text-sm mt-1">DeFi hacks, exploits, and lessons learned.</p>
+    </div>
+    <a data-tool data-url="https://rekt.news/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://rekt.news/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Chainalysis Blog</h3>
+      <p class="text-gray-400 text-sm mt-1">Crypto crime and investigation insights.</p>
+    </div>
+    <a data-tool data-url="https://blog.chainalysis.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://blog.chainalysis.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CryptoScamDB</h3>
+      <p class="text-gray-400 text-sm mt-1">Database of ongoing crypto scams.</p>
+    </div>
+    <a data-tool data-url="https://cryptoscamdb.org/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://cryptoscamdb.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">MyCrypto Security Guide</h3>
+      <p class="text-gray-400 text-sm mt-1">Practical wallet & key safety guide.</p>
+    </div>
+    <a data-tool data-url="https://support.mycrypto.com/staying-safe/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://support.mycrypto.com/staying-safe/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Always verify URLs — phishing is the #1 crypto attack vector.</li>
+      <li>Use hardware wallets (Ledger, Trezor) for long-term storage.</li>
+      <li>DeFi contracts can be malicious — never approve unknown spenders.</li>
+      <li>Monitor trusted sources like Rekt.news and Chainalysis for current threats.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some tabs were blocked. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

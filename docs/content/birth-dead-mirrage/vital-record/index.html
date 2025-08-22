@@ -1,0 +1,175 @@
+<section class="space-y-6" id="vital-record-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Vital Records — Birth, Death & Marriage</h2>
+      <p class="text-gray-300">
+        Resources and archives for official birth, death, marriage, and census records worldwide.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="vitalQuery" type="text" placeholder="Enter query, e.g. name, birth year, location"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllVital').click();}">
+      <div class="flex gap-2">
+        <button id="openAllVital"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#vitalQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('vitalQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use names, dates & regions for best results</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check multiple record sets for accuracy</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Local archives may require subscriptions</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Australian BDM -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Australian BDM Guide</h3>
+          <p class="text-gray-400 text-sm mt-1">National Library of Australia birth, death & marriage research guide.</p>
+        </div>
+        <a data-tool data-url="https://www.nla.gov.au/research-guides/australian-birth-death-and-marriage-records"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.nla.gov.au/research-guides/australian-birth-death-and-marriage-records" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- National Archives of Australia -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">National Archives of Australia</h3>
+          <p class="text-gray-400 text-sm mt-1">Official archives including immigration, BDM & military records.</p>
+        </div>
+        <a data-tool data-url="https://www.naa.gov.au/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.naa.gov.au/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- NSW Records -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">NSW Records & Archives</h3>
+          <p class="text-gray-400 text-sm mt-1">New South Wales government archives including vital records.</p>
+        </div>
+        <a data-tool data-url="https://www.records.nsw.gov.au/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.records.nsw.gov.au/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Steve Morse Genealogy Index -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Steve Morse — Genealogy Web Index</h3>
+          <p class="text-gray-400 text-sm mt-1">Unified search interface for U.S. genealogy websites.</p>
+        </div>
+        <a data-tool data-url="https://stevemorse.org/fhl/websitesunitedstates.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://stevemorse.org/fhl/websitesunitedstates.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Cook County Vital Records -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Cook County Vital Records</h3>
+          <p class="text-gray-400 text-sm mt-1">Illinois vital records (birth, marriage, death) via Steve Morse.</p>
+        </div>
+        <a data-tool data-url="https://stevemorse.org/vital/cook.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://stevemorse.org/vital/cook.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- U.S. Census Records -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Steve Morse — Census Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Search & tools for U.S. census records (changes over years).</p>
+        </div>
+        <a data-tool data-url="https://stevemorse.org/census/changes.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://stevemorse.org/census/changes.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extra Extensions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">UK GRO</h3>
+          <p class="text-gray-400 text-sm mt-1">General Register Office for England & Wales (birth, marriage, death records).</p>
+        </div>
+        <a data-tool data-url="https://www.gro.gov.uk/gro/content/certificates/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.gro.gov.uk/gro/content/certificates/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Ellis Island Records</h3>
+          <p class="text-gray-400 text-sm mt-1">Immigration & passenger arrival records (New York).</p>
+        </div>
+        <a data-tool data-url="https://www.libertyellisfoundation.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.libertyellisfoundation.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Research Notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with national archives, then check local/state resources for precision.</li>
+      <li>Use multiple spellings & variations of names.</li>
+      <li>Cross-reference census, immigration & cemetery data for verification.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

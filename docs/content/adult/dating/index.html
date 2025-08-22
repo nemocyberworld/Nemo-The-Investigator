@@ -1,0 +1,151 @@
+<section class="space-y-6" id="adult-osint-dating">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Adult OSINT: Dating & Romance Platforms</h2>
+      <p class="text-gray-300">
+        Research toolkit for dating-site OSINT: profile discovery, reverse-image checks, email/phone reputation, breach exposure, and scam reporting. Use ethically and within the law.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter name, username, email, or phone"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use consent & follow local laws</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Try multiple pivots (name, username, photo, phone, email)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Dating Scam Watch</h3>
+          <p class="text-gray-400 text-sm mt-1">Database of reported dating scams & fake profiles.</p>
+        </div>
+        <a data-tool data-url="https://www.datingscamswatch.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.datingscamswatch.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Scam Detector (Romance)</h3>
+          <p class="text-gray-400 text-sm mt-1">Check suspicious dating websites & romance scams.</p>
+        </div>
+        <a data-tool data-url="https://www.scam-detector.com/validator/?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.scam-detector.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Romance Scam Survivors</h3>
+          <p class="text-gray-400 text-sm mt-1">Community reports of dating fraud & scammer databases.</p>
+        </div>
+        <a data-tool data-url="https://romancescamsnow.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://romancescamsnow.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">DatingNiche OSINT (Google Dorks)</h3>
+          <p class="text-gray-400 text-sm mt-1">Quick profile footprinting on popular dating sites.</p>
+        </div>
+        <a data-tool data-url="https://www.google.com/search?q=site:okcupid.com+%22{q}%22+OR+site:match.com+%22{q}%22+OR+site:pof.com+%22{q}%22"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.google.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">UserSearch (Dating)</h3>
+          <p class="text-gray-400 text-sm mt-1">Check username across dating/social platforms.</p>
+        </div>
+        <a data-tool data-url="https://usersearch.org/results-normal.php?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://usersearch.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Scamalytics</h3>
+          <p class="text-gray-400 text-sm mt-1">IP & dating fraud risk analysis.</p>
+        </div>
+        <a data-tool data-url="https://scamalytics.com/ip?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://scamalytics.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Safety & Method Notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Get consent and avoid stalking/harassment. Follow site terms and local laws.</li>
+      <li>Triangulate: image reverse → username hits → email/phone reputation → breaches.</li>
+      <li>Prefer official reporting channels if you suspect fraud or impersonation.</li>
+      <li>Keep evidence responsibly (screenshots, archive links) and protect PII.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some tabs may be blocked by your browser. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

@@ -1,0 +1,282 @@
+<section class="space-y-6" id="archive-dataset-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Archive Tools — Data Sets</h2>
+      <p class="text-gray-300">
+        Explore repositories of open datasets, leaked archives, government records, and research collections.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveDatasetQuery" type="text" placeholder="Enter keyword, e.g. climate, finance, surveillance"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchiveDataset').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchiveDataset"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveDatasetQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('archiveDatasetQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search across public & specialized datasets</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Internet Archive — Datasets</h3>
+          <p class="text-gray-400 text-sm mt-1">Collection of datasets preserved on Archive.org.</p>
+        </div>
+        <a data-tool data-url="https://archive.org/details/datasets" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.org/details/datasets" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">DBpedia</h3>
+          <p class="text-gray-400 text-sm mt-1">Linked data project extracting structured info from Wikipedia.</p>
+        </div>
+        <a data-tool data-url="https://www.dbpedia.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.dbpedia.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FiveThirtyEight Data</h3>
+          <p class="text-gray-400 text-sm mt-1">Datasets behind journalism stories (politics, sports, science).</p>
+        </div>
+        <a data-tool data-url="https://data.fivethirtyeight.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.fivethirtyeight.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Google Dataset Search</h3>
+          <p class="text-gray-400 text-sm mt-1">Search engine specialized in datasets across the web.</p>
+        </div>
+        <a data-tool data-url="https://datasetsearch.research.google.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://datasetsearch.research.google.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Kaggle Datasets</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven dataset repository with competitions.</p>
+        </div>
+        <a data-tool data-url="https://www.kaggle.com/datasets" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.kaggle.com/datasets" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Dataset List</h3>
+          <p class="text-gray-400 text-sm mt-1">Directory of datasets by topic and category.</p>
+        </div>
+        <a data-tool data-url="https://www.datasetlist.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.datasetlist.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ICIJ Offshore Leaks</h3>
+          <p class="text-gray-400 text-sm mt-1">Leaked data on offshore entities and tax havens.</p>
+        </div>
+        <a data-tool data-url="https://offshoreleaks.icij.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://offshoreleaks.icij.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Public Accountability Initiative</h3>
+          <p class="text-gray-400 text-sm mt-1">Data-driven research on corporate and government influence.</p>
+        </div>
+        <a data-tool data-url="https://publicaccountability.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://publicaccountability.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">The Black Vault</h3>
+          <p class="text-gray-400 text-sm mt-1">Massive FOIA archive with government documents.</p>
+        </div>
+        <a data-tool data-url="https://www.theblackvault.com/documentarchive/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.theblackvault.com/documentarchive/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FBI Vault</h3>
+          <p class="text-gray-400 text-sm mt-1">Declassified FBI records available online.</p>
+        </div>
+        <a data-tool data-url="https://vault.fbi.gov/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://vault.fbi.gov/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 11 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ProPublica Nonprofits Explorer</h3>
+          <p class="text-gray-400 text-sm mt-1">Database of nonprofit tax filings and financials.</p>
+        </div>
+        <a data-tool data-url="https://projects.propublica.org/nonprofits" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://projects.propublica.org/nonprofits" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Harvard Dataverse -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Harvard Dataverse</h3>
+      <p class="text-gray-400 text-sm mt-1">Repository of research data across disciplines, open access.</p>
+    </div>
+    <a data-tool data-url="https://dataverse.harvard.edu/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dataverse.harvard.edu/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- ICPSR -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ICPSR</h3>
+      <p class="text-gray-400 text-sm mt-1">Inter-university consortium with 250,000+ social & behavioral science datasets.</p>
+    </div>
+    <a data-tool data-url="https://www.icpsr.umich.edu/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.icpsr.umich.edu/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- World Bank Data -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">World Bank Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Free global economic, financial, and development datasets.</p>
+    </div>
+    <a data-tool data-url="https://data.worldbank.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.worldbank.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- UN Data -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UN Data</h3>
+      <p class="text-gray-400 text-sm mt-1">United Nations official datasets: population, trade, environment.</p>
+    </div>
+    <a data-tool data-url="http://data.un.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://data.un.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- EU Open Data Portal -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">EU Open Data Portal</h3>
+      <p class="text-gray-400 text-sm mt-1">Datasets from European institutions, agencies, and projects.</p>
+    </div>
+    <a data-tool data-url="https://data.europa.eu/en" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.europa.eu/en" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- U.S. Government Data (data.gov) -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Data.gov</h3>
+      <p class="text-gray-400 text-sm mt-1">The U.S. government’s open data portal with 250,000+ datasets.</p>
+    </div>
+    <a data-tool data-url="https://data.gov/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.gov/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Humanitarian Data Exchange -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">HDX (Humanitarian Data Exchange)</h3>
+      <p class="text-gray-400 text-sm mt-1">Global humanitarian crisis datasets by UNOCHA.</p>
+    </div>
+    <a data-tool data-url="https://data.humdata.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.humdata.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- OpenICPSR (Public) -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OpenICPSR</h3>
+      <p class="text-gray-400 text-sm mt-1">Open access datasets in social, health, and behavioral sciences.</p>
+    </div>
+    <a data-tool data-url="https://www.openicpsr.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.openicpsr.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use specialized dataset search engines like Google Dataset Search and Kaggle for quick exploration.</li>
+      <li>For leaks and accountability, check ICIJ Offshore Leaks and The Black Vault.</li>
+      <li>Combine structured linked data (DBpedia) with journalistic datasets (FiveThirtyEight).</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

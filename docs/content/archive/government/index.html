@@ -1,0 +1,205 @@
+<section class="space-y-6" id="archive-government-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Archive Tools — Government</h2>
+      <p class="text-gray-300">
+        Access government archives, leaked data, FOIA repositories, and nonprofit accountability resources.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveGovQuery" type="text" placeholder="Enter keyword, e.g. FBI files, CIA, offshore, nonprofits"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchiveGov').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchiveGov"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveGovQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('archiveGovQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best for FOIA docs, leaks, and transparency data</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- FBI Vault -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FBI Vault</h3>
+          <p class="text-gray-400 text-sm mt-1">Official FBI FOIA documents and declassified records.</p>
+        </div>
+        <a data-tool data-url="https://vault.fbi.gov/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://vault.fbi.gov/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- The Black Vault -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">The Black Vault</h3>
+          <p class="text-gray-400 text-sm mt-1">Largest private archive of FOIA documents and government records.</p>
+        </div>
+        <a data-tool data-url="https://www.theblackvault.com/documentarchive/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.theblackvault.com/documentarchive/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- ProPublica Nonprofits -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ProPublica Nonprofits Explorer</h3>
+          <p class="text-gray-400 text-sm mt-1">Database of nonprofit tax filings, 990 forms, and accountability reports.</p>
+        </div>
+        <a data-tool data-url="https://projects.propublica.org/nonprofits" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://projects.propublica.org/nonprofits" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Offshore Leaks ICIJ -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ICIJ Offshore Leaks</h3>
+          <p class="text-gray-400 text-sm mt-1">Leaks of offshore entities, tax havens, and financial secrecy data.</p>
+        </div>
+        <a data-tool data-url="https://offshoreleaks.icij.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://offshoreleaks.icij.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Public Accountability -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Public Accountability Initiative</h3>
+          <p class="text-gray-400 text-sm mt-1">Research project tracking corporate, political, and government influence.</p>
+        </div>
+        <a data-tool data-url="https://publicaccountability.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://publicaccountability.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- CIA CREST -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CIA CREST Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">Declassified CIA records from the CIA Records Search Tool.</p>
+    </div>
+    <a data-tool data-url="https://www.cia.gov/readingroom/advanced-search" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.cia.gov/readingroom/advanced-search" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- NSA FOIA Archive -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">NSA FOIA Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">National Security Agency declassified documents and FOIA releases.</p>
+    </div>
+    <a data-tool data-url="https://www.nsa.gov/Helpful-Links/FOIA/Declassified/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.nsa.gov/Helpful-Links/FOIA/Declassified/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- U.S. National Archives -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">U.S. National Archives</h3>
+      <p class="text-gray-400 text-sm mt-1">The U.S. National Archives (NARA) holds government records and FOIA files.</p>
+    </div>
+    <a data-tool data-url="https://www.archives.gov/research" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.archives.gov/research" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- UK National Archives -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UK National Archives</h3>
+      <p class="text-gray-400 text-sm mt-1">Official UK government archive including declassified and historical records.</p>
+    </div>
+    <a data-tool data-url="https://www.nationalarchives.gov.uk/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.nationalarchives.gov.uk/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- EU Public Document Portal -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">EU Public Documents</h3>
+      <p class="text-gray-400 text-sm mt-1">European Union document register and archives.</p>
+    </div>
+    <a data-tool data-url="https://www.europarl.europa.eu/RegistreWeb/search/simple.htm?language=EN" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.europarl.europa.eu/RegistreWeb/search/simple.htm?language=EN" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- UN Digital Library -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UN Digital Library</h3>
+      <p class="text-gray-400 text-sm mt-1">Official UN documents, voting records, treaties, and resolutions.</p>
+    </div>
+    <a data-tool data-url="https://digitallibrary.un.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://digitallibrary.un.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Canadian Government Open Data -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Canada Government Open Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Canadian government open datasets and public records.</p>
+    </div>
+    <a data-tool data-url="https://open.canada.ca/en/open-data" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://open.canada.ca/en/open-data" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use FBI Vault and The Black Vault for FOIA documents and declassified archives.</li>
+      <li>ICIJ Offshore Leaks reveals hidden financial and corporate structures.</li>
+      <li>ProPublica and Public Accountability are great for nonprofit and influence research.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

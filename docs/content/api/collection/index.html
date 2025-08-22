@@ -1,0 +1,453 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">OSINT Web Tools</h2>
+      <p class="text-gray-300">
+        Collection of open-source intelligence tools for reconnaissance, breach checks, social analysis, anonymization, and more.
+      </p>
+      <p class="text-gray-400 text-sm mt-1">
+        Includes a dedicated <span class="font-semibold">API Intelligence</span> main category with subcategory collections.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. user@example.com, domain.com, 1.2.3.4, username"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const template=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=template.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use relevant search terms (email, domain, IP, username)</span>
+  </div>
+
+  <!-- General OSINT tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IntelTechniques Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Bazzell’s curated OSINT tool index.</p>
+        </div>
+        <a data-tool data-url="https://inteltechniques.com/tools/index.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://inteltechniques.com/tools/index.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">OSINTTools.io</h3>
+          <p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p>
+        </div>
+        <a data-tool data-url="https://osinttools.io/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://osinttools.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">GreyNoise Viz</h3>
+          <p class="text-gray-400 text-sm mt-1">IP reputation & scanning context.</p>
+        </div>
+        <a data-tool data-url="https://viz.greynoise.io/ip/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://viz.greynoise.io/ip/{q}" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+
+        <!-- public-apis -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">public-apis</h4>
+              <p class="text-gray-400 text-sm mt-1">Massive list of free public APIs.</p>
+            </div>
+            <a data-tool data-url="https://github.com/public-apis/public-apis"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/public-apis/public-apis" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- APIs.guru directory -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">APIs.guru (OpenAPI Directory)</h4>
+              <p class="text-gray-400 text-sm mt-1">Community OpenAPI specs catalog.</p>
+            </div>
+            <a data-tool data-url="https://github.com/APIs-guru/openapi-directory"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/APIs-guru/openapi-directory" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- SwaggerHub Explore -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">SwaggerHub Explore</h4>
+              <p class="text-gray-400 text-sm mt-1">Search & explore APIs by spec.</p>
+            </div>
+            <a data-tool data-url="https://app.swaggerhub.com/apis"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://app.swaggerhub.com/apis" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Postman API Network -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Postman API Network</h4>
+              <p class="text-gray-400 text-sm mt-1">Collections shared by providers.</p>
+            </div>
+            <a data-tool data-url="https://www.postman.com/explore"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://www.postman.com/explore" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- RapidAPI Hub -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">RapidAPI Hub</h4>
+              <p class="text-gray-400 text-sm mt-1">Marketplace of public APIs.</p>
+            </div>
+            <a data-tool data-url="https://rapidapi.com/hub"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://rapidapi.com/hub" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- apilist.fun -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">apilist.fun</h4>
+              <p class="text-gray-400 text-sm mt-1">Curated list of fun & useful APIs.</p>
+            </div>
+            <a data-tool data-url="https://apilist.fun/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://apilist.fun/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+        <!-- IntelTechniques API page -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">IntelTechniques: API</h4>
+              <p class="text-gray-400 text-sm mt-1">Vendor API lookups & notes.</p>
+            </div>
+            <a data-tool data-url="https://inteltechniques.com/tools/API.html"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://inteltechniques.com/tools/API.html" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- all-about-apikey -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">All About API Key</h4>
+              <p class="text-gray-400 text-sm mt-1">Formats & locations of API keys.</p>
+            </div>
+            <a data-tool data-url="https://github.com/daffainfo/all-about-apikey"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/daffainfo/all-about-apikey" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- keyhacks -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">KeyHacks</h4>
+              <p class="text-gray-400 text-sm mt-1">How to verify leaked API keys.</p>
+            </div>
+            <a data-tool data-url="https://github.com/streaak/keyhacks"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/streaak/keyhacks" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- gitleaks -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Gitleaks</h4>
+              <p class="text-gray-400 text-sm mt-1">Detect hardcoded secrets in repos.</p>
+            </div>
+            <a data-tool data-url="https://github.com/gitleaks/gitleaks"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- trufflehog -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">truffleHog</h4>
+              <p class="text-gray-400 text-sm mt-1">Find credentials in code & git history.</p>
+            </div>
+            <a data-tool data-url="https://github.com/trufflesecurity/trufflehog"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/trufflesecurity/trufflehog" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Awesome -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">awesome.re</h4>
+              <p class="text-gray-400 text-sm mt-1">Search the Awesome lists ecosystem.</p>
+            </div>
+            <a data-tool data-url="https://awesome.re/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://awesome.re/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+
+        <!-- GitHub topic openapi -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">GitHub Topic: openapi</h4>
+              <p class="text-gray-400 text-sm mt-1">Repos tagged with OpenAPI/Swagger.</p>
+            </div>
+            <a data-tool data-url="https://github.com/topics/openapi"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/topics/openapi" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- GitHub code search for swagger.json -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">GitHub Search: swagger.json</h4>
+              <p class="text-gray-400 text-sm mt-1">Search potential API specs by term + {q}.</p>
+            </div>
+            <a data-tool data-url="https://github.com/search?q={q}+filename%3Aswagger.json+OR+openapi.json&type=code"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/search?q={q}+filename%3Aswagger.json+OR+openapi.json&type=code" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Google search for swagger docs -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Google: Swagger/OpenAPI Docs</h4>
+              <p class="text-gray-400 text-sm mt-1">Find docs endpoints for {q}.</p>
+            </div>
+            <a data-tool data-url="https://www.google.com/search?q={q}+site%3A*+inurl%3A%2Fswagger+OR+inurl%3A%2Fopenapi"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://www.google.com/search?q={q}+site%3A*+inurl%3A%2Fswagger+OR+inurl%3A%2Fopenapi" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Shodan Swagger UI -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Shodan: Swagger UI</h4>
+              <p class="text-gray-400 text-sm mt-1">Find exposed Swagger UI pages.</p>
+            </div>
+            <a data-tool data-url="https://www.shodan.io/search?query=title%3A%22Swagger+UI%22+{q}"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://www.shodan.io/search?query=title%3A%22Swagger+UI%22+{q}" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Censys swagger -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Censys: Swagger endpoints</h4>
+              <p class="text-gray-400 text-sm mt-1">Host discovery with swagger keyword.</p>
+            </div>
+            <a data-tool data-url="https://search.censys.io/search?resource=hosts&q=swagger+AND+{q}"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://search.censys.io/search?resource=hosts&q=swagger+AND+{q}" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Hoppscotch -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Hoppscotch</h4>
+              <p class="text-gray-400 text-sm mt-1">Lightweight web API client.</p>
+            </div>
+            <a data-tool data-url="https://hoppscotch.io/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://hoppscotch.io/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- HTTPie -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">HTTPie</h4>
+              <p class="text-gray-400 text-sm mt-1">Modern HTTP client & UI.</p>
+            </div>
+            <a data-tool data-url="https://httpie.io/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://httpie.io/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Insomnia -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Insomnia</h4>
+              <p class="text-gray-400 text-sm mt-1">REST, GraphQL & gRPC client.</p>
+            </div>
+            <a data-tool data-url="https://insomnia.rest/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://insomnia.rest/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Nuclei templates -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Nuclei HTTP Templates</h4>
+              <p class="text-gray-400 text-sm mt-1">Community checks incl. API vulns.</p>
+            </div>
+            <a data-tool data-url="https://github.com/projectdiscovery/nuclei-templates/tree/main/http"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/projectdiscovery/nuclei-templates/tree/main/http" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- GitHub code search for keys -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">GitHub Search: likely keys</h4>
+              <p class="text-gray-400 text-sm mt-1">Search {q} for .env / tokens.</p>
+            </div>
+            <a data-tool data-url="https://github.com/search?q={q}+filename%3A.env+OR+apikey+OR+%22api_key%22&type=code"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/search?q={q}+filename%3A.env+OR+apikey+OR+%22api_key%22&type=code" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- Google dorks for keys -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">Google: key exposure dorks</h4>
+              <p class="text-gray-400 text-sm mt-1">Prebuilt search for {q}.</p>
+            </div>
+            <a data-tool data-url="https://www.google.com/search?q=site%3Agithub.com+{q}+(%22api_key%22+OR+%22apikey%22)+file%3Aenv+OR+file%3Ayml+OR+file%3Ajson"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://www.google.com/search?q=site%3Agithub.com+{q}+(%22api_key%22+OR+%22apikey%22)+file%3Aenv+OR+file%3Ayml+OR+file%3Ajson" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+        <!-- OWASP API Top 10 -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">OWASP API Security Top 10</h4>
+              <p class="text-gray-400 text-sm mt-1">Common API risks & mitigations.</p>
+            </div>
+            <a data-tool data-url="https://owasp.org/www-project-api-security/"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://owasp.org/www-project-api-security/" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- HackTricks API -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">HackTricks: API Attacks</h4>
+              <p class="text-gray-400 text-sm mt-1">Tactics for testing API flaws.</p>
+            </div>
+            <a data-tool data-url="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/web-api-pentesting"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://book.hacktricks.xyz/network-services-pentesting/pentesting-web/web-api-pentesting" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- PayloadsAllTheThings -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="font-semibold">PayloadsAllTheThings</h4>
+              <p class="text-gray-400 text-sm mt-1">Useful payloads incl. API contexts.</p>
+            </div>
+            <a data-tool data-url="https://github.com/swisskyrepo/PayloadsAllTheThings"
+               class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+               href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use emails, usernames, domains, and IPs as pivot keys across multiple tools.</li>
+      <li>Mind operational security: prefer Tor/VPNs and sanitized environments.</li>
+      <li>Correlate results (e.g., breach hits → social handles → repo commits → infra).</li>
+      <li>For API work, start with public directories → find docs/specs → test endpoints responsibly.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

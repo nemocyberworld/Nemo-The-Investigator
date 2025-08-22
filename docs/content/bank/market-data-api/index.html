@@ -1,0 +1,178 @@
+<section class="space-y-6" id="bank-market-data-api">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Bank — Market Data API</h2>
+      <p class="text-gray-300">
+        APIs for stock prices, indices, forex, crypto, and financial market data.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="marketDataQuery" type="text" placeholder="Enter query, e.g. AAPL, TSLA, BTC-USD"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllMarketData').click();}">
+      <div class="flex gap-2">
+        <button id="openAllMarketData"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#marketDataQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('marketDataQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Supports stock tickers & crypto symbols</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Most APIs require free API keys</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Great for dashboards & algo trading</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Alpaca -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Alpaca Market Data API</h3>
+          <p class="text-gray-400 text-sm mt-1">Stocks & market data (real-time & historical).</p>
+        </div>
+        <a data-tool data-url="https://alpaca.markets/docs/api-documentation/api-v2/market-data/alpaca-data-api-v2/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://alpaca.markets/docs/api-documentation/api-v2/market-data/alpaca-data-api-v2/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Yahoo Finance API -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Yahoo Finance API</h3>
+          <p class="text-gray-400 text-sm mt-1">Stock quotes, crypto, forex & market summaries.</p>
+        </div>
+        <a data-tool data-url="https://rapidapi.com/apidojo/api/yahoo-finance1/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://rapidapi.com/apidojo/api/yahoo-finance1/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Alpha Vantage -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Alpha Vantage</h3>
+          <p class="text-gray-400 text-sm mt-1">Free stock, forex, and crypto market data APIs.</p>
+        </div>
+        <a data-tool data-url="https://www.alphavantage.co/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.alphavantage.co/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- IEX Cloud -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IEX Cloud</h3>
+          <p class="text-gray-400 text-sm mt-1">U.S. stock market data & financial news API.</p>
+        </div>
+        <a data-tool data-url="https://iexcloud.io/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://iexcloud.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Polygon.io -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Polygon.io</h3>
+          <p class="text-gray-400 text-sm mt-1">Real-time & historical stocks, options & crypto data.</p>
+        </div>
+        <a data-tool data-url="https://polygon.io/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://polygon.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Quandl (Nasdaq Data Link) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Quandl (Nasdaq Data Link)</h3>
+          <p class="text-gray-400 text-sm mt-1">Financial, economic & alternative datasets API.</p>
+        </div>
+        <a data-tool data-url="https://data.nasdaq.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://data.nasdaq.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Twelve Data -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Twelve Data</h3>
+          <p class="text-gray-400 text-sm mt-1">Global stocks, ETFs, indices, forex, and crypto API.</p>
+        </div>
+        <a data-tool data-url="https://twelvedata.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://twelvedata.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Finnhub -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Finnhub.io</h3>
+          <p class="text-gray-400 text-sm mt-1">Stock, forex, and crypto data API with news feed.</p>
+        </div>
+        <a data-tool data-url="https://finnhub.io/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://finnhub.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Most APIs require registering for a free API key.</li>
+      <li>Use stock tickers (e.g., AAPL, TSLA) or crypto symbols (BTC, ETH) as queries.</li>
+      <li>Check API limits — free tiers usually have daily/monthly caps.</li>
+      <li>Some APIs (like Quandl, OANDA) include commodities & macroeconomic data too.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

@@ -1,0 +1,733 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Academic OSINT Resources</h2>
+      <p class="text-gray-300">
+        Collection of open-source intelligence resources for research, geopolitics, global governance, diplomacy, and academic study.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input
+        id="osintQuery"
+        type="text"
+        placeholder="Enter query, e.g. global politics, treaties, constitution, peace accords"
+        class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}"
+      >
+      <div class="flex gap-2">
+        <button
+          id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          "
+        >
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          "
+        >
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use academic keywords (treaty, constitution, accord, soft power)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+<!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Global North and Global South</h3>
+      <p class="text-gray-400 text-sm mt-1">Wikipedia article on geopolitical division.</p>
+    </div>
+    <a data-tool data-url="https://en.wikipedia.org/wiki/Global_North_and_Global_South"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://en.wikipedia.org/wiki/Global_North_and_Global_South" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Article 9 of the Japanese Constitution</h3>
+      <p class="text-gray-400 text-sm mt-1">Wikipedia article on Japan’s pacifist clause.</p>
+    </div>
+    <a data-tool data-url="https://en.wikipedia.org/wiki/Article_9_of_the_Japanese_Constitution"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://en.wikipedia.org/wiki/Article_9_of_the_Japanese_Constitution" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Dayton Accords</h3>
+      <p class="text-gray-400 text-sm mt-1">Britannica entry on the 1995 peace agreement.</p>
+    </div>
+    <a data-tool data-url="https://www.britannica.com/event/Dayton-Accords"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.britannica.com/event/Dayton-Accords" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Non-Aligned Movement</h3>
+      <p class="text-gray-400 text-sm mt-1">Britannica overview of the Non-Aligned Movement.</p>
+    </div>
+    <a data-tool data-url="https://www.britannica.com/topic/Non-Aligned-Movement"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.britannica.com/topic/Non-Aligned-Movement" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">The Benefits of Soft Power</h3>
+      <p class="text-gray-400 text-sm mt-1">Harvard Business School article on soft power advantages.</p>
+    </div>
+    <a data-tool data-url="https://hbswk.hbs.edu/archive/the-benefits-of-soft-power"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://hbswk.hbs.edu/archive/the-benefits-of-soft-power" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Global Soft Power Index 2022</h3>
+      <p class="text-gray-400 text-sm mt-1">Brand Finance report on nation brand rankings.</p>
+    </div>
+    <a data-tool data-url="https://brandfinance.com/press-releases/global-soft-power-index-2022-usa-bounces-back-better-to-top-of-nation-brand-ranking"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://brandfinance.com/press-releases/global-soft-power-index-2022-usa-bounces-back-better-to-top-of-nation-brand-ranking" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Google Scholar</h3>
+      <p class="text-gray-400 text-sm mt-1">Scholarly literature search.</p>
+    </div>
+    <a data-tool data-url="https://scholar.google.com/scholar?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://scholar.google.com/scholar?q={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">JSTOR</h3>
+      <p class="text-gray-400 text-sm mt-1">Academic journals, books & primary sources.</p>
+    </div>
+    <a data-tool data-url="https://www.jstor.org/action/doBasicSearch?Query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.jstor.org/action/doBasicSearch?Query={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">SSRN</h3>
+      <p class="text-gray-400 text-sm mt-1">Social science research papers & working papers.</p>
+    </div>
+    <a data-tool data-url="https://papers.ssrn.com/sol3/results.cfm?txtKey_Words={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://papers.ssrn.com/sol3/results.cfm?txtKey_Words={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">arXiv</h3>
+      <p class="text-gray-400 text-sm mt-1">Open e-prints in many fields.</p>
+    </div>
+    <a data-tool data-url="https://arxiv.org/search/?query={q}&searchtype=all"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://arxiv.org/search/?query={q}&searchtype=all" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">DOAJ</h3>
+      <p class="text-gray-400 text-sm mt-1">Directory of Open Access Journals.</p>
+    </div>
+    <a data-tool data-url="https://doaj.org/search/articles?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://doaj.org/search/articles?q={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Semantic Scholar</h3>
+      <p class="text-gray-400 text-sm mt-1">AI-powered academic search.</p>
+    </div>
+    <a data-tool data-url="https://www.semanticscholar.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.semanticscholar.org/search?q={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Crossref Works</h3>
+      <p class="text-gray-400 text-sm mt-1">Find DOIs and metadata for scholarly content.</p>
+    </div>
+    <a data-tool data-url="https://search.crossref.org/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://search.crossref.org/?q={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UN Digital Library</h3>
+      <p class="text-gray-400 text-sm mt-1">UN documents, resolutions, voting data.</p>
+    </div>
+    <a data-tool data-url="https://digitallibrary.un.org/search?ln=en&p={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://digitallibrary.un.org/search?ln=en&p={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UN Treaty Collection</h3>
+      <p class="text-gray-400 text-sm mt-1">Treaties, status, participants.</p>
+    </div>
+    <a data-tool data-url="https://treaties.un.org/Pages/UNTSOnline.aspx?clang=_en"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://treaties.un.org/Pages/UNTSOnline.aspx?clang=_en" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ICJ Judgments</h3>
+      <p class="text-gray-400 text-sm mt-1">International Court of Justice decisions.</p>
+    </div>
+    <a data-tool data-url="https://www.icj-cij.org/case/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.icj-cij.org/en/decisions" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ICRC IHL Database</h3>
+      <p class="text-gray-400 text-sm mt-1">International humanitarian law treaties & practice.</p>
+    </div>
+    <a data-tool data-url="https://ihl-databases.icrc.org/en/customary-ihl?keyword={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://ihl-databases.icrc.org/en" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">WTO Statistics</h3>
+      <p class="text-gray-400 text-sm mt-1">Trade and tariff data.</p>
+    </div>
+    <a data-tool data-url="https://timeseries.wto.org/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://timeseries.wto.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">World Bank Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Open data on development indicators.</p>
+    </div>
+    <a data-tool data-url="https://data.worldbank.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://data.worldbank.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 20 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">IMF Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Macro-financial datasets and reports.</p>
+    </div>
+    <a data-tool data-url="https://data.imf.org/?sk=388DFA60-1D26-4ADE-B505-A05A558D9A42&sId={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://data.imf.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 21 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OECD Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Statistics and indicators across OECD members.</p>
+    </div>
+    <a data-tool data-url="https://data.oecd.org/searchresults/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://data.oecd.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 22 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Eurostat</h3>
+      <p class="text-gray-400 text-sm mt-1">European statistics.</p>
+    </div>
+    <a data-tool data-url="https://ec.europa.eu/eurostat/web/main/search?p_p_id=estatsearchportlet_WAR_estatsearchportlet&p_p_lifecycle=1&p_p_state=maximized&p_p_mode=view&_estatsearchportlet_WAR_estatsearchportlet_action=search&text={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://ec.europa.eu/eurostat" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 23 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UN Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Global UN statistical databases.</p>
+    </div>
+    <a data-tool data-url="https://data.un.org/Search.aspx?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://data.un.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 24 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UNESCO Institute for Statistics</h3>
+      <p class="text-gray-400 text-sm mt-1">Education, science, culture stats.</p>
+    </div>
+    <a data-tool data-url="http://data.uis.unesco.org/index.aspx?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="http://data.uis.unesco.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 25 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ILOSTAT</h3>
+      <p class="text-gray-400 text-sm mt-1">International Labour Organization statistics.</p>
+    </div>
+    <a data-tool data-url="https://ilostat.ilo.org/?s={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://ilostat.ilo.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 26 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">FAOSTAT</h3>
+      <p class="text-gray-400 text-sm mt-1">Food and agriculture data.</p>
+    </div>
+    <a data-tool data-url="https://www.fao.org/faostat/en/#search/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.fao.org/faostat/en/#home" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 27 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ITU Data</h3>
+      <p class="text-gray-400 text-sm mt-1">ICT access, usage & infrastructure.</p>
+    </div>
+    <a data-tool data-url="https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.itu.int/en/ITU-D/Statistics/Pages/stat/default.aspx" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 28 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Freedom House</h3>
+      <p class="text-gray-400 text-sm mt-1">Freedom in the World scores & reports.</p>
+    </div>
+    <a data-tool data-url="https://freedomhouse.org/countries/freedom-world/scores?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://freedomhouse.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 29 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">V-Dem</h3>
+      <p class="text-gray-400 text-sm mt-1">Varieties of Democracy datasets.</p>
+    </div>
+    <a data-tool data-url="https://www.v-dem.net/data/the-v-dem-dataset/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.v-dem.net/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 30 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Polity Project</h3>
+      <p class="text-gray-400 text-sm mt-1">Regime authority characteristics dataset.</p>
+    </div>
+    <a data-tool data-url="https://www.systemicpeace.org/inscrdata.html"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.systemicpeace.org/inscrdata.html" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 31 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">UCDP</h3>
+      <p class="text-gray-400 text-sm mt-1">Uppsala Conflict Data Program.</p>
+    </div>
+    <a data-tool data-url="https://ucdp.uu.se/?{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://ucdp.uu.se/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 32 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ACLED</h3>
+      <p class="text-gray-400 text-sm mt-1">Armed Conflict Location & Event Data.</p>
+    </div>
+    <a data-tool data-url="https://acleddata.com/?s={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://acleddata.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 33 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">SIPRI</h3>
+      <p class="text-gray-400 text-sm mt-1">Arms transfers, military expenditure, peace research.</p>
+    </div>
+    <a data-tool data-url="https://www.sipri.org/search?search_api_fulltext={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.sipri.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 34 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CIA World Factbook</h3>
+      <p class="text-gray-400 text-sm mt-1">Country profiles & data.</p>
+    </div>
+    <a data-tool data-url="https://www.cia.gov/the-world-factbook/search/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.cia.gov/the-world-factbook/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 35 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Our World in Data</h3>
+      <p class="text-gray-400 text-sm mt-1">Research & data visualizations on global issues.</p>
+    </div>
+    <a data-tool data-url="https://ourworldindata.org/search?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://ourworldindata.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 36 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">World Governance Indicators</h3>
+      <p class="text-gray-400 text-sm mt-1">Governance measures: voice, stability, rule of law.</p>
+    </div>
+    <a data-tool data-url="https://info.worldbank.org/governance/wgi/Home/Reports?name={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://info.worldbank.org/governance/wgi/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 37 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Transparency International (CPI)</h3>
+      <p class="text-gray-400 text-sm mt-1">Corruption Perceptions Index & analyses.</p>
+    </div>
+    <a data-tool data-url="https://www.transparency.org/en/cpi/2024?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.transparency.org/en/cpi" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 38 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">GDELT</h3>
+      <p class="text-gray-400 text-sm mt-1">Global news event database & analysis tools.</p>
+    </div>
+    <a data-tool data-url="https://www.gdeltproject.org/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.gdeltproject.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 39 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Wayback Machine</h3>
+      <p class="text-gray-400 text-sm mt-1">Archive snapshots of web pages.</p>
+    </div>
+    <a data-tool data-url="https://web.archive.org/web/*/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://web.archive.org" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 40 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Google Dataset Search</h3>
+      <p class="text-gray-400 text-sm mt-1">Find datasets across the web.</p>
+    </div>
+    <a data-tool data-url="https://datasetsearch.research.google.com/search?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://datasetsearch.research.google.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 41 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">EUR-Lex</h3>
+      <p class="text-gray-400 text-sm mt-1">EU law & case law database.</p>
+    </div>
+    <a data-tool data-url="https://eur-lex.europa.eu/search.html?text={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://eur-lex.europa.eu/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 42 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Congress.gov</h3>
+      <p class="text-gray-400 text-sm mt-1">US legislation, treaties, bill texts.</p>
+    </div>
+    <a data-tool data-url="https://www.congress.gov/search?q={%22source%22:%22legislation%22,%22search%22:%22{q}%22}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.congress.gov/search" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 43 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CourtListener</h3>
+      <p class="text-gray-400 text-sm mt-1">US court opinions & dockets (RECAP).</p>
+    </div>
+    <a data-tool data-url="https://www.courtlistener.com/?q={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.courtlistener.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 44 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CFR – Backgrounders</h3>
+      <p class="text-gray-400 text-sm mt-1">Council on Foreign Relations explainers.</p>
+    </div>
+    <a data-tool data-url="https://www.cfr.org/search?keyword={q}&sort=relevance"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.cfr.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 45 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CSIS</h3>
+      <p class="text-gray-400 text-sm mt-1">Center for Strategic & International Studies.</p>
+    </div>
+    <a data-tool data-url="https://www.csis.org/search?search_api_fulltext={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.csis.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 46 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Chatham House</h3>
+      <p class="text-gray-400 text-sm mt-1">Royal Institute of International Affairs.</p>
+    </div>
+    <a data-tool data-url="https://www.chathamhouse.org/search/site/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.chathamhouse.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 47 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Brookings Institution</h3>
+      <p class="text-gray-400 text-sm mt-1">Research on governance, economy, foreign policy.</p>
+    </div>
+    <a data-tool data-url="https://www.brookings.edu/search/?s={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.brookings.edu/search/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 48 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Stanford Encyclopedia of Philosophy</h3>
+      <p class="text-gray-400 text-sm mt-1">Peer-reviewed encyclopedia, political philosophy topics.</p>
+    </div>
+    <a data-tool data-url="https://plato.stanford.edu/search/searcher.py?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://plato.stanford.edu/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 49 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Britannica Academic</h3>
+      <p class="text-gray-400 text-sm mt-1">Authoritative encyclopedia entries.</p>
+    </div>
+    <a data-tool data-url="https://www.britannica.com/search?query={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.britannica.com/search?query={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 50 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Wikipedia</h3>
+      <p class="text-gray-400 text-sm mt-1">Starting point with citations to primary sources.</p>
+    </div>
+    <a data-tool data-url="https://en.wikipedia.org/w/index.php?search={q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://en.wikipedia.org/w/index.php?search={q}" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Academic OSINT Guidance</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use treaties, constitutions, accords, and international rulings as primary OSINT references.</li>
+      <li>Validate information by cross-checking Wikipedia, Britannica, and peer-reviewed sources (JSTOR, SSRN, etc.).</li>
+      <li>Leverage indices (e.g., “Soft Power Index,” “Freedom in the World,” “WGI”) for comparative geopolitical research.</li>
+      <li>Combine quantitative data (World Bank, IMF, OECD, UN Data) with qualitative insights (think tanks, policy briefs).</li>
+      <li>Archive important findings with the Wayback Machine for long-term access and reproducibility.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some tools may open multiple tabs. If they are blocked, please enable pop-ups for this site or open resources individually.
+  </div>
+
+</section>

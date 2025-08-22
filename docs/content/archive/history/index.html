@@ -1,0 +1,205 @@
+<section class="space-y-6" id="archive-history-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Archive Tools — History</h2>
+      <p class="text-gray-300">
+        Explore historical archives, old newspapers, and archived websites preserved by national institutions.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveHistoryQuery" type="text" placeholder="Enter keyword, e.g. WWII, census, historical newspaper"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchiveHistory').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchiveHistory"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveHistoryQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('archiveHistoryQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search historic archives and digitized newspapers</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- British Newspaper Archive -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">British Newspaper Archive</h3>
+          <p class="text-gray-400 text-sm mt-1">Digitized historic newspapers from the UK (millions of pages).</p>
+        </div>
+        <a data-tool data-url="https://www.britishnewspaperarchive.co.uk/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.britishnewspaperarchive.co.uk/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Trove (Australia National Library) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Trove (NLA)</h3>
+          <p class="text-gray-400 text-sm mt-1">Australian newspapers, books, photos, archives & more.</p>
+        </div>
+        <a data-tool data-url="https://trove.nla.gov.au/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://trove.nla.gov.au/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Trove Website Archive -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Trove Website Archive</h3>
+          <p class="text-gray-400 text-sm mt-1">Archived Australian websites captured by NLA.</p>
+        </div>
+        <a data-tool data-url="https://trove.nla.gov.au/website" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://trove.nla.gov.au/website" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- LINC Tasmania Archived Websites -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">LINC Tasmania Archived Websites</h3>
+          <p class="text-gray-400 text-sm mt-1">Tasmanian government & cultural websites preserved as archives.</p>
+        </div>
+        <a data-tool data-url="https://linctas.ent.sirsidynix.net.au/client/en_AU/library/search/results?qf=LOCAL_FORMAT%09Format+(Specific)%09archived+website%09archived+website" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://linctas.ent.sirsidynix.net.au/client/en_AU/library/search/results?qf=LOCAL_FORMAT%09Format+(Specific)%09archived+website%09archived+website" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Newspapers.com -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Newspapers.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Large collection of digitized U.S. & global historical newspapers.</p>
+        </div>
+        <a data-tool data-url="https://www.newspapers.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.newspapers.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Chronicling America -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Chronicling America</h3>
+      <p class="text-gray-400 text-sm mt-1">Historic American newspapers (1789–1963) by Library of Congress.</p>
+    </div>
+    <a data-tool data-url="https://chroniclingamerica.loc.gov/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chroniclingamerica.loc.gov/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Google News Archive -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Google News Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">Digitized newspaper archives hosted by Google News.</p>
+    </div>
+    <a data-tool data-url="https://news.google.com/newspapers" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://news.google.com/newspapers" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Europeana Newspapers -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Europeana Newspapers</h3>
+      <p class="text-gray-400 text-sm mt-1">Historic European newspapers digitized across 20+ countries.</p>
+    </div>
+    <a data-tool data-url="https://www.europeana.eu/en/collections/topic/34-newspapers" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.europeana.eu/en/collections/topic/34-newspapers" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- World Newspaper Archive -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">World Newspaper Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">International collection of historical newspapers.</p>
+    </div>
+    <a data-tool data-url="https://www.readex.com/content/world-newspaper-archive" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.readex.com/content/world-newspaper-archive" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Digital Public Library of America (DPLA) -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">DPLA</h3>
+      <p class="text-gray-400 text-sm mt-1">Digital Public Library of America — photos, texts, newspapers, and archives.</p>
+    </div>
+    <a data-tool data-url="https://dp.la/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dp.la/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- HathiTrust Digital Library -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">HathiTrust Digital Library</h3>
+      <p class="text-gray-400 text-sm mt-1">Millions of digitized books, periodicals, and historical collections.</p>
+    </div>
+    <a data-tool data-url="https://www.hathitrust.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.hathitrust.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- JSTOR Daily & Archives -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">JSTOR Archives</h3>
+      <p class="text-gray-400 text-sm mt-1">Academic journals and historical primary sources.</p>
+    </div>
+    <a data-tool data-url="https://www.jstor.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.jstor.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Search across multiple archives for historical newspaper coverage.</li>
+      <li>Trove and LINC Tasmania focus on Australian history and culture.</li>
+      <li>British Newspaper Archive and Newspapers.com are excellent for genealogy and history research.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

@@ -1,0 +1,158 @@
+<section class="space-y-6" id="awareness-browser-tracking">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Browser Tracking</h2>
+      <p class="text-gray-300">
+        Tools and resources to test browser fingerprinting, uniqueness, online tracking, and improve privacy awareness.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="browserTrackingQuery" type="text" placeholder="Enter query (if applicable, e.g. domain.com, IP)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBrowserTracking').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBrowserTracking"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#browserTrackingQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('browserTrackingQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Many tools show unique browser fingerprint</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use VPN/Tor for privacy testing</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Articles / Guides -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Medium — Browser Fingerprinting</h3>
+          <p class="text-gray-400 text-sm mt-1">Browser uniqueness & fingerprinting explained.</p>
+        </div>
+        <a data-tool data-url="https://medium.com/@ravielakshmanan/web-browser-uniqueness-and-fingerprinting-7eac3c381805"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://medium.com/@ravielakshmanan/web-browser-uniqueness-and-fingerprinting-7eac3c381805" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FreeCodeCamp — Web Tracking</h3>
+          <p class="text-gray-400 text-sm mt-1">Guide to online tracking & privacy impacts.</p>
+        </div>
+        <a data-tool data-url="https://medium.freecodecamp.org/what-you-should-know-about-web-tracking-and-how-it-affects-your-online-privacy-42935355525"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://medium.freecodecamp.org/what-you-should-know-about-web-tracking-and-how-it-affects-your-online-privacy-42935355525" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Fingerprinting Test Sites -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Am I Unique?</h3>
+          <p class="text-gray-400 text-sm mt-1">Test your browser fingerprint uniqueness.</p>
+        </div>
+        <a data-tool data-url="https://amiunique.org/tools"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://amiunique.org/tools" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MyBrowserInfo</h3>
+          <p class="text-gray-400 text-sm mt-1">See what details your browser leaks.</p>
+        </div>
+        <a data-tool data-url="http://mybrowserinfo.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://mybrowserinfo.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Panopticlick (EFF)</h3>
+          <p class="text-gray-400 text-sm mt-1">EFF’s tool to test tracker & fingerprint resistance.</p>
+        </div>
+        <a data-tool data-url="https://panopticlick.eff.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://panopticlick.eff.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Device Info</h3>
+          <p class="text-gray-400 text-sm mt-1">Detailed device & browser fingerprint.</p>
+        </div>
+        <a data-tool data-url="https://www.deviceinfo.me/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.deviceinfo.me/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">PrivacyTests.org</h3>
+          <p class="text-gray-400 text-sm mt-1">Compare privacy features of browsers.</p>
+        </div>
+        <a data-tool data-url="https://privacytests.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://privacytests.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Browser fingerprinting combines canvas, fonts, headers, and plugins to uniquely identify you.</li>
+      <li>Use privacy-hardened browsers (Firefox, Brave, LibreWolf) and extensions like uBlock, NoScript.</li>
+      <li>VPN/Tor only mask IP — they don’t fully stop fingerprinting.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

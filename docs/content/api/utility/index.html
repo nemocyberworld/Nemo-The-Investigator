@@ -1,0 +1,163 @@
+<section class="space-y-6" id="api-utility-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">API Tools — Utility</h2>
+      <p class="text-gray-300">
+        Handy utilities to generate, transform, and extend APIs — including regex generators, spreadsheet APIs, guessing endpoints, and more.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="apiUtilityQuery" type="text" placeholder="Enter input, e.g. regex pattern, sheet URL, API endpoint"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllApiUtility').click();}">
+      <div class="flex gap-2">
+        <button id="openAllApiUtility"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#apiUtilityQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('apiUtilityQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Input
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best for quick utilities: regex, sheets, endpoint guesses</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">AutoRegex API</h3>
+          <p class="text-gray-400 text-sm mt-1">Generate regex from natural language and test it online.</p>
+        </div>
+        <a data-tool data-url="https://autoregex.notion.site/AutoRegex-API-Documentation-97256bad2c114a6db0c5822860214d3a" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://autoregex.notion.site/AutoRegex-API-Documentation-97256bad2c114a6db0c5822860214d3a" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">API Guesser</h3>
+          <p class="text-gray-400 text-sm mt-1">Guess REST API endpoints from a base URL automatically.</p>
+        </div>
+        <a data-tool data-url="https://api-guesser.netlify.app/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://api-guesser.netlify.app/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sheety</h3>
+          <p class="text-gray-400 text-sm mt-1">Turn Google Sheets into RESTful APIs instantly.</p>
+        </div>
+        <a data-tool data-url="https://sheety.co/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://sheety.co/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Retool API Generator</h3>
+          <p class="text-gray-400 text-sm mt-1">Generate CRUD APIs quickly from database schemas.</p>
+        </div>
+        <a data-tool data-url="https://retool.com/api-generator/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://retool.com/api-generator/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extra utilities -->
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Mocky</h3>
+          <p class="text-gray-400 text-sm mt-1">Create custom mock HTTP APIs for testing.</p>
+        </div>
+        <a data-tool data-url="https://designer.mocky.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://designer.mocky.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">QuickType</h3>
+          <p class="text-gray-400 text-sm mt-1">Generate types and code from JSON (TS, C#, Go, Swift, etc.).</p>
+        </div>
+        <a data-tool data-url="https://app.quicktype.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://app.quicktype.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">JsonPlaceHolder</h3>
+          <p class="text-gray-400 text-sm mt-1">Free fake REST API for prototyping & testing.</p>
+        </div>
+        <a data-tool data-url="https://jsonplaceholder.typicode.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Mockaroo</h3>
+          <p class="text-gray-400 text-sm mt-1">Generate large mock data sets in CSV, JSON, SQL.</p>
+        </div>
+        <a data-tool data-url="https://mockaroo.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://mockaroo.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use AutoRegex to generate regex patterns for input validation.</li>
+      <li>Sheety is great to expose spreadsheets as quick APIs.</li>
+      <li>Retool & QuickType help bootstrap CRUD APIs and strongly typed models.</li>
+      <li>Mocky, Mockaroo & JSONPlaceholder are perfect for prototyping.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

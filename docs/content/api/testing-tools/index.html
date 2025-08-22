@@ -1,0 +1,194 @@
+<section class="space-y-6" id="api-testing-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">API Tools — Testing Tools</h2>
+      <p class="text-gray-300">
+        Online API testing platforms for sending requests, debugging, validating responses, and collaborating on API workflows.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="apiTestQuery" type="text" placeholder="Enter endpoint, e.g. https://api.example.com/v1/users"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllApiTest').click();}">
+      <div class="flex gap-2">
+        <button id="openAllApiTest"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#apiTestQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('apiTestQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Endpoint
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Paste full API endpoints with params & headers</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ReqBin</h3>
+          <p class="text-gray-400 text-sm mt-1">Online API client to send REST, SOAP & GraphQL requests.</p>
+        </div>
+        <a data-tool data-url="https://reqbin.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://reqbin.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ExtendsClass REST Client</h3>
+          <p class="text-gray-400 text-sm mt-1">Simple browser-based REST & SOAP client.</p>
+        </div>
+        <a data-tool data-url="https://extendsclass.com/rest-client-online.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://extendsclass.com/rest-client-online.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">CodeBeautify API Tester</h3>
+          <p class="text-gray-400 text-sm mt-1">Test and debug REST APIs online with headers and JSON.</p>
+        </div>
+        <a data-tool data-url="https://codebeautify.org/api-test" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://codebeautify.org/api-test" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Beeceptor</h3>
+          <p class="text-gray-400 text-sm mt-1">Mock API endpoints & intercept requests for testing.</p>
+        </div>
+        <a data-tool data-url="https://beeceptor.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://beeceptor.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Postman</h3>
+          <p class="text-gray-400 text-sm mt-1">Industry-standard API client for testing & collaboration.</p>
+        </div>
+        <a data-tool data-url="https://www.postman.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.postman.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Hoppscotch</h3>
+          <p class="text-gray-400 text-sm mt-1">Fast, lightweight open-source API testing tool.</p>
+        </div>
+        <a data-tool data-url="https://hoppscotch.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hoppscotch.io" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Testfully</h3>
+          <p class="text-gray-400 text-sm mt-1">Automated API testing & monitoring in the cloud.</p>
+        </div>
+        <a data-tool data-url="https://testfully.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://testfully.io" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Swagger Inspector</h3>
+          <p class="text-gray-400 text-sm mt-1">Test REST APIs & auto-generate OpenAPI docs.</p>
+        </div>
+        <a data-tool data-url="https://inspector.swagger.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://inspector.swagger.io" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Runscope</h3>
+          <p class="text-gray-400 text-sm mt-1">API monitoring & automated test scenarios.</p>
+        </div>
+        <a data-tool data-url="https://www.runscope.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.runscope.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Insomnia REST (Web)</h3>
+          <p class="text-gray-400 text-sm mt-1">Clean interface for testing REST, GraphQL & gRPC APIs.</p>
+        </div>
+        <a data-tool data-url="https://app.insomnia.rest" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://app.insomnia.rest" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 11 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Apimatic Transformer</h3>
+          <p class="text-gray-400 text-sm mt-1">Transform API descriptions (Swagger, RAML, Postman) between formats.</p>
+        </div>
+        <a data-tool data-url="https://apimatic.io/transformer" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apimatic.io/transformer" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Paste full endpoints (with query params & headers) into clients.</li>
+      <li>Use mock servers like Beeceptor to simulate APIs.</li>
+      <li>Tools like Swagger Inspector & Apimatic help auto-generate docs.</li>
+      <li>Combine live testing (Postman/Hoppscotch) with monitoring (Runscope/Testfully).</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

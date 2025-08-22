@@ -1,0 +1,185 @@
+<section class="space-y-6" id="awareness-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Tools</h2>
+      <p class="text-gray-300">
+        Collections and resources of cybersecurity, OSINT, and penetration testing tools to improve awareness and digital safety.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="toolsQuery" type="text" placeholder="Enter query, e.g. tool name, extension, framework"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllTools').click();}">
+      <div class="flex gap-2">
+        <button id="openAllTools"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#toolsQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('toolsQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Explore curated tool collections</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check open-source projects on GitHub</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use responsibly in secure environments</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Best Chrome Extensions for Pentesting</h3>
+          <p class="text-gray-400 text-sm mt-1">List of useful Chrome extensions for penetration testing.</p>
+        </div>
+        <a data-tool data-url="http://techblogcorner.com/2017/10/27/best-chrome-extensions-for-penetration-testing/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://techblogcorner.com/2017/10/27/best-chrome-extensions-for-penetration-testing/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Start.me Cybersecurity Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Curated OSINT & infosec start page with categorized tools.</p>
+        </div>
+        <a data-tool data-url="https://start.me/u/4Km56x"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://start.me/u/4Km56x" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Additional -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Awesome OSINT</h3>
+          <p class="text-gray-400 text-sm mt-1">GitHub’s largest curated list of OSINT tools and resources.</p>
+        </div>
+        <a data-tool data-url="https://github.com/jivoi/awesome-osint"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://github.com/jivoi/awesome-osint" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">SecLists</h3>
+          <p class="text-gray-400 text-sm mt-1">Collection of wordlists for usernames, passwords, fuzzing, and more.</p>
+        </div>
+        <a data-tool data-url="https://github.com/danielmiessler/SecLists"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://github.com/danielmiessler/SecLists" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Pentest Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Online penetration testing tools for reconnaissance and security checks.</p>
+        </div>
+        <a data-tool data-url="https://pentesttools.net/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://pentesttools.net/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+    <!-- Mobile Security Tools -->
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Kali NetHunter</h3>
+      <p class="text-gray-400 text-sm mt-1">Official mobile penetration testing platform for Android by Kali Linux.</p>
+    </div>
+    <a data-tool data-url="https://www.kali.org/get-kali/#kali-mobile"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.kali.org/get-kali/#kali-mobile" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">zAnti</h3>
+      <p class="text-gray-400 text-sm mt-1">Comprehensive mobile pentesting toolkit for network security assessments.</p>
+    </div>
+    <a data-tool data-url="https://www.zimperium.com/zanti-mobile-penetration-testing"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.zimperium.com/zanti-mobile-penetration-testing" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Fing</h3>
+      <p class="text-gray-400 text-sm mt-1">Popular mobile app for network scanning, device discovery, and security checks.</p>
+    </div>
+    <a data-tool data-url="https://www.fing.com/products"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.fing.com/products" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">MobSF (Mobile Security Framework)</h3>
+      <p class="text-gray-400 text-sm mt-1">Automated mobile app (Android/iOS) pen-testing, malware, and security analysis framework.</p>
+    </div>
+    <a data-tool data-url="https://mobsf.github.io/Mobile-Security-Framework-MobSF/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://mobsf.github.io/Mobile-Security-Framework-MobSF/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use collections like Awesome-OSINT for discovering new investigative tools.</li>
+      <li>Explore browser extensions carefully — some may pose privacy risks.</li>
+      <li>Maintain a separate test environment when experimenting with pentest tools.</li>
+      <li>Combine multiple sources (GitHub repos, curated lists, start pages) for best coverage.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

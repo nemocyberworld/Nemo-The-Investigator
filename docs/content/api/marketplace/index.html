@@ -1,0 +1,273 @@
+<section class="space-y-6" id="api-marketplace">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">API Tools — Marketplace</h2>
+      <p class="text-gray-300">
+        Explore directories and hubs for discovering, testing, and integrating APIs across multiple providers and categories.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="apiMarketQuery" type="text" placeholder="Enter keyword, e.g. weather, finance, crypto"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllMarket').click();}">
+      <div class="flex gap-2">
+        <button id="openAllMarket"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#apiMarketQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('apiMarketQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search with relevant keywords (finance, crypto, social)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">RapidAPI Provider Hub</h3>
+          <p class="text-gray-400 text-sm mt-1">Marketplace for publishing and monetizing APIs.</p>
+        </div>
+        <a data-tool data-url="https://rapidapi.com/solution/api-provider/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://rapidapi.com/solution/api-provider/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Apidog API Hub</h3>
+          <p class="text-gray-400 text-sm mt-1">Test, debug, and share APIs with a collaborative platform.</p>
+        </div>
+        <a data-tool data-url="https://apidog.com/apihub/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apidog.com/apihub/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">RapidAPI Collections</h3>
+          <p class="text-gray-400 text-sm mt-1">Curated API collections by category and use case.</p>
+        </div>
+        <a data-tool data-url="https://rapidapi.com/collections" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://rapidapi.com/collections" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">apilayer</h3>
+          <p class="text-gray-400 text-sm mt-1">API marketplace offering data, currency, and utilities APIs.</p>
+        </div>
+        <a data-tool data-url="https://apilayer.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apilayer.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">API Ninjas</h3>
+          <p class="text-gray-400 text-sm mt-1">Simple, free, and paid APIs for data, utilities, and AI.</p>
+        </div>
+        <a data-tool data-url="https://api-ninjas.com/api" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://api-ninjas.com/api" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">APIs.guru</h3>
+          <p class="text-gray-400 text-sm mt-1">OpenAPI directory with thousands of specs.</p>
+        </div>
+        <a data-tool data-url="https://apis.guru/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apis.guru/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">APIs List</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven directory of free & public APIs.</p>
+        </div>
+        <a data-tool data-url="https://apislist.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apislist.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">API Context</h3>
+          <p class="text-gray-400 text-sm mt-1">API directory with ratings, categories, and search.</p>
+        </div>
+        <a data-tool data-url="https://apicontext.com/api-directory/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apicontext.com/api-directory/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Any-API</h3>
+          <p class="text-gray-400 text-sm mt-1">Quick search across many API examples and docs.</p>
+        </div>
+        <a data-tool data-url="https://any-api.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://any-api.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Google Workspace Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">API-driven apps (example: Syncwith Crypto Binance, CoinGecko, Airbox).</p>
+        </div>
+        <a data-tool data-url="https://workspace.google.com/u/0/marketplace/app/syncwith_crypto_binance_coingecko_airbox/449644239211" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://workspace.google.com/u/0/marketplace/app/syncwith_crypto_binance_coingecko_airbox/449644239211" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+        <!-- Next available number -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">DigitalAPI Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">Low-code, white-label API portal with sandbox, analytics & monetization.</p>
+        </div>
+        <a data-tool data-url="https://digitalapi.ai" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://digitalapi.ai" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Amplify Engage</h3>
+          <p class="text-gray-400 text-sm mt-1">Branded API marketplace with policy, compliance, and subscriptions.</p>
+        </div>
+        <a data-tool data-url="https://www.axway.com/en/products/amplify/platform" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.axway.com/en/products/amplify/platform" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">APIwiz</h3>
+          <p class="text-gray-400 text-sm mt-1">Low-code API marketplace builder with sandbox, logs & metrics.</p>
+        </div>
+        <a data-tool data-url="https://apiwiz.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://apiwiz.io" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MuleSoft Anypoint Exchange</h3>
+          <p class="text-gray-400 text-sm mt-1">Central portal for reusable API assets, templates & mock testing.</p>
+        </div>
+        <a data-tool data-url="https://www.mulesoft.com/platform/anypoint-exchange" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.mulesoft.com/platform/anypoint-exchange" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Kong Konnect / Konnect Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">Private API marketplace with gateway, governance, and portal.</p>
+        </div>
+        <a data-tool data-url="https://konghq.com/kong-konnect" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://konghq.com/kong-konnect" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Postman API Network</h3>
+          <p class="text-gray-400 text-sm mt-1">Discover APIs directly inside Postman with examples and documentation.</p>
+        </div>
+        <a data-tool data-url="https://www.postman.com/explore" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.postman.com/explore" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">BuiltAPI Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">PropTech API directory with live demos and payload previews.</p>
+        </div>
+        <a data-tool data-url="https://builtapi.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://builtapi.io" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">PromptAPI Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">Lightweight API directory, free plans available for sandboxing.</p>
+        </div>
+        <a data-tool data-url="https://promptapi.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://promptapi.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Public-APIs (GitHub)</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-curated repository of free public APIs across domains.</p>
+        </div>
+        <a data-tool data-url="https://github.com/public-apis/public-apis" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/public-apis/public-apis" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use the search bar to test queries (e.g., "crypto", "weather", "social").</li>
+      <li>Different marketplaces focus on free vs paid APIs—compare terms.</li>
+      <li>Bookmark frequently used API directories for quick integration checks.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

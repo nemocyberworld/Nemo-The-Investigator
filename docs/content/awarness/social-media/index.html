@@ -1,0 +1,177 @@
+<section class="space-y-6" id="awareness-social-media">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Social Media</h2>
+      <p class="text-gray-300">
+        Tools and resources to explore, analyze, and stay aware of social media activity, transparency reports, and digital influence.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="socialQuery" type="text" placeholder="Enter query, e.g. username, hashtag, page"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllSocial').click();}">
+      <div class="flex gap-2">
+        <button id="openAllSocial"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#socialQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('socialQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check platform transparency reports</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Track usernames and hashtags</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use multiple platforms for cross-checks</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Twitter -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Twitter — Herdwolfman</h3>
+          <p class="text-gray-400 text-sm mt-1">Example Twitter profile for awareness tracking.</p>
+        </div>
+        <a data-tool data-url="https://twitter.com/Herdwolfman"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://twitter.com/Herdwolfman" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Social Blade -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Social Blade</h3>
+          <p class="text-gray-400 text-sm mt-1">Analytics for YouTube, Twitch, Instagram, and Twitter accounts.</p>
+        </div>
+        <a data-tool data-url="https://socialblade.com/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://socialblade.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Facebook Transparency -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Facebook Transparency</h3>
+          <p class="text-gray-400 text-sm mt-1">See Facebook Page transparency info and ad history.</p>
+        </div>
+        <a data-tool data-url="https://www.facebook.com/{q}/about"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.facebook.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Reddit Metrics -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Reddit Metrics</h3>
+          <p class="text-gray-400 text-sm mt-1">Track subreddit growth and engagement over time.</p>
+        </div>
+        <a data-tool data-url="https://frontpagemetrics.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://frontpagemetrics.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Mastodon Instances -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Mastodon Instances</h3>
+          <p class="text-gray-400 text-sm mt-1">Find and join decentralized Mastodon servers.</p>
+        </div>
+        <a data-tool data-url="https://instances.social/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://instances.social/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- CrowdTangle -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">CrowdTangle</h3>
+          <p class="text-gray-400 text-sm mt-1">Tool for tracking content and trends across Facebook and Instagram.</p>
+        </div>
+        <a data-tool data-url="https://www.crowdtangle.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.crowdtangle.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+    <!-- TikTok Analytics -->
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Exolyt (TikTok Analytics)</h3>
+      <p class="text-gray-400 text-sm mt-1">Analytics for TikTok accounts, videos, and hashtags.</p>
+    </div>
+    <a data-tool data-url="https://exolyt.com/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://exolyt.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">TokTracker</h3>
+      <p class="text-gray-400 text-sm mt-1">Track TikTok user growth, video performance, and trending hashtags.</p>
+    </div>
+    <a data-tool data-url="https://toktracker.com/{q}"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://toktracker.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Monitor usernames across multiple platforms to detect impersonation.</li>
+      <li>Review platform transparency and ad libraries for deeper insights.</li>
+      <li>Use analytics (like Social Blade or Reddit Metrics) to track influence growth.</li>
+      <li>Explore decentralized platforms like Mastodon for broader social awareness.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

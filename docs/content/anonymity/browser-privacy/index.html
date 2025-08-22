@@ -1,0 +1,348 @@
+</section>
+<section class="space-y-6" id="anonymity-browser-privacy">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Anonymity: Browser Privacy</h2>
+      <p class="text-gray-300">
+        Tools to check browser privacy leaks, fingerprinting, cookies, and tracking. Helps maintain anonymity by testing your online footprint.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter test parameter, e.g. IP, user-agent"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use private mode / Tor for anonymity</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Test across multiple devices & networks</span>
+  </div>
+
+<!-- Browser Privacy Tools -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+  <!-- 1 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">uBlock Origin</h3>
+        <p class="text-gray-400 text-sm mt-1">Efficient ad & tracker blocker.</p>
+      </div>
+      <a data-tool data-url="https://ublockorigin.com/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://ublockorigin.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Decentraleyes</h3>
+        <p class="text-gray-400 text-sm mt-1">Protects against CDN tracking.</p>
+      </div>
+      <a data-tool data-url="https://decentraleyes.org/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://decentraleyes.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">HTTPS Everywhere</h3>
+        <p class="text-gray-400 text-sm mt-1">Forces secure HTTPS connections.</p>
+      </div>
+      <a data-tool data-url="https://www.eff.org/HTTPS-EVERYWHERE"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.eff.org/HTTPS-EVERYWHERE" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Privacy Badger</h3>
+        <p class="text-gray-400 text-sm mt-1">Smart anti-tracking browser extension by EFF.</p>
+      </div>
+      <a data-tool data-url="https://www.eff.org/privacybadger"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.eff.org/privacybadger" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">NoScript</h3>
+        <p class="text-gray-400 text-sm mt-1">Block scripts & control execution.</p>
+      </div>
+      <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/noscript/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://addons.mozilla.org/en-US/firefox/addon/noscript/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">User-Agent Switcher</h3>
+        <p class="text-gray-400 text-sm mt-1">Change your browser fingerprint.</p>
+      </div>
+      <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher-revived/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher-revived/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 7 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Cookie AutoDelete</h3>
+        <p class="text-gray-400 text-sm mt-1">Deletes unused cookies automatically.</p>
+      </div>
+      <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/cookie-autodelete/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://addons.mozilla.org/en-US/firefox/addon/cookie-autodelete/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 8 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">uMatrix</h3>
+        <p class="text-gray-400 text-sm mt-1">Advanced script & request firewall for browsers.</p>
+      </div>
+      <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/umatrix/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://addons.mozilla.org/en-US/firefox/addon/umatrix/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 9 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">CanvasBlocker</h3>
+        <p class="text-gray-400 text-sm mt-1">Prevents Canvas fingerprinting.</p>
+      </div>
+      <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 10 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Panopticlick</h3>
+        <p class="text-gray-400 text-sm mt-1">EFF’s browser fingerprinting test.</p>
+      </div>
+      <a data-tool data-url="https://panopticlick.eff.org/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://panopticlick.eff.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 11 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">WhatIsMyBrowser</h3>
+        <p class="text-gray-400 text-sm mt-1">Check user-agent, settings, and leaks.</p>
+      </div>
+      <a data-tool data-url="https://www.whatismybrowser.com/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.whatismybrowser.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 12 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Mozilla Firefox</h3>
+        <p class="text-gray-400 text-sm mt-1">Privacy-friendly open-source browser.</p>
+      </div>
+      <a data-tool data-url="https://www.mozilla.org/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.mozilla.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 13 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Vivaldi</h3>
+        <p class="text-gray-400 text-sm mt-1">Customizable browser with privacy options.</p>
+      </div>
+      <a data-tool data-url="https://vivaldi.com/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://vivaldi.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 14 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Epic Privacy Browser</h3>
+        <p class="text-gray-400 text-sm mt-1">Chromium-based browser with built-in privacy tools.</p>
+      </div>
+      <a data-tool data-url="https://www.epicbrowser.com/index.html"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.epicbrowser.com/index.html" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 15 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Iridium Browser</h3>
+        <p class="text-gray-400 text-sm mt-1">Privacy-enhanced Chromium build.</p>
+      </div>
+      <a data-tool data-url="https://iridiumbrowser.de/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://iridiumbrowser.de/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 16 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">GNUzilla / IceCat</h3>
+        <p class="text-gray-400 text-sm mt-1">GNU’s privacy-focused browser.</p>
+      </div>
+      <a data-tool data-url="https://www.gnu.org/software/gnuzilla/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.gnu.org/software/gnuzilla/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 17 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Oscobo Search</h3>
+        <p class="text-gray-400 text-sm mt-1">UK-based private search engine.</p>
+      </div>
+      <a data-tool data-url="https://oscobo.co.uk/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://oscobo.co.uk/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 18 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">First Party Simulator</h3>
+        <p class="text-gray-400 text-sm mt-1">Explore how cookies & trackers behave.</p>
+      </div>
+      <a data-tool data-url="https://firstpartysimulator.org/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://firstpartysimulator.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 19 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Swisscows</h3>
+        <p class="text-gray-400 text-sm mt-1">Private & family-friendly search engine.</p>
+      </div>
+      <a data-tool data-url="https://swisscows.com/?region=iv&culture=en"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://swisscows.com/?region=iv&culture=en" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 20 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">DuckDuckGo</h3>
+        <p class="text-gray-400 text-sm mt-1">Well-known privacy-focused search engine.</p>
+      </div>
+      <a data-tool data-url="https://duckduckgo.com/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://duckduckgo.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- 21 -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Startpage</h3>
+        <p class="text-gray-400 text-sm mt-1">Search privately with Google results.</p>
+      </div>
+      <a data-tool data-url="https://www.startpage.com/"
+         class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+         href="https://www.startpage.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+</div>
+
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Privacy Notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use Tor or VPN to hide your IP when testing.</li>
+      <li>Compare results across multiple tools to find leaks.</li>
+      <li>Disable WebRTC if anonymity is critical.</li>
+      <li>Fingerprinting can still identify you even with VPN—use hardened browsers.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some tabs may be blocked by your browser. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

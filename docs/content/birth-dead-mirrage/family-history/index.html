@@ -1,0 +1,296 @@
+<section class="space-y-6" id="family-history">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Birth • Death • Marriage — Family History</h2>
+      <p class="text-gray-300">
+        Genealogy resources, family tree databases, DNA testing archives, and global record collections for tracing ancestry and family history.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="familyHistoryQuery" type="text" placeholder="Enter query, e.g. ancestor name, location, birth year"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllFamilyHistory').click();}">
+      <div class="flex gap-2">
+        <button id="openAllFamilyHistory"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#familyHistoryQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('familyHistoryQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search with full names + approximate years</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check spelling variations and maiden names</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use census and immigration records for context</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Genealogy Platforms -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Geneanet</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven family trees & genealogy records.</p>
+        </div>
+        <a data-tool data-url="https://www.geneanet.org/search/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.geneanet.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FamilySearch</h3>
+          <p class="text-gray-400 text-sm mt-1">Free global genealogy archive by LDS Church.</p>
+        </div>
+        <a data-tool data-url="https://www.familysearch.org/search/record/results?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.familysearch.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Ancestry</h3>
+          <p class="text-gray-400 text-sm mt-1">Largest paid genealogy & DNA testing database.</p>
+        </div>
+        <a data-tool data-url="https://www.ancestry.com/search/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.ancestry.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MyHeritage</h3>
+          <p class="text-gray-400 text-sm mt-1">Global family tree builder & DNA matches.</p>
+        </div>
+        <a data-tool data-url="https://www.myheritage.com/research?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.myheritage.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Burial & gravestone -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Find a Grave</h3>
+          <p class="text-gray-400 text-sm mt-1">Cemetery records, photos & gravestone indexes.</p>
+        </div>
+        <a data-tool data-url="https://www.findagrave.com/memorial/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.findagrave.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Archives & regional records -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">U.S. National Archives</h3>
+          <p class="text-gray-400 text-sm mt-1">Genealogy collections, census & military records.</p>
+        </div>
+        <a data-tool data-url="https://www.archives.gov/research/genealogy?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.archives.gov/research/genealogy" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Scotland’s People</h3>
+          <p class="text-gray-400 text-sm mt-1">Official birth, death & marriage records (Scotland).</p>
+        </div>
+        <a data-tool data-url="https://www.scotlandspeople.gov.uk/advanced-search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.scotlandspeople.gov.uk/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">UK BMD Registers</h3>
+          <p class="text-gray-400 text-sm mt-1">Official UK birth, marriage & death indexes.</p>
+        </div>
+        <a data-tool data-url="https://www.bmdregisters.co.uk/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.bmdregisters.co.uk/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extended genealogy tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Ellis Island</h3>
+          <p class="text-gray-400 text-sm mt-1">Immigration passenger records (1892–1957).</p>
+        </div>
+        <a data-tool data-url="https://www.libertyellisfoundation.org/passenger?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.libertyellisfoundation.org/passenger" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">RootsWeb</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-contributed genealogy archives.</p>
+        </div>
+        <a data-tool data-url="https://rootsweb.com/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://rootsweb.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Cyndi’s List</h3>
+          <p class="text-gray-400 text-sm mt-1">Directory of genealogy websites & resources.</p>
+        </div>
+        <a data-tool data-url="https://cyndislist.com/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://cyndislist.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Archives.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Genealogy, vital records & historical archives.</p>
+        </div>
+        <a data-tool data-url="https://www.archives.com/search/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.archives.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- DNA & Genetic Genealogy Tools -->
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">23andMe</h3>
+      <p class="text-gray-400 text-sm mt-1">DNA testing for ancestry, health, and family connections.</p>
+    </div>
+    <a data-tool data-url="https://www.23andme.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.23andme.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">GEDmatch</h3>
+      <p class="text-gray-400 text-sm mt-1">Upload DNA test results to compare & find relatives across platforms.</p>
+    </div>
+    <a data-tool data-url="https://www.gedmatch.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.gedmatch.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">AncestryDNA</h3>
+      <p class="text-gray-400 text-sm mt-1">DNA kit from Ancestry for ethnicity estimates & DNA matches.</p>
+    </div>
+    <a data-tool data-url="https://www.ancestry.com/dna/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.ancestry.com/dna/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">MyHeritageDNA</h3>
+      <p class="text-gray-400 text-sm mt-1">DNA testing & relative matching with global database.</p>
+    </div>
+    <a data-tool data-url="https://www.myheritage.com/dna"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.myheritage.com/dna" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">LivingDNA</h3>
+      <p class="text-gray-400 text-sm mt-1">Detailed ancestry breakdown & regional heritage analysis.</p>
+    </div>
+    <a data-tool data-url="https://livingdna.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://livingdna.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">FamilyTreeDNA</h3>
+      <p class="text-gray-400 text-sm mt-1">Comprehensive DNA testing (Y-DNA, mtDNA, autosomal) for genealogy.</p>
+    </div>
+    <a data-tool data-url="https://www.familytreedna.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.familytreedna.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Research notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Cross-check family records across multiple platforms (FamilySearch, Ancestry, MyHeritage).</li>
+      <li>Use immigration & military archives for missing ancestors.</li>
+      <li>Grave databases (Find a Grave) often link relatives together.</li>
+      <li>Start broad, then refine by name variations and locations.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

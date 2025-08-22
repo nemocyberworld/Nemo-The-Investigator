@@ -1,0 +1,230 @@
+<section class="space-y-6" id="bank-currency-exchange">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Bank — Currency Exchange</h2>
+      <p class="text-gray-300">
+        APIs and tools for currency exchange, conversion rates, and financial compliance (VAT & taxation).
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="currencyQuery" type="text" placeholder="Enter query, e.g. USD, EUR, GBP, JPY"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCurrency').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCurrency"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#currencyQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('currencyQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use 3-letter ISO currency codes (e.g., USD, EUR)</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check API rate limits before integration</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Always confirm with official central bank rates</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Amdoren Currency API</h3>
+          <p class="text-gray-400 text-sm mt-1">Currency conversion API with live exchange rates.</p>
+        </div>
+        <a data-tool data-url="https://www.amdoren.com/currency-api/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.amdoren.com/currency-api/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">VATComply API</h3>
+          <p class="text-gray-400 text-sm mt-1">Currency exchange API with VAT compliance support.</p>
+        </div>
+        <a data-tool data-url="https://www.vatcomply.com/documentation"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.vatcomply.com/documentation" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- ExchangeRate-API -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">ExchangeRate-API</h3>
+      <p class="text-gray-400 text-sm mt-1">Free & paid currency conversion API with real-time rates.</p>
+    </div>
+    <a data-tool data-url="https://www.exchangerate-api.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.exchangerate-api.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- CurrencyFreaks -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CurrencyFreaks</h3>
+      <p class="text-gray-400 text-sm mt-1">JSON API providing real-time & historical FX data.</p>
+    </div>
+    <a data-tool data-url="https://currencyfreaks.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://currencyfreaks.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Open Exchange Rates -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Open Exchange Rates</h3>
+      <p class="text-gray-400 text-sm mt-1">API for 200+ currencies, supports real-time & historical data.</p>
+    </div>
+    <a data-tool data-url="https://openexchangerates.org/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://openexchangerates.org/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Fixer.io -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Fixer.io</h3>
+      <p class="text-gray-400 text-sm mt-1">European Central Bank-backed FX API with JSON data.</p>
+    </div>
+    <a data-tool data-url="https://fixer.io/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://fixer.io/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- CurrencyLayer -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CurrencyLayer</h3>
+      <p class="text-gray-400 text-sm mt-1">Reliable API for real-time & historical exchange rates.</p>
+    </div>
+    <a data-tool data-url="https://currencylayer.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://currencylayer.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- XE Currency Data API -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">XE Currency Data API</h3>
+      <p class="text-gray-400 text-sm mt-1">Professional-grade exchange rates from XE.com.</p>
+    </div>
+    <a data-tool data-url="https://www.xe.com/xecurrencydata/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.xe.com/xecurrencydata/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- OANDA Exchange Rates -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">OANDA Exchange Rates API</h3>
+      <p class="text-gray-400 text-sm mt-1">Trusted FX data provider for banks & businesses.</p>
+    </div>
+    <a data-tool data-url="https://www.oanda.com/solutions-for-business/exchange-rates-api/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.oanda.com/solutions-for-business/exchange-rates-api/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- Yahoo Finance API -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">Yahoo Finance API</h3>
+      <p class="text-gray-400 text-sm mt-1">Access FX & market data via RapidAPI.</p>
+    </div>
+    <a data-tool data-url="https://rapidapi.com/apidojo/api/yahoo-finance1/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://rapidapi.com/apidojo/api/yahoo-finance1/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- FCSAPI -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">FCSAPI</h3>
+      <p class="text-gray-400 text-sm mt-1">Forex & cryptocurrency data API with live rates.</p>
+    </div>
+    <a data-tool data-url="https://fcsapi.com/"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://fcsapi.com/" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- CoinGecko API -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="font-semibold">CoinGecko API</h3>
+      <p class="text-gray-400 text-sm mt-1">Crypto-to-fiat exchange tracking & historical data.</p>
+    </div>
+    <a data-tool data-url="https://www.coingecko.com/en/api"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+       href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Implementation notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use <code>{q}</code> placeholder for currency codes (e.g., USD, GBP, EUR, JPY).</li>
+      <li>APIs often support historical rates; check docs for endpoints.</li>
+      <li>VATComply includes tax compliance features in addition to FX data.</li>
+      <li>Validate exchange rates against official central bank sources for accuracy.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

@@ -1,0 +1,116 @@
+<section class="space-y-6" id="archive-cached-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Archive Tools — Cached Pages</h2>
+      <p class="text-gray-300">
+        Collection of cached page viewers, archive explorers, and utilities to access old or deleted web content.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveCacheQuery" type="text" placeholder="Enter URL, e.g. http://example.com/page"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchiveCache').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchiveCache"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveCacheQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('archiveCacheQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best for retrieving old or cached versions of pages</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Cached page viewers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedPages</h3><p class="text-gray-400 text-sm mt-1">View Google/Yahoo/Bing cached versions of a site.</p></div><a data-tool data-url="http://www.cachedpages.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://www.cachedpages.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedView</h3><p class="text-gray-400 text-sm mt-1">Access cached snapshots of web pages.</p></div><a data-tool data-url="http://cachedview.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachedview.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedView NL</h3><p class="text-gray-400 text-sm mt-1">Dutch mirror for cached page lookup.</p></div><a data-tool data-url="http://cachedview.nl/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachedview.nl/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">PageCached</h3><p class="text-gray-400 text-sm mt-1">Online cached page viewer.</p></div><a data-tool data-url="http://pagecached.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://pagecached.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ViewCached</h3><p class="text-gray-400 text-sm mt-1">View cached content by search engines.</p></div><a data-tool data-url="http://viewcached.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://viewcached.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedViews</h3><p class="text-gray-400 text-sm mt-1">Multiple cached web sources.</p></div><a data-tool data-url="http://cachedviews.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachedviews.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedWebPages</h3><p class="text-gray-400 text-sm mt-1">Find cached copies of websites.</p></div><a data-tool data-url="http://cachedwebpages.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachedwebpages.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WebCaches</h3><p class="text-gray-400 text-sm mt-1">General cached content browser.</p></div><a data-tool data-url="http://webcaches.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://webcaches.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CacheArchive</h3><p class="text-gray-400 text-sm mt-1">Browse archived and cached content.</p></div><a data-tool data-url="http://cachearchive.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachearchive.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ArchivedWeb</h3><p class="text-gray-400 text-sm mt-1">Explore archived websites online.</p></div><a data-tool data-url="http://archivedweb.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archivedweb.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CacheBrowser</h3><p class="text-gray-400 text-sm mt-1">Web page cache access utility.</p></div><a data-tool data-url="http://cachebrowser.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachebrowser.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Nevkontakte Cache</h3><p class="text-gray-400 text-sm mt-1">Alternative cache viewing service.</p></div><a data-tool data-url="http://cache.nevkontakte.com/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cache.nevkontakte.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CachedView B4Your</h3><p class="text-gray-400 text-sm mt-1">Cached content viewer (mirror).</p></div><a data-tool data-url="http://cachedview.b4your.com/en/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://cachedview.b4your.com/en/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Stored Website</h3><p class="text-gray-400 text-sm mt-1">Check stored versions of sites.</p></div><a data-tool data-url="https://stored.website/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://stored.website/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GetLinkInfo</h3><p class="text-gray-400 text-sm mt-1">Expand shortened links and fetch cache.</p></div><a data-tool data-url="https://getlinkinfo.com/info?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://getlinkinfo.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Aware Online Archive Search</h3><p class="text-gray-400 text-sm mt-1">OSINT-focused cached/archived web search tool.</p></div><a data-tool data-url="https://aware-online.com/en/osint-tools/web-archive-search-tool/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://aware-online.com/en/osint-tools/web-archive-search-tool/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Quick Cache & Archive Search</h3><p class="text-gray-400 text-sm mt-1">Cipher387’s cache/archive search utility.</p></div><a data-tool data-url="https://cipher387.github.io/quickcacheandarchivesearch/?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://cipher387.github.io/quickcacheandarchivesearch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Web Archive Viewer</h3><p class="text-gray-400 text-sm mt-1">CybDetective’s web archive browser.</p></div><a data-tool data-url="https://cybdetective.com/webarchiveviewer/index.php?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://cybdetective.com/webarchiveviewer/index.php" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- GitHub Projects -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Waymore</h3><p class="text-gray-400 text-sm mt-1">OSINT tool to fetch URLs from Wayback Machine.</p></div><a data-tool data-url="https://github.com/xnl-h4ck3r/waymore" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/xnl-h4ck3r/waymore" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">waybackpy</h3><p class="text-gray-400 text-sm mt-1">Python library to fetch Wayback Machine snapshots.</p></div><a data-tool data-url="https://github.com/akamhy/waybackpy" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/akamhy/waybackpy" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Wayback Downloader</h3><p class="text-gray-400 text-sm mt-1">Tool for bulk downloading from the Wayback Machine.</p></div><a data-tool data-url="https://github.com/hartator/wayback-machine-downloader" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/hartator/wayback-machine-downloader" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Paste full URLs to check their cached/archived versions.</li>
+      <li>Try multiple sources: Google Cache, Bing Cache, Archive.org, etc.</li>
+      <li>Use tools like Waymore or waybackpy for automation.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

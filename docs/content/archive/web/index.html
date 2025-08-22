@@ -1,0 +1,134 @@
+<section class="space-y-6" id="archive-web-tools" aria-labelledby="archive-web-title">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 id="archive-web-title" class="text-2xl font-bold">Archive — Web</h2>
+      <p class="text-gray-300">
+        Web archiving & snapshot utilities for OSINT, research, and historical analysis.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveQuery" type="text" inputmode="url"
+             placeholder="Enter URL or domain, e.g. https://example.com or example.com"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchive').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchive"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          title="Open all tools in new tabs"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveQuery');
+            const raw=(input.value||'').trim();
+            if(!raw){input.focus(); return;}
+            const q=encodeURIComponent(raw);
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', q);
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          title="Copy current query"
+          onclick="
+            const v=(document.getElementById('archiveQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Allow pop-ups for this page</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use a full URL for best results</span>
+  </div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+  <!-- Archive snapshot services -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.is</h3><p class="text-gray-400 text-sm mt-1">Instant page snapshot.</p></div><a data-tool data-url="http://archive.is/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archive.is/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.today</h3><p class="text-gray-400 text-sm mt-1">Alternate snapshot service.</p></div><a data-tool data-url="http://archive.today/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archive.today/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.ph</h3><p class="text-gray-400 text-sm mt-1">Mirror for snapshots.</p></div><a data-tool data-url="https://archive.ph/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.ph/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.fo</h3><p class="text-gray-400 text-sm mt-1">Fast archiving service.</p></div><a data-tool data-url="http://archive.fo/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archive.fo/" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- Internet Archive / Wayback -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Wayback Machine</h3><p class="text-gray-400 text-sm mt-1">Browse historical captures.</p></div><a data-tool data-url="https://web.archive.org/web/*/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://web.archive.org/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.org Web</h3><p class="text-gray-400 text-sm mt-1">Internet Archive main web UI.</p></div><a data-tool data-url="http://archive.org/web/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archive.org/web/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive.org Web (PHP)</h3><p class="text-gray-400 text-sm mt-1">Alternate PHP web access.</p></div><a data-tool data-url="http://archive.org/web/web.php?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://archive.org/web/web.php" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- Regional archives -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">UK Web Archive</h3><p class="text-gray-400 text-sm mt-1">UK-based web archive.</p></div><a data-tool data-url="https://webarchive.org.uk/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://webarchive.org.uk/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">UKWA (Search)</h3><p class="text-gray-400 text-sm mt-1">UKWA search interface.</p></div><a data-tool data-url="https://webarchive.org.uk/en/ukwa/search?text={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://webarchive.org.uk/en/ukwa/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Stanford SWAP</h3><p class="text-gray-400 text-sm mt-1">Stanford web archive.</p></div><a data-tool data-url="https://swap.stanford.edu/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://swap.stanford.edu/" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- Webrecorder ecosystem -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Webrecorder.io</h3><p class="text-gray-400 text-sm mt-1">Record & replay browsing sessions.</p></div><a data-tool data-url="https://webrecorder.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://webrecorder.io" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Webrecorder Tools</h3><p class="text-gray-400 text-sm mt-1">Toolset for web archiving.</p></div><a data-tool data-url="https://webrecorder.net/tools" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://webrecorder.net/tools" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">ReplayWeb.page</h3><p class="text-gray-400 text-sm mt-1">Replay archived web pages.</p></div><a data-tool data-url="https://replayweb.page/?source={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://replayweb.page/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">OldWeb.today</h3><p class="text-gray-400 text-sm mt-1">Browse old websites in vintage browsers.</p></div><a data-tool data-url="https://oldweb.today/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://oldweb.today/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Conifer</h3><p class="text-gray-400 text-sm mt-1">Rhizome’s web archiving service.</p></div><a data-tool data-url="https://conifer.rhizome.org/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://conifer.rhizome.org/" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- Media/social archives -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">GhostArchive</h3><p class="text-gray-400 text-sm mt-1">Archive and replay videos/social posts.</p></div><a data-tool data-url="https://ghostarchive.org/search?term={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ghostarchive.org/" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- Meta search / viewers -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Aware Online Web Archive Search</h3><p class="text-gray-400 text-sm mt-1">Search across multiple archives.</p></div><a data-tool data-url="https://aware-online.com/en/osint-tools/web-archive-search-tool/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://aware-online.com/en/osint-tools/web-archive-search-tool/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">CybDetective Web Archive Viewer</h3><p class="text-gray-400 text-sm mt-1">Custom archive viewing tool.</p></div><a data-tool data-url="https://cybdetective.com/webarchiveviewer/index.php?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://cybdetective.com/webarchiveviewer/index.php" target="_blank" rel="noopener">Open</a></article>
+
+  <!-- APIs -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Wayback API</h3><p class="text-gray-400 text-sm mt-1">API documentation.</p></div><a data-tool data-url="https://archive.org/help/wayback_api.php?url={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.org/help/wayback_api.php" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Trove API (NLA)</h3><p class="text-gray-400 text-sm mt-1">National Library of Australia API.</p></div><a data-tool data-url="https://trove.nla.gov.au/about/create-something/using-api?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://trove.nla.gov.au/about/create-something/using-api" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Archive-It CDX API</h3><p class="text-gray-400 text-sm mt-1">Access Wayback index (CDX/C API).</p></div><a data-tool data-url="https://support.archive-it.org/hc/en-us/articles/115001790023-Access-Archive-It-s-Wayback-index-with-the-CDX-C-API?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://support.archive-it.org/hc/en-us/articles/115001790023-Access-Archive-It-s-Wayback-index-with-the-CDX-C-API" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">UKWA Manage API</h3><p class="text-gray-400 text-sm mt-1">UKWA API reference.</p></div><a data-tool data-url="https://ukwa-manage.readthedocs.io/en/latest/#api-reference" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ukwa-manage.readthedocs.io/en/latest/#api-reference" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Arquivo.pt API</h3><p class="text-gray-400 text-sm mt-1">Portuguese archive API.</p></div><a data-tool data-url="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">Library of Congress APIs</h3><p class="text-gray-400 text-sm mt-1">LOC API hub.</p></div><a data-tool data-url="https://www.loc.gov/apis/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.loc.gov/apis/" target="_blank" rel="noopener">Open</a></article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div><h3 class="font-semibold">BotsArchive Docs</h3><p class="text-gray-400 text-sm mt-1">Bot archive documentation.</p></div><a data-tool data-url="https://botsarchive.com/docs.html?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://botsarchive.com/docs.html" target="_blank" rel="noopener">Open</a></article>
+
+</div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use full URLs when possible (protocol + path). Domains also work for timeline views.</li>
+      <li>For Wayback, try patterns like <code>https://web.archive.org/web/*/{q}</code> for a capture list.</li>
+      <li>Mind OPSEC: VPN/Tor, separate browser profiles, and sanitize referrers.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Some tabs were blocked. Allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

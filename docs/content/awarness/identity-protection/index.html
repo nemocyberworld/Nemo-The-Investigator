@@ -1,0 +1,259 @@
+<section class="space-y-6" id="awareness-identity-protection">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Awareness — Identity Protection</h2>
+      <p class="text-gray-300">
+        Tools and resources for checking breaches, preventing identity theft, monitoring leaks, and protecting personal information.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="identityQuery" type="text" placeholder="Enter query, e.g. email, phone, username"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllIdentity').click();}">
+      <div class="flex gap-2">
+        <button id="openAllIdentity"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#identityQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('identityQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use your email/phone to check breaches</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Rotate passwords regularly</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Enable multi-factor authentication</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Cifas Identity Protection</h3>
+          <p class="text-gray-400 text-sm mt-1">Fraud prevention & identity protection service (UK).</p>
+        </div>
+        <a data-tool data-url="https://www.cifas.org.uk/services/identity-protection"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.cifas.org.uk/services/identity-protection" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Breach checkers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Have I Been Pwned</h3>
+          <p class="text-gray-400 text-sm mt-1">Check if your email/phone appears in breaches.</p>
+        </div>
+        <a data-tool data-url="https://haveibeenpwned.com/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://haveibeenpwned.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IDStrong</h3>
+          <p class="text-gray-400 text-sm mt-1">Identity theft monitoring & dark web scan.</p>
+        </div>
+        <a data-tool data-url="https://www.idstrong.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.idstrong.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Government & credit bureaus -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IdentityTheft.gov</h3>
+          <p class="text-gray-400 text-sm mt-1">US Federal Trade Commission recovery site.</p>
+        </div>
+        <a data-tool data-url="https://www.identitytheft.gov/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.identitytheft.gov/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Equifax</h3>
+          <p class="text-gray-400 text-sm mt-1">Credit monitoring & fraud alerts.</p>
+        </div>
+        <a data-tool data-url="https://www.equifax.com/personal/identity-theft-protection/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.equifax.com/personal/identity-theft-protection/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Experian</h3>
+          <p class="text-gray-400 text-sm mt-1">Identity theft & credit monitoring services.</p>
+        </div>
+        <a data-tool data-url="https://www.experian.com/identity-protection/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.experian.com/identity-protection/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">TransUnion</h3>
+          <p class="text-gray-400 text-sm mt-1">Identity theft protection & fraud alerts.</p>
+        </div>
+        <a data-tool data-url="https://www.transunion.com/identity-theft-protection"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.transunion.com/identity-theft-protection" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Security vendors -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Kaspersky Leak Checker</h3>
+          <p class="text-gray-400 text-sm mt-1">Check if your data was leaked online.</p>
+        </div>
+        <a data-tool data-url="https://www.kaspersky.com/password-check/leak-check"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.kaspersky.com/password-check/leak-check" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">F-Secure ID Protection</h3>
+          <p class="text-gray-400 text-sm mt-1">Monitor personal data on dark web.</p>
+        </div>
+        <a data-tool data-url="https://www.f-secure.com/en/home/products/id-protection"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.f-secure.com/en/home/products/id-protection" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <!-- Password Managers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Bitwarden</h3>
+          <p class="text-gray-400 text-sm mt-1">Open-source password manager.</p>
+        </div>
+        <a data-tool data-url="https://bitwarden.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://bitwarden.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">1Password</h3>
+          <p class="text-gray-400 text-sm mt-1">Popular secure password manager.</p>
+        </div>
+        <a data-tool data-url="https://1password.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://1password.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">KeePassXC</h3>
+          <p class="text-gray-400 text-sm mt-1">Local, open-source password manager.</p>
+        </div>
+        <a data-tool data-url="https://keepassxc.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://keepassxc.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- MFA / 2FA -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Authy</h3>
+          <p class="text-gray-400 text-sm mt-1">Secure two-factor authentication app.</p>
+        </div>
+        <a data-tool data-url="https://authy.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://authy.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Google Authenticator</h3>
+          <p class="text-gray-400 text-sm mt-1">Free 2FA app by Google.</p>
+        </div>
+        <a data-tool data-url="https://googleauthenticator.net/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://googleauthenticator.net/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">YubiKey</h3>
+          <p class="text-gray-400 text-sm mt-1">Hardware security keys for MFA.</p>
+        </div>
+        <a data-tool data-url="https://www.yubico.com/products/yubikey-5-overview/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.yubico.com/products/yubikey-5-overview/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Always check your email and phone regularly for breach exposures.</li>
+      <li>Freeze your credit report if you suspect fraud.</li>
+      <li>Use strong, unique passwords and store them in a password manager.</li>
+      <li>Consider credit monitoring or ID theft protection services for early alerts.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
+  </div>
+</section>

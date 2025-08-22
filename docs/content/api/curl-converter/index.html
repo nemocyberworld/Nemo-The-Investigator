@@ -1,0 +1,223 @@
+<section class="space-y-6" id="api-curl-converter">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">API Tools — cURL Converter</h2>
+      <p class="text-gray-300">
+        Paste a cURL command and quickly open multiple converters (JS fetch, PHP, and more).
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="curlInput" type="text" placeholder='Paste: curl -X GET "https://api.example.com"...'
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCurl').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCurl"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#curlInput');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              // Most converters don't accept prefilled input via URL.
+              // We still open them and keep cURL in clipboard for quick paste.
+              setTimeout(()=>{
+                const url=(a.getAttribute('data-url')||a.getAttribute('href'));
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1){
+                  // Try copying the cURL for convenience
+                  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(q); }
+                  const hint=root.querySelector('#pasteHint'); if(hint) hint.classList.remove('hidden');
+                  if(blocked){ const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden'); }
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('curlInput').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy cURL
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to open all tools</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Your cURL is auto-copied for quick paste</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">curlconverter.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Convert cURL to many languages (JS fetch, Python, Go, etc.).</p>
+        </div>
+        <a data-tool data-url="https://curlconverter.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://curlconverter.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Incarnate — cURL → PHP</h3>
+          <p class="text-gray-400 text-sm mt-1">Simple cURL to PHP converter (curl_init style).</p>
+        </div>
+        <a data-tool data-url="https://incarnate.github.io/curl-to-php/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://incarnate.github.io/curl-to-php/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">CodeBeautify — cURL → PHP</h3>
+          <p class="text-gray-400 text-sm mt-1">Convert to PHP with options/formatting.</p>
+        </div>
+        <a data-tool data-url="https://codebeautify.org/curl-to-php-online" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://codebeautify.org/curl-to-php-online" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">kigiri — cURL → fetch()</h3>
+          <p class="text-gray-400 text-sm mt-1">Lightweight converter to JavaScript fetch.</p>
+        </div>
+        <a data-tool data-url="https://kigiri.github.io/fetch/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://kigiri.github.io/fetch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ScrapingBee — cURL → fetch()</h3>
+          <p class="text-gray-400 text-sm mt-1">Article + tool for generating JS fetch from cURL.</p>
+        </div>
+        <a data-tool data-url="https://www.scrapingbee.com/curl-converter/javascript-fetch/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.scrapingbee.com/curl-converter/javascript-fetch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">olsh — cURL Converter</h3>
+          <p class="text-gray-400 text-sm mt-1">Another handy multi-language converter.</p>
+        </div>
+        <a data-tool data-url="https://curl.olsh.me/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://curl.olsh.me/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ReqBin — Online cURL Client</h3>
+          <p class="text-gray-400 text-sm mt-1">Run cURL in browser, see response, and convert to many languages.</p>
+        </div>
+        <a data-tool data-url="https://reqbin.com/curl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://reqbin.com/curl" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Oxylabs — cURL Converter</h3>
+          <p class="text-gray-400 text-sm mt-1">Convert cURL to Python, JS, PHP, Go, Rust, Dart, Java, Ruby, and more.</p>
+        </div>
+        <a data-tool data-url="https://oxylabs.io/tools/curl-converter" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://oxylabs.io/tools/curl-converter" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">curlbuilder.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Visual builder to create valid cURL commands with headers & body.</p>
+        </div>
+        <a data-tool data-url="https://curlbuilder.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://curlbuilder.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Curl-to.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Instantly convert to JS (fetch, Axios), Python, Go, PHP, Java, C#, Ruby, Swift.</p>
+        </div>
+        <a data-tool data-url="https://curl-to.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://curl-to.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 11 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">HasData — cURL → Python</h3>
+          <p class="text-gray-400 text-sm mt-1">Fast converter focused on Python <code>requests</code>.</p>
+        </div>
+        <a data-tool data-url="https://hasdata.com/curl-to-python-converter" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hasdata.com/curl-to-python-converter" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 12 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Chilkat Tools — cURL → Code</h3>
+          <p class="text-gray-400 text-sm mt-1">Generate code for dozens of languages (Node.js, Go, Swift, C#, Java, etc.).</p>
+        </div>
+        <a data-tool data-url="https://tools.chilkat.io/curl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://tools.chilkat.io/curl" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 13 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">curlconverter (GitHub)</h3>
+          <p class="text-gray-400 text-sm mt-1">Open-source library & CLI for converting cURL to 27+ languages.</p>
+        </div>
+        <a data-tool data-url="https://github.com/curlconverter/curlconverter" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/curlconverter/curlconverter" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Click <span class="font-semibold">Open All</span> to launch every converter; your cURL is auto-copied for pasting.</li>
+      <li>Check auth headers, cookies, and payloads after conversion — some tools simplify options.</li>
+      <li>Verify multi-part, binary uploads, and special characters after converting.</li>
+    </ul>
+  </details>
+
+  <div id="pasteHint" class="hidden text-emerald-300 text-xs bg-emerald-900/30 border border-emerald-700 rounded p-2">
+    Your cURL command is copied. Paste it into each opened converter.
+  </div>
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
