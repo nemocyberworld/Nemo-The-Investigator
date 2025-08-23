@@ -1,0 +1,135 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">OSINT & Self-Hosted Tools</h2>
+      <p class="text-gray-300">
+        Categorized collection of open-source intelligence utilities and self-hosted alternatives for reconnaissance, privacy, and research.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. user@example.com, domain.com, 1.2.3.4, username"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use relevant search terms (email, domain, IP, username)</span>
+  </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <!-- 1 -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">IntelTechniques Tools</h3><p class="text-gray-400 text-sm mt-1">Bazzell’s curated OSINT tool index.</p></div>
+            <a data-tool data-url="https://inteltechniques.com/tools/index.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">OSINTTools.io</h3><p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p></div>
+            <a data-tool data-url="https://osinttools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">GreyNoise Viz</h3><p class="text-gray-400 text-sm mt-1">IP reputation & scanning context.</p></div>
+            <a data-tool data-url="https://viz.greynoise.io/ip/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">Awesome Self-Hosted</h3><p class="text-gray-400 text-sm mt-1">GitHub’s legendary collection.</p></div>
+            <a data-tool data-url="https://github.com/awesome-selfhosted/awesome-selfhosted" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">Awesome-Selfhosted.net</h3><p class="text-gray-400 text-sm mt-1">Web index of self-hosted projects.</p></div>
+            <a data-tool data-url="https://awesome-selfhosted.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">Selfh.st Apps</h3><p class="text-gray-400 text-sm mt-1">Curated self-hostable apps directory.</p></div>
+            <a data-tool data-url="https://selfh.st/apps" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">LibreSelfHosted</h3><p class="text-gray-400 text-sm mt-1">Open-source alternatives directory.</p></div>
+            <a data-tool data-url="https://libreselfhosted.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">OpenAlternative</h3><p class="text-gray-400 text-sm mt-1">Find open-source replacements.</p></div>
+            <a data-tool data-url="https://openalternative.co/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div><h3 class="font-semibold">EasyIndie</h3><p class="text-gray-400 text-sm mt-1">Discover independent & self-hosted apps.</p></div>
+            <a data-tool data-url="https://easyindie.app/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+          </div>
+        </article>
+  </div>
+
+  <!-- Technique Notes -->
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use emails, usernames, domains, and IPs as pivot keys across multiple tools.</li>
+      <li>Mind operational security: prefer Tor/VPNs and sanitized environments.</li>
+      <li>Correlate results (e.g., breach hits → social handles → repo commits → infra).</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
