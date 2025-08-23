@@ -1,0 +1,108 @@
+<section class="space-y-6" id="company-business-profile">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Company Business — Business Profile</h2>
+      <p class="text-gray-300">
+        Directories, registries, and filings to research company profiles, registrations, reputation, and industry details.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="bizProfileQuery" type="text" placeholder="Optional: company name, domain, registration no., LEI"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBizProfiles').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBizProfiles"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#bizProfileQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{q}')) url=url.replaceAll('{q}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('bizProfileQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Enter query (optional) → Open All</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Only cards with {q} use your query</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided links -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Better Business Bureau</h3><p class="text-gray-400 text-sm mt-1">US business profiles & ratings.</p></div><a data-tool data-url="https://www.bbb.org/search?find_text={q}" href="https://www.bbb.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">International Franchise Association</h3><p class="text-gray-400 text-sm mt-1">Franchise directory & profiles.</p></div><a data-tool data-url="https://www.franchise.org/search?keys={q}" href="https://www.franchise.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Kompass</h3><p class="text-gray-400 text-sm mt-1">Global B2B company directory.</p></div><a data-tool data-url="https://www.kompass.com/en/searchCompanies/?text={q}" href="https://www.kompass.com/b/business-directory/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Manta</h3><p class="text-gray-400 text-sm mt-1">Small business listings.</p></div><a data-tool data-url="https://www.manta.com/search?search_source=business&search={q}" href="https://www.manta.com/business" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Thomasnet</h3><p class="text-gray-400 text-sm mt-1">Industrial suppliers & manufacturers.</p></div><a data-tool data-url="https://www.thomasnet.com/search.html?what={q}" href="https://www.thomasnet.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Zauba Corp (India)</h3><p class="text-gray-400 text-sm mt-1">Indian company registry lookups.</p></div><a data-tool data-url="https://www.zaubacorp.com/companysearchresults/{q}" href="https://www.zaubacorp.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Brownbook</h3><p class="text-gray-400 text-sm mt-1">Global business directory.</p></div><a data-tool data-url="https://www.brownbook.net/businesses/?q={q}" href="https://www.brownbook.net/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">List-Org (RU)</h3><p class="text-gray-400 text-sm mt-1">Russian companies database.</p></div><a data-tool data-url="https://www.list-org.com/search?type=company&search={q}" href="https://www.list-org.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Yell (UK)</h3><p class="text-gray-400 text-sm mt-1">UK business listings.</p></div><a data-tool data-url="https://www.yell.com/ucs/UcsSearchAction.do?keywords={q}" href="https://www.yell.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Yelp</h3><p class="text-gray-400 text-sm mt-1">Local business reviews.</p></div><a data-tool data-url="https://www.yelp.com/search?find_desc={q}" href="https://www.yelp.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- Extended useful additions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenCorporates</h3><p class="text-gray-400 text-sm mt-1">Global company registry aggregator.</p></div><a data-tool data-url="https://opencorporates.com/companies?q={q}" href="https://opencorporates.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">UK Companies House</h3><p class="text-gray-400 text-sm mt-1">Official UK company filings.</p></div><a data-tool data-url="https://find-and-update.company-information.service.gov.uk/search?q={q}" href="https://find-and-update.company-information.service.gov.uk/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SEC EDGAR (US)</h3><p class="text-gray-400 text-sm mt-1">US public company filings.</p></div><a data-tool data-url="https://www.sec.gov/edgar/search/#/entityName={q}" href="https://www.sec.gov/edgar/search/#/category=entity&filter_forms=10-K,10-Q,8-K" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SEDAR+ (Canada)</h3><p class="text-gray-400 text-sm mt-1">Canadian issuer filings.</p></div><a data-tool data-url="https://www.sedarplus.ca/csa-SPA/sedarplus/search?keyword={q}" href="https://www.sedarplus.ca/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GLEIF LEI Search</h3><p class="text-gray-400 text-sm mt-1">Find Legal Entity Identifiers.</p></div><a data-tool data-url="https://search.gleif.org/#/search/{q}" href="https://search.gleif.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Crunchbase</h3><p class="text-gray-400 text-sm mt-1">Startup & company profiles.</p></div><a data-tool data-url="https://www.crunchbase.com/search/organizations/field/organizations/organization_names/{q}" href="https://www.crunchbase.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MCA (India) — CIN/LLPIN</h3><p class="text-gray-400 text-sm mt-1">Locate Indian company identifiers.</p></div><a data-tool data-url="https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/mca-services/find-cin-llpin.html" href="https://www.mca.gov.in/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Research notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Cross-check commercial directories with official registries (e.g., OpenCorporates, Companies House, SEC/SEDAR+).</li>
+      <li>Use LEI search for financial entities; match names, addresses, and IDs.</li>
+      <li>For SMEs, Manta/Yelp/Yell/Brownbook can provide presence & reviews; verify with BBB for complaints/ratings.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

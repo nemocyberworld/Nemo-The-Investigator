@@ -1,0 +1,180 @@
+<section class="space-y-6" id="company-career-employee">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Company Business — Career & Employee</h2>
+      <p class="text-gray-300">
+        Platforms and directories for researching employee profiles, company culture, professional networks, and career insights.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="careerQuery" type="text" placeholder="Optional: name, job title, company, email"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCareer').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCareer"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#careerQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{q}')) url=url.replaceAll('{q}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('careerQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Enter query (optional) → Open All</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best for names, companies, or emails</span>
+  </div>
+
+  <!-- Career/Employee grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Glassdoor -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Glassdoor</h3><p class="text-gray-400 text-sm mt-1">Company reviews, salaries, interviews.</p></div>
+        <a data-tool data-url="https://www.glassdoor.com/Reviews/{q}-reviews-SRCH.htm" href="https://www.glassdoor.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Vault -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Vault</h3><p class="text-gray-400 text-sm mt-1">Career advice & employee insights.</p></div>
+        <a data-tool data-url="https://www.vault.com/blogs/" href="https://www.vault.com/blogs/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- LinkedIn -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">LinkedIn</h3><p class="text-gray-400 text-sm mt-1">Professional networking & employee profiles.</p></div>
+        <a data-tool data-url="https://www.linkedin.com/search/results/people/?keywords={q}" href="https://www.linkedin.com" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- RocketReach -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">RocketReach</h3><p class="text-gray-400 text-sm mt-1">Emails, phone numbers, social links.</p></div>
+        <a data-tool data-url="https://rocketreach.co/splash" href="https://rocketreach.co/splash" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- SignalHire -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">SignalHire</h3><p class="text-gray-400 text-sm mt-1">Employee lookup across companies.</p></div>
+        <a data-tool data-url="https://signalhire.com/search/people?q={q}" href="https://signalhire.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Indeed -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Indeed</h3><p class="text-gray-400 text-sm mt-1">Jobs & employee reviews.</p></div>
+        <a data-tool data-url="https://www.indeed.com/cmp/{q}" href="https://www.indeed.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Monster -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Monster</h3><p class="text-gray-400 text-sm mt-1">Career search & employee data.</p></div>
+        <a data-tool data-url="https://www.monster.com/jobs/search/?q={q}" href="https://www.monster.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- ZoomInfo -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ZoomInfo</h3><p class="text-gray-400 text-sm mt-1">Employee directories & B2B contacts.</p></div>
+        <a data-tool data-url="https://www.zoominfo.com/p/{q}" href="https://www.zoominfo.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Crunchbase Talent -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Crunchbase Talent</h3><p class="text-gray-400 text-sm mt-1">Employee profiles in startups.</p></div>
+        <a data-tool data-url="https://www.crunchbase.com/discover/organization.companies/people?q={q}" href="https://www.crunchbase.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- AngelList -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">AngelList Talent</h3><p class="text-gray-400 text-sm mt-1">Startup jobs & employee profiles.</p></div>
+        <a data-tool data-url="https://angel.co/companies?company_types[]=Startup&keywords={q}" href="https://angel.co/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Xing -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Xing</h3><p class="text-gray-400 text-sm mt-1">European professional networking.</p></div>
+        <a data-tool data-url="https://www.xing.com/search/members?keywords={q}" href="https://www.xing.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Payscale -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Payscale</h3><p class="text-gray-400 text-sm mt-1">Compensation, roles & job market data.</p></div>
+        <a data-tool data-url="https://www.payscale.com/research/US/Job={q}" href="https://www.payscale.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Career notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>LinkedIn, Xing, and Crunchbase Talent are great for employee identity pivots.</li>
+      <li>Glassdoor, Vault, Indeed, and Payscale reveal company culture, salaries, and reviews.</li>
+      <li>RocketReach, ZoomInfo, and SignalHire can enrich OSINT with verified employee contacts.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
