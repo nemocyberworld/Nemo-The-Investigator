@@ -1,0 +1,115 @@
+<section class="space-y-6" id="community-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Community</h2>
+      <p class="text-gray-300">
+        Collection of online communities, forums, groups, and platforms for knowledge sharing, collaboration, and networking.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="communityQuery" type="text" placeholder="Enter query, e.g. OSINT, cybersecurity, hacking"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCommunity').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCommunity"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#communityQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('communityQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use relevant search terms for communities</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Recon Village -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Recon Village</h3><p class="text-gray-400 text-sm mt-1">DEFCON OSINT community.</p></div>
+        <a data-tool data-url="https://www.reconvillage.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.reconvillage.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Discord Invites -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OSINT Discord</h3><p class="text-gray-400 text-sm mt-1">Community invite.</p></div><a data-tool data-url="https://discord.com/invite/uRnBwad" href="https://discord.com/invite/uRnBwad" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OSINT Discord 2</h3><p class="text-gray-400 text-sm mt-1">Community invite.</p></div><a data-tool data-url="https://discord.gg/p78TTGa" href="https://discord.gg/p78TTGa" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Project OWL Discord</h3><p class="text-gray-400 text-sm mt-1">Community invite.</p></div><a data-tool data-url="https://discord.com/invite/projectowl" href="https://discord.com/invite/projectowl" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">TraceLabs Discord</h3><p class="text-gray-400 text-sm mt-1">Crowdsourced OSINT for missing persons.</p></div><a data-tool data-url="https://discord.gg/tracelabs" href="https://discord.gg/tracelabs" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- Reddit Communities -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Reddit OSINT</h3><p class="text-gray-400 text-sm mt-1">OSINT-focused subreddit.</p></div><a data-tool data-url="https://www.reddit.com/r/OSINT/" href="https://www.reddit.com/r/OSINT/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Reddit RBI</h3><p class="text-gray-400 text-sm mt-1">Reddit Bureau of Investigation.</p></div><a data-tool data-url="https://www.reddit.com/r/RBI/" href="https://www.reddit.com/r/RBI/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Reddit WhatIsThisThing</h3><p class="text-gray-400 text-sm mt-1">Object identification community.</p></div><a data-tool data-url="https://www.reddit.com/r/whatisthisthing/" href="https://www.reddit.com/r/whatisthisthing/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Reddit TraceAnObject</h3><p class="text-gray-400 text-sm mt-1">Tracing objects from images.</p></div><a data-tool data-url="https://www.reddit.com/r/TraceAnObject/" href="https://www.reddit.com/r/TraceAnObject/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Reddit Catfish</h3><p class="text-gray-400 text-sm mt-1">Exposing catfishing cases.</p></div><a data-tool data-url="https://www.reddit.com/r/catfish/" href="https://www.reddit.com/r/catfish/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- Other Communities & Resources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Null Byte</h3><p class="text-gray-400 text-sm mt-1">Hacking tutorials & OSINT guides.</p></div><a data-tool data-url="https://null-byte.wonderhowto.com/" href="https://null-byte.wonderhowto.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">2600</h3><p class="text-gray-400 text-sm mt-1">Hacker quarterly magazine.</p></div><a data-tool data-url="https://2600.com/" href="https://2600.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hak5 Shop</h3><p class="text-gray-400 text-sm mt-1">Hacking gear & pentest tools.</p></div><a data-tool data-url="https://shop.hak5.org/" href="https://shop.hak5.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Bugcrowd</h3><p class="text-gray-400 text-sm mt-1">Bug bounty platform.</p></div><a data-tool data-url="https://www.bugcrowd.com/" href="https://www.bugcrowd.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hackerspaces</h3><p class="text-gray-400 text-sm mt-1">Global hackerspaces directory.</p></div><a data-tool data-url="https://hackerspaces.org/" href="https://hackerspaces.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Latest Hacking News</h3><p class="text-gray-400 text-sm mt-1">Cybersecurity news site.</p></div><a data-tool data-url="https://latesthackingnews.com/" href="https://latesthackingnews.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hackers for Charity</h3><p class="text-gray-400 text-sm mt-1">Nonprofit hacker org.</p></div><a data-tool data-url="https://www.hackersforcharity.org/" href="https://www.hackersforcharity.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hakin9</h3><p class="text-gray-400 text-sm mt-1">Hacking magazine.</p></div><a data-tool data-url="https://hakin9.org/" href="https://hakin9.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">eHacking</h3><p class="text-gray-400 text-sm mt-1">Hacking resources & news.</p></div><a data-tool data-url="https://www.ehacking.net/" href="https://www.ehacking.net/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- OpenOSINT -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenOSINT Signup</h3><p class="text-gray-400 text-sm mt-1">Community sign-up page.</p></div><a data-tool data-url="https://openosint.signup.team" href="https://openosint.signup.team" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenOSINT Slack</h3><p class="text-gray-400 text-sm mt-1">Slack workspace.</p></div><a data-tool data-url="https://openosint.slack.com/" href="https://openosint.slack.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- More Discord/Slack -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OSINT Discord 3</h3><p class="text-gray-400 text-sm mt-1">Community invite.</p></div><a data-tool data-url="https://discord.gg/REfpPJB/" href="https://discord.gg/REfpPJB/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">The Many Hats Club</h3><p class="text-gray-400 text-sm mt-1">Infosec community.</p></div><a data-tool data-url="https://themanyhats.club/invite/" href="https://themanyhats.club/invite/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">NetSec Focus</h3><p class="text-gray-400 text-sm mt-1">Slack group for security pros.</p></div><a data-tool data-url="https://www.netsecfocus.com/" href="https://www.netsecfocus.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OWASP Slack</h3><p class="text-gray-400 text-sm mt-1">OWASP security community.</p></div><a data-tool data-url="https://owasp.slack.com/" href="https://owasp.slack.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">VeteranSec</h3><p class="text-gray-400 text-sm mt-1">Cybersecurity community for veterans.</p></div><a data-tool data-url="https://veteransec.com/" href="https://veteransec.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Community notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Join specialized Discord/Slack groups for active collaboration.</li>
+      <li>Explore Reddit forums for crowdsourced intelligence and case studies.</li>
+      <li>Attend hacker conferences and local hackerspaces for networking.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

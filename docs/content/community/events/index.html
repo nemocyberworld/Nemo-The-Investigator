@@ -1,0 +1,133 @@
+<section class="space-y-6" id="community-events">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Community – Events</h2>
+      <p class="text-gray-300">
+        Collection of major cybersecurity, hacking, and OSINT conferences, summits, and community-driven events worldwide.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="eventQuery" type="text" placeholder="Enter query, e.g. DEFCON, BSides, OSINT"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllEvents').click();}">
+      <div class="flex gap-2">
+        <button id="openAllEvents"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#eventQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('eventQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Explore global security conferences</span>
+  </div>
+
+  <!-- Events grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- DEFCON -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">DEFCON</h3><p class="text-gray-400 text-sm mt-1">World’s largest hacker convention.</p></div>
+        <a data-tool data-url="https://www.defcon.org/" href="https://www.defcon.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Black Hat -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Black Hat</h3><p class="text-gray-400 text-sm mt-1">Leading info security conference series.</p></div>
+        <a data-tool data-url="https://www.blackhat.com/" href="https://www.blackhat.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- BSides -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Security BSides</h3><p class="text-gray-400 text-sm mt-1">Community-driven infosec events.</p></div>
+        <a data-tool data-url="https://www.securitybsides.org.uk/" href="https://www.securitybsides.org.uk/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- FIRST -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">FIRST Conference</h3><p class="text-gray-400 text-sm mt-1">Incident response & security teams.</p></div>
+        <a data-tool data-url="https://www.first.org/conference/" href="https://www.first.org/conference/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- ENISA -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ENISA Events</h3><p class="text-gray-400 text-sm mt-1">Cybersecurity conferences listing.</p></div>
+        <a data-tool data-url="https://www.enisa.europa.eu/topics/threat-risk-management/cybersecurity-conferences" href="https://www.enisa.europa.eu/topics/threat-risk-management/cybersecurity-conferences" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- RSA -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">RSA Conference</h3><p class="text-gray-400 text-sm mt-1">Global security conference & expo.</p></div>
+        <a data-tool data-url="https://www.rsaconference.com/" href="https://www.rsaconference.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- SANS Summit -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">SANS Summit</h3><p class="text-gray-400 text-sm mt-1">Hands-on security training events.</p></div>
+        <a data-tool data-url="https://www.sans.org/cyber-security-summit/" href="https://www.sans.org/cyber-security-summit/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Extra additions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ShmooCon</h3><p class="text-gray-400 text-sm mt-1">East Coast hacker conference.</p></div><a data-tool data-url="https://shmoocon.org/" href="https://shmoocon.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">TROOPERS</h3><p class="text-gray-400 text-sm mt-1">Advanced security conference in Germany.</p></div><a data-tool data-url="https://troopers.de/" href="https://troopers.de/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hack In The Box</h3><p class="text-gray-400 text-sm mt-1">HITB Security Conference series.</p></div><a data-tool data-url="https://conference.hitb.org/" href="https://conference.hitb.org/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Event notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Global events are prime opportunities to network with security researchers, professionals, and hackers.</li>
+      <li>Local BSides chapters provide affordable, community-driven alternatives.</li>
+      <li>Online events (RSA, SANS, ENISA) often have live streams and archives.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
