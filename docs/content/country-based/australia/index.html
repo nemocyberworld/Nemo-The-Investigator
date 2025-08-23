@@ -1,0 +1,271 @@
+<section class="space-y-6" id="country-australia-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Australia OSINT Tools</h2>
+      <p class="text-gray-300">
+        Collection of open-source intelligence resources for company searches, business registers, government data, and local directories in Australia.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="ausQuery" type="text" placeholder="Enter query, e.g. ABN, business name, person"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllAustralia').click();}">
+      <div class="flex gap-2">
+        <button id="openAllAustralia"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#ausQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('ausQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use relevant search terms (business name, ABN, local directory)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- ASIC Connect -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ASIC Connect</h3><p class="text-gray-400 text-sm mt-1">Australian Securities & Investments Commission – company lookups.</p></div>
+        <a data-tool data-url="https://connectonline.asic.gov.au/" href="https://connectonline.asic.gov.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- ABR Lookup -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ABR Lookup</h3><p class="text-gray-400 text-sm mt-1">Australian Business Register (ABN search).</p></div>
+        <a data-tool data-url="https://abr.business.gov.au/" href="https://abr.business.gov.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- ASIC main site -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ASIC Main Site</h3><p class="text-gray-400 text-sm mt-1">Official Australian Securities & Investments Commission site.</p></div>
+        <a data-tool data-url="https://asic.gov.au/" href="https://asic.gov.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Data.gov.au -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Data.gov.au</h3><p class="text-gray-400 text-sm mt-1">Australian Open Government Data portal.</p></div>
+        <a data-tool data-url="https://data.gov.au/" href="https://data.gov.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- ASIC Direct Lookup -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ASIC Direct Lookup</h3><p class="text-gray-400 text-sm mt-1">Business name and company information search.</p></div>
+        <a data-tool data-url="https://asicconnect.asic.gov.au/" href="https://asicconnect.asic.gov.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Yellow Pages -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Yellow Pages AU</h3><p class="text-gray-400 text-sm mt-1">Business directory and phone numbers.</p></div>
+        <a data-tool data-url="https://www.yellowpages.com.au/" href="https://www.yellowpages.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Search Frog -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Search Frog</h3><p class="text-gray-400 text-sm mt-1">Australian local business directory.</p></div>
+        <a data-tool data-url="https://searchfrog.com.au/" href="https://searchfrog.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- True Local -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">True Local</h3><p class="text-gray-400 text-sm mt-1">Local reviews & businesses in Australia.</p></div>
+        <a data-tool data-url="https://www.truelocal.com.au/" href="https://www.truelocal.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- StartLocal -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">StartLocal</h3><p class="text-gray-400 text-sm mt-1">Australian business directory listings.</p></div>
+        <a data-tool data-url="https://startlocal.com.au/" href="https://startlocal.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- HotFrog AU -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">HotFrog AU</h3><p class="text-gray-400 text-sm mt-1">Australian business directory & reviews.</p></div>
+        <a data-tool data-url="https://www.hotfrog.com.au/" href="https://www.hotfrog.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Enroll Business AU -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Enroll Business AU</h3><p class="text-gray-400 text-sm mt-1">Local Australian business listings.</p></div>
+        <a data-tool data-url="https://au.enrollbusiness.com/" href="https://au.enrollbusiness.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Local.com.au -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Local.com.au</h3><p class="text-gray-400 text-sm mt-1">Australian business search engine.</p></div>
+        <a data-tool data-url="https://www.local.com.au/" href="https://www.local.com.au/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- White Pages -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">White Pages AU</h3><p class="text-gray-400 text-sm mt-1">Residential & business phone directory.</p></div>
+    <a data-tool data-url="https://www.whitepages.com.au/" href="https://www.whitepages.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Reverse Australia -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Reverse Australia</h3><p class="text-gray-400 text-sm mt-1">Reverse phone number lookup.</p></div>
+    <a data-tool data-url="https://www.reverseaustralia.com/" href="https://www.reverseaustralia.com/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Person Lookup -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Person Lookup</h3><p class="text-gray-400 text-sm mt-1">Australian phone & address search.</p></div>
+    <a data-tool data-url="https://personlookup.com.au/" href="https://personlookup.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Numberway AU -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Numberway AU</h3><p class="text-gray-400 text-sm mt-1">Australia phone directory index.</p></div>
+    <a data-tool data-url="https://www.numberway.com/au/" href="https://www.numberway.com/au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Truecaller -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Truecaller</h3><p class="text-gray-400 text-sm mt-1">Reverse phone number search (global).</p></div>
+    <a data-tool data-url="https://www.truecaller.com/" href="https://www.truecaller.com/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Credit Report AU -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Credit Report AU</h3><p class="text-gray-400 text-sm mt-1">Personal credit history checks.</p></div>
+    <a data-tool data-url="https://www.creditreport.com.au/" href="https://www.creditreport.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Illion -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Illion</h3><p class="text-gray-400 text-sm mt-1">Business credit reporting Australia.</p></div>
+    <a data-tool data-url="https://www.illion.com.au/" href="https://www.illion.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- Dun & Bradstreet AU -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Dun & Bradstreet AU</h3><p class="text-gray-400 text-sm mt-1">Company credit data & risk reports.</p></div>
+    <a data-tool data-url="https://www.dnb.com.au/" href="https://www.dnb.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- SmartCompany -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">SmartCompany</h3><p class="text-gray-400 text-sm mt-1">Business insights & company news.</p></div>
+    <a data-tool data-url="https://www.smartcompany.com.au/" href="https://www.smartcompany.com.au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+<!-- IBISWorld AU -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">IBISWorld AU</h3><p class="text-gray-400 text-sm mt-1">Market research & company data.</p></div>
+    <a data-tool data-url="https://www.ibisworld.com/au/" href="https://www.ibisworld.com/au/" target="_blank" rel="noopener"
+       class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use ABNs, company names, or local directory searches for business OSINT in Australia.</li>
+      <li>Combine ASIC and ABR records with local reviews for richer profiling.</li>
+      <li>Government open data portals provide context on economy, regulations, and population.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
