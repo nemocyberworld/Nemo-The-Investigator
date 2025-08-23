@@ -1,0 +1,176 @@
+<section class="space-y-6" id="chemical-safety-regulatory">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Chemical – Safety & Regulatory Databases</h2>
+      <p class="text-gray-300">
+        Authoritative chemical safety and regulatory databases for hazard information, SDS, GHS classification, and compliance checks.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="chemSafeQuery" type="text" placeholder="Enter query, e.g. CAS number, chemical name, UN number"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllChemSafe').click();}">
+      <div class="flex gap-2">
+        <button id="openAllChemSafe"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#chemSafeQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('chemSafeQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use CAS numbers, chemical names, or UN numbers</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ChemHAT</h3>
+          <p class="text-gray-400 text-sm mt-1">Chemical Hazard and Alternatives Toolbox – workplace safety and hazard data.</p>
+        </div>
+        <a data-tool data-url="https://chemhat.org/en/search/node/{q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chemhat.org/en" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">eChemPortal (OECD)</h3>
+          <p class="text-gray-400 text-sm mt-1">Global portal for chemical safety data (GHS, exposure, toxicity).</p>
+        </div>
+        <a data-tool data-url="https://www.echemportal.org/echemportal/substancesearch/substancesearch.do?query={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://echemportal.net" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">RD Chemicals</h3>
+          <p class="text-gray-400 text-sm mt-1">Safety Data Sheets (SDS) for a wide range of laboratory chemicals.</p>
+        </div>
+        <a data-tool data-url="https://rdchemicals.com/search.php?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://rdchemicals.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ChemScanner</h3>
+          <p class="text-gray-400 text-sm mt-1">Aggregated safety and regulatory information with hazard classification.</p>
+        </div>
+        <a data-tool data-url="https://chemscanner.org/search?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chemscanner.org" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">GESTIS</h3>
+          <p class="text-gray-400 text-sm mt-1">International database for occupational safety & chemical hazard information.</p>
+        </div>
+        <a data-tool data-url="https://gestis-database.dguv.de/search?query={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://gestis-database.dguv.de" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ECHA (EU Chemicals Agency)</h3>
+          <p class="text-gray-400 text-sm mt-1">EU regulatory database – REACH, CLP, and registered substances.</p>
+        </div>
+        <a data-tool data-url="https://echa.europa.eu/information-on-chemicals/{q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://echa.europa.eu" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">NIOSH Pocket Guide</h3>
+          <p class="text-gray-400 text-sm mt-1">NIOSH database of workplace chemical hazards & exposure limits.</p>
+        </div>
+        <a data-tool data-url="https://www.cdc.gov/niosh/npg/npgd{q}.html" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.cdc.gov/niosh/npg/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Hazardous Substances Data Bank (HSDB)</h3>
+          <p class="text-gray-400 text-sm mt-1">Toxicology, safety, and hazard data for chemicals and mixtures.</p>
+        </div>
+        <a data-tool data-url="https://pubchem.ncbi.nlm.nih.gov/source/hsdb/{q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://pubchem.ncbi.nlm.nih.gov/source/hsdb" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Best queries: CAS number, UN number, or precise IUPAC name.</li>
+      <li>Cross-reference multiple databases for compliance and hazard validation.</li>
+      <li>For workplace use: check ChemHAT, GESTIS, and NIOSH.</li>
+      <li>For regulatory compliance: use eChemPortal and ECHA.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

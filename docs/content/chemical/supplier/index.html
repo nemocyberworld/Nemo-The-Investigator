@@ -1,0 +1,177 @@
+<section class="space-y-6" id="chemical-suppliers">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Chemical – Supplier Directories</h2>
+      <p class="text-gray-300">
+        Global directories and marketplaces for chemical suppliers, manufacturers, distributors, and product sourcing.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="chemSupplierQuery" type="text" placeholder="Enter query, e.g. compound name, CAS number, product ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllChemSupplier').click();}">
+      <div class="flex gap-2">
+        <button id="openAllChemSupplier"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#chemSupplierQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('chemSupplierQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best queries: chemical name, CAS number, product code</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Chem.com</h3>
+          <p class="text-gray-400 text-sm mt-1">Chemical supplier search and sourcing marketplace.</p>
+        </div>
+        <a data-tool data-url="http://chem.com/search?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://chem.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ChemicalBook</h3>
+          <p class="text-gray-400 text-sm mt-1">Database of suppliers, manufacturers, and chemical products.</p>
+        </div>
+        <a data-tool data-url="https://www.chemicalbook.com/Search_EN.aspx?keyword={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chemicalbook.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Molbase</h3>
+          <p class="text-gray-400 text-sm mt-1">Chemical database and marketplace for global suppliers.</p>
+        </div>
+        <a data-tool data-url="http://www.molbase.com/en/search.html?searchkw={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://molbase.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ChemSpace</h3>
+          <p class="text-gray-400 text-sm mt-1">Supplier and marketplace for purchasable compounds worldwide.</p>
+        </div>
+        <a data-tool data-url="https://chem-space.com/search?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chem-space.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Alibaba Chemicals</h3>
+          <p class="text-gray-400 text-sm mt-1">Global marketplace for chemical products and suppliers.</p>
+        </div>
+        <a data-tool data-url="https://www.alibaba.com/trade/search?SearchText={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.alibaba.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Made-in-China Chemicals</h3>
+          <p class="text-gray-400 text-sm mt-1">Supplier directory for chemical products in China.</p>
+        </div>
+        <a data-tool data-url="https://www.made-in-china.com/productdirectory.do?word={q}&subaction=hunt&style=b" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.made-in-china.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">GlobalSpec Chemicals</h3>
+          <p class="text-gray-400 text-sm mt-1">Engineering and industrial chemicals supplier search.</p>
+        </div>
+        <a data-tool data-url="https://www.globalspec.com/Search?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.globalspec.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">WorldOfChemicals Marketplace</h3>
+          <p class="text-gray-400 text-sm mt-1">Marketplace for chemicals, suppliers, and industry resources.</p>
+        </div>
+        <a data-tool data-url="https://www.worldofchemicals.com/search.html?q={q}" 
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.worldofchemicals.com" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use CAS numbers, product codes, or IUPAC names for best supplier results.</li>
+      <li>Alibaba & Made-in-China are best for bulk and industrial sourcing.</li>
+      <li>ChemSpace, Molbase, and ChemicalBook focus on lab and research chemicals.</li>
+      <li>GlobalSpec and WorldOfChemicals provide industrial and global supplier coverage.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
