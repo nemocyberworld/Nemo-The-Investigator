@@ -1,0 +1,160 @@
+<!-- Main Category: Browser -->
+<section class="space-y-6" id="browser-resources">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Tools</h2>
+      <p class="text-gray-300">
+        Resources for data exports, account deletion, privacy opt-outs, and ad/tracker controls.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="browserResQuery" type="text" placeholder="Optional query (used only by tools that support it)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBrowserRes').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBrowserRes"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#browserResQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
+              url=url.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnBrowserRes'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('browserResQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for “Open All”</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Export before deleting</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Revisit opt-outs periodically</span>
+  </div>
+
+  <!-- Sub-category: Resource -->
+  <h3 class="text-xl font-semibold mt-6">Resource: Data Export • Deletion • Opt-out</h3>
+
+  <!-- Core directories & guides -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">JustGetMyData</h3>
+      <p class="text-gray-400 text-sm mt-1">Export data from major services.</p>
+    </div><a data-tool data-url="https://justgetmydata.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://justgetmydata.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Opting Out (OSINT Way)</h3>
+      <p class="text-gray-400 text-sm mt-1">LearnAllTheThings: in-depth opt-out guide.</p>
+    </div><a data-tool data-url="https://www.learnallthethings.net/2020/06/opting-out-like-a-boss-the-osint-way.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.learnallthethings.net/2020/06/opting-out-like-a-boss-the-osint-way.html" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">JustDeleteMe</h3>
+      <p class="text-gray-400 text-sm mt-1">Directory of account deletion links.</p>
+    </div><a data-tool data-url="https://justdeleteme.xyz/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://justdeleteme.xyz/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">BackgroundChecks Opt-Out List</h3>
+      <p class="text-gray-400 text-sm mt-1">Comprehensive broker opt-outs.</p>
+    </div><a data-tool data-url="https://backgroundchecks.org/opt-out/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://backgroundchecks.org/opt-out/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">OptOutPrescreen (US)</h3>
+      <p class="text-gray-400 text-sm mt-1">Credit/insurance offers opt-out.</p>
+    </div><a data-tool data-url="https://optoutprescreen.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://optoutprescreen.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">SimpleOptOut</h3>
+      <p class="text-gray-400 text-sm mt-1">Broker opt-out links & instructions.</p>
+    </div><a data-tool data-url="https://simpleoptout.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://simpleoptout.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Helpful extensions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">AccountKiller</h3>
+      <p class="text-gray-400 text-sm mt-1">Delete account guides (easy/medium/hard).</p>
+    </div><a data-tool data-url="https://www.accountkiller.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.accountkiller.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Datarequests.org Toolbox</h3>
+      <p class="text-gray-400 text-sm mt-1">DSAR templates & GDPR tools.</p>
+    </div><a data-tool data-url="https://www.datarequests.org/tools/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.datarequests.org/tools/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Privacy Guides</h3>
+      <p class="text-gray-400 text-sm mt-1">Community-maintained privacy best practices.</p>
+    </div><a data-tool data-url="https://www.privacyguides.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.privacyguides.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Your Ad Choices (NAI)</h3>
+      <p class="text-gray-400 text-sm mt-1">Interest-based ads opt-out (NAI members).</p>
+    </div><a data-tool data-url="https://optout.networkadvertising.org/?c=1" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://optout.networkadvertising.org/?c=1" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Your Online Choices (EU)</h3>
+      <p class="text-gray-400 text-sm mt-1">EDAA ad preferences/opt-outs.</p>
+    </div><a data-tool data-url="https://www.youronlinechoices.eu/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.youronlinechoices.eu/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">AboutAds (US)</h3>
+      <p class="text-gray-400 text-sm mt-1">DAA consumer ad choices.</p>
+    </div><a data-tool data-url="https://optout.aboutads.info/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://optout.aboutads.info/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- First-party data & ad settings -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Google Takeout</h3>
+      <p class="text-gray-400 text-sm mt-1">Export your Google account data.</p>
+    </div><a data-tool data-url="https://takeout.google.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://takeout.google.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Google Ad Settings</h3>
+      <p class="text-gray-400 text-sm mt-1">Control personalized ads on Google.</p>
+    </div><a data-tool data-url="https://adssettings.google.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://adssettings.google.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Facebook Off-Facebook Activity</h3>
+      <p class="text-gray-400 text-sm mt-1">Manage data shared with Meta by sites/apps.</p>
+    </div><a data-tool data-url="https://www.facebook.com/off_facebook_activity/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.facebook.com/off_facebook_activity/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Apple Data & Privacy</h3>
+      <p class="text-gray-400 text-sm mt-1">Get a copy of your Apple data.</p>
+    </div><a data-tool data-url="https://privacy.apple.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://privacy.apple.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Export first, then delete — you can’t always reverse deletion.</li>
+      <li>Use DSAR/Right-to-Access where legally available (e.g., GDPR).</li>
+      <li>Repeat opt-outs quarterly; brokers and ad settings often reset.</li>
+      <li>Use a unique email alias per service for future correlation.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnBrowserRes" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open resources one by one.
+  </div>
+</section>

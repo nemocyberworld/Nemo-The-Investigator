@@ -1,0 +1,147 @@
+<!-- Main Category: Browser -->
+<section class="space-y-6" id="browser-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Tools</h2>
+      <p class="text-gray-300">
+        Curated tools, frameworks, and collections for OSINT, privacy, and security research.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="browserToolsQuery" type="text" placeholder="Optional query (some tools support it)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBrowserTools').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBrowserTools"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#browserToolsQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
+              url=url.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnBrowserTools'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('browserToolsQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for "Open All"</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Many are directories/collections</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check updates often, OSINT evolves fast</span>
+  </div>
+
+  <!-- Sub-category: Tools -->
+  <h3 class="text-xl font-semibold mt-6">Tools & Frameworks</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">CommotionMade</h3>
+      <p class="text-gray-400 text-sm mt-1">OSINT resource collection.</p>
+    </div><a data-tool data-url="https://commotionmade.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://commotionmade.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">FollowGraph</h3>
+      <p class="text-gray-400 text-sm mt-1">Analyze Twitter/X follow graphs.</p>
+    </div><a data-tool data-url="https://followgraph.vercel.app/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://followgraph.vercel.app/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Katana</h3>
+      <p class="text-gray-400 text-sm mt-1">Powerful OSINT tool (GitHub).</p>
+    </div><a data-tool data-url="https://github.com/TebbaaX/Katana" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/TebbaaX/Katana" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Shodan Dojo</h3>
+      <p class="text-gray-400 text-sm mt-1">Learning resources for Shodan.</p>
+    </div><a data-tool data-url="https://github.com/ninoseki/shodan-dojo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/ninoseki/shodan-dojo" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">IntelTechniques</h3>
+      <p class="text-gray-400 text-sm mt-1">Michael Bazzell’s OSINT tools.</p>
+    </div><a data-tool data-url="https://inteltechniques.com/tools/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://inteltechniques.com/tools/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">OSINT Framework</h3>
+      <p class="text-gray-400 text-sm mt-1">Classic OSINT resource map.</p>
+    </div><a data-tool data-url="https://osintframework.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://osintframework.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Ultimate OSINT Collection</h3>
+      <p class="text-gray-400 text-sm mt-1">Start.me OSINT bookmarks.</p>
+    </div><a data-tool data-url="https://start.me/p/DPYPMz/the-ultimate-osint-collection" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://start.me/p/DPYPMz/the-ultimate-osint-collection" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">PrivacyTools.io</h3>
+      <p class="text-gray-400 text-sm mt-1">Privacy/security tools & guides.</p>
+    </div><a data-tool data-url="https://privacytools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://privacytools.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">RestorePrivacy</h3>
+      <p class="text-gray-400 text-sm mt-1">VPN, browser leak & privacy tests.</p>
+    </div><a data-tool data-url="https://restoreprivacy.com/tools/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://restoreprivacy.com/tools/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Prism-Break</h3>
+      <p class="text-gray-400 text-sm mt-1">FOSS alternatives for privacy.</p>
+    </div><a data-tool data-url="https://prism-break.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://prism-break.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extended suggestions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">SecTools.org</h3>
+      <p class="text-gray-400 text-sm mt-1">Top security & OSINT tools (Nmap team).</p>
+    </div><a data-tool data-url="https://sectools.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://sectools.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">DFIR Training Tools</h3>
+      <p class="text-gray-400 text-sm mt-1">DFIR & OSINT tools directory.</p>
+    </div><a data-tool data-url="https://dfir.training/tools" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dfir.training/tools" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Awesome OSINT (GitHub)</h3>
+      <p class="text-gray-400 text-sm mt-1">Community-driven OSINT resources.</p>
+    </div><a data-tool data-url="https://github.com/jivoi/awesome-osint" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/jivoi/awesome-osint" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">OSINT Techniques Book</h3>
+      <p class="text-gray-400 text-sm mt-1">Michael Bazzell’s official resources.</p>
+    </div><a data-tool data-url="https://inteltechniques.com/book1.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://inteltechniques.com/book1.html" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use frameworks (OSINT Framework, Awesome OSINT) to branch into niche tools.</li>
+      <li>Bookmark collections (Start.me, CommotionMade) for constant updates.</li>
+      <li>Blend privacy tools (PrivacyTools, RestorePrivacy, Prism-Break) with investigative resources.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnBrowserTools" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

@@ -1,0 +1,148 @@
+<!-- Main Category: Browser -->
+<section class="space-y-6" id="browser-vendor">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Tools</h2>
+      <p class="text-gray-300">
+        Vendor browsers for privacy, performance, and security — mainstream to niche alternatives.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="browserVendorQuery" type="text" placeholder="Optional query (some vendor sites support it)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBrowserVendor').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBrowserVendor"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#browserVendorQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
+              url=url.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnBrowserVendor'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('browserVendorQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Compare privacy vs speed</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Test fingerprint resistance</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check extension ecosystem</span>
+  </div>
+
+  <!-- Sub-category: Vendor -->
+  <h3 class="text-xl font-semibold mt-6">Vendor Browsers</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Core vendors -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Brave</h3>
+      <p class="text-gray-400 text-sm mt-1">Privacy-focused Chromium fork with built-in adblocker.</p>
+    </div><a data-tool data-url="https://brave.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://brave.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Mozilla Firefox</h3>
+      <p class="text-gray-400 text-sm mt-1">Open-source browser emphasizing privacy & customization.</p>
+    </div><a data-tool data-url="https://www.mozilla.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.mozilla.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Opera</h3>
+      <p class="text-gray-400 text-sm mt-1">Feature-rich browser with built-in VPN.</p>
+    </div><a data-tool data-url="http://www.opera.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://www.opera.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Safari</h3>
+      <p class="text-gray-400 text-sm mt-1">Apple’s browser with strong OS integration.</p>
+    </div><a data-tool data-url="http://www.apple.com/safari/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://www.apple.com/safari/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Microsoft Edge</h3>
+      <p class="text-gray-400 text-sm mt-1">Chromium-based, Windows-integrated browser.</p>
+    </div><a data-tool data-url="https://www.microsoft.com/edge" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.microsoft.com/edge" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Google Chrome</h3>
+      <p class="text-gray-400 text-sm mt-1">Most widely used browser, Chromium base.</p>
+    </div><a data-tool data-url="https://www.google.com/chrome/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.google.com/chrome/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Tor Browser</h3>
+      <p class="text-gray-400 text-sm mt-1">Privacy browser for anonymity over Tor network.</p>
+    </div><a data-tool data-url="https://www.torproject.org/projects/torbrowser.html.en" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.torproject.org/projects/torbrowser.html.en" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Vivaldi</h3>
+      <p class="text-gray-400 text-sm mt-1">Highly customizable Chromium-based browser.</p>
+    </div><a data-tool data-url="https://vivaldi.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://vivaldi.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Waterfox</h3>
+      <p class="text-gray-400 text-sm mt-1">Firefox fork with legacy plugin support.</p>
+    </div><a data-tool data-url="https://www.waterfox.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.waterfox.net/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Yandex Browser</h3>
+      <p class="text-gray-400 text-sm mt-1">Russian Chromium-based browser with integration.</p>
+    </div><a data-tool data-url="https://browser.yandex.com/desktop/main" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://browser.yandex.com/desktop/main" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extended browsers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Pale Moon</h3>
+      <p class="text-gray-400 text-sm mt-1">Independent fork of Firefox with classic UI.</p>
+    </div><a data-tool data-url="https://www.palemoon.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.palemoon.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Iridium Browser</h3>
+      <p class="text-gray-400 text-sm mt-1">Privacy-enhanced Chromium variant.</p>
+    </div><a data-tool data-url="https://iridiumbrowser.de/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://iridiumbrowser.de/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">LibreWolf</h3>
+      <p class="text-gray-400 text-sm mt-1">Firefox fork stripped of telemetry.</p>
+    </div><a data-tool data-url="https://librewolf.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://librewolf.net/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Ungoogled Chromium</h3>
+      <p class="text-gray-400 text-sm mt-1">Chromium build without Google services.</p>
+    </div><a data-tool data-url="https://ungoogled-software.github.io/ungoogled-chromium-binaries/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ungoogled-software.github.io/ungoogled-chromium-binaries/" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use multiple browsers for compartmentalization (work, research, privacy).</li>
+      <li>Test vendors with fingerprinting & tracking tools for true privacy claims.</li>
+      <li>Chromium forks (Brave, Iridium, Ungoogled) vary widely in telemetry removal.</li>
+      <li>Firefox forks (Waterfox, LibreWolf, Pale Moon) retain legacy add-ons or remove telemetry.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnBrowserVendor" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open vendor links one by one.
+  </div>
+</section>

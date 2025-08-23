@@ -1,0 +1,109 @@
+<!-- Main Category: Browser -->
+<section class="space-y-6" id="browser-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Tools</h2>
+      <p class="text-gray-300">
+        Browser analysis, fingerprinting, privacy leak detection, and security configuration checks.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="browserQuery" type="text" placeholder="Enter query, e.g. IP, domain, UA string"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBrowser').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBrowser"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#browserQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnBrowser'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('browserQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sub-category: Fingerprint -->
+  <h3 class="text-xl font-semibold mt-6">Fingerprint & Leak Tests</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Am I Unique?</h3>
+        <p class="text-gray-400 text-sm mt-1">Tests browser uniqueness (Panopticlick-like).</p>
+      </div><a data-tool data-url="https://amiunique.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+        href="https://amiunique.org/" target="_blank" rel="noopener">Open</a></div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BrowserLeaks</h3><p class="text-gray-400 text-sm mt-1">Browser fingerprint & leaks check.</p></div><a data-tool data-url="https://browserleaks.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://browserleaks.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WhatIsMyBrowser</h3><p class="text-gray-400 text-sm mt-1">Detects browser, UA, version, privacy leaks.</p></div><a data-tool data-url="https://www.whatismybrowser.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.whatismybrowser.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">UserAgentString DB</h3><p class="text-gray-400 text-sm mt-1">Complete UA string database.</p></div><a data-tool data-url="http://useragentstring.com/pages/useragentstring.php" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://useragentstring.com/pages/useragentstring.php" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Browser.ru</h3><p class="text-gray-400 text-sm mt-1">Russian browser fingerprint info.</p></div><a data-tool data-url="https://browser.ru/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://browser.ru/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Cover Your Tracks</h3><p class="text-gray-400 text-sm mt-1">EFF fingerprinting test.</p></div><a data-tool data-url="https://coveryourtracks.eff.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://coveryourtracks.eff.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">DeviceInfo.me</h3><p class="text-gray-400 text-sm mt-1">Hardware & browser data leak test.</p></div><a data-tool data-url="https://deviceinfo.me/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://deviceinfo.me/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IPLeak.net</h3><p class="text-gray-400 text-sm mt-1">VPN & WebRTC leak test.</p></div><a data-tool data-url="https://ipleak.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ipleak.net/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Whoer.net</h3><p class="text-gray-400 text-sm mt-1">IP, DNS, proxy & fingerprint check.</p></div><a data-tool data-url="https://whoer.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://whoer.net/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ClientJS Demo</h3><p class="text-gray-400 text-sm mt-1">Browser fingerprinting via ClientJS.</p></div><a data-tool data-url="https://clientjs.org/demo.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://clientjs.org/demo.html" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Panopticlick</h3><p class="text-gray-400 text-sm mt-1">EFF’s original fingerprinting test.</p></div><a data-tool data-url="https://panopticlick.eff.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://panopticlick.eff.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IP Location</h3><p class="text-gray-400 text-sm mt-1">IP geolocation & leak test.</p></div><a data-tool data-url="https://iplocation.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://iplocation.net/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BrowserAudit</h3><p class="text-gray-400 text-sm mt-1">Tests browser security features.</p></div><a data-tool data-url="https://browseraudit.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://browseraudit.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SecurityHeaders</h3><p class="text-gray-400 text-sm mt-1">HTTP security headers test.</p></div><a data-tool data-url="https://securityheaders.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://securityheaders.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">How’s My SSL?</h3><p class="text-gray-400 text-sm mt-1">TLS/SSL configuration test.</p></div><a data-tool data-url="https://howsmyssl.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://howsmyssl.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extra suggested tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">TLS Observatory</h3><p class="text-gray-400 text-sm mt-1">Mozilla’s TLS/SSL security scanner.</p></div><a data-tool data-url="https://observatory.mozilla.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://observatory.mozilla.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SSL Labs Test</h3><p class="text-gray-400 text-sm mt-1">Qualys SSL server test & cipher analysis.</p></div><a data-tool data-url="https://www.ssllabs.com/ssltest/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Compare fingerprints across multiple tools for consistency.</li>
+      <li>Check for WebRTC, Canvas, AudioContext leaks separately.</li>
+      <li>Use VPN/Tor for OPSEC while testing fingerprinting exposure.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnBrowser" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
