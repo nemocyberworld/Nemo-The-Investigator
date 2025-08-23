@@ -1,0 +1,223 @@
+<section class="space-y-6" id="code-search-engines">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Code Search – Search Engines</h2>
+      <p class="text-gray-300">
+        Powerful search engines for discovering code, open-source projects, libraries, and snippets across repositories.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="codeSearchQuery" type="text" placeholder="Enter query, e.g. function name, library, API key"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCodeSearch').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCodeSearch"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#codeSearchQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('codeSearchQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use keywords like functions, classes, or library names</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- GitHub -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">GitHub Code Search</h3><p class="text-gray-400 text-sm mt-1">Search millions of public repos.</p></div>
+        <a data-tool data-url="https://github.com/search?q={q}&type=code"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://github.com/search" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Sourcegraph -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Sourcegraph</h3><p class="text-gray-400 text-sm mt-1">Universal code search across repos.</p></div>
+        <a data-tool data-url="https://sourcegraph.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://sourcegraph.com/search" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Searchcode -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Searchcode</h3><p class="text-gray-400 text-sm mt-1">Indexed search across 40M projects.</p></div>
+        <a data-tool data-url="https://searchcode.com/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://searchcode.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Grep.app -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Grep.app</h3><p class="text-gray-400 text-sm mt-1">Fast regex-based code search.</p></div>
+        <a data-tool data-url="https://grep.app/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://grep.app/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- NerdyData -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">NerdyData</h3><p class="text-gray-400 text-sm mt-1">Find tech stacks in source code.</p></div>
+        <a data-tool data-url="https://www.nerdydata.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.nerdydata.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- PublicWWW -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">PublicWWW</h3><p class="text-gray-400 text-sm mt-1">Search HTML source code at scale.</p></div>
+        <a data-tool data-url="https://publicwww.com/websites/{q}/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://publicwww.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Awesome Open Source -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Awesome Open Source</h3><p class="text-gray-400 text-sm mt-1">Discover projects by topics.</p></div>
+        <a data-tool data-url="https://awesomeopensource.com/project/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://awesomeopensource.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Webfinery -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Webfinery Code Search</h3><p class="text-gray-400 text-sm mt-1">Search APIs, libraries, and functions.</p></div>
+        <a data-tool data-url="https://webfinery.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://webfinery.com/search" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- RedHunt IDE Search -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">RedHunt IDE Search</h3><p class="text-gray-400 text-sm mt-1">Search online IDEs and snippets.</p></div>
+        <a data-tool data-url="https://redhuntlabs.com/online-ide-search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://redhuntlabs.com/online-ide-search" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Sourcebot -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Sourcebot</h3><p class="text-gray-400 text-sm mt-1">AI-powered code and repo search.</p></div>
+        <a data-tool data-url="https://www.sourcebot.dev/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.sourcebot.dev/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- CodeFinder -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">CodeFinder</h3><p class="text-gray-400 text-sm mt-1">Search snippets across multiple repos.</p></div>
+        <a data-tool data-url="https://codefinder.dev/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://codefinder.dev/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- AnalyzeID -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">AnalyzeID</h3><p class="text-gray-400 text-sm mt-1">Analyze and search developer identities in code.</p></div>
+        <a data-tool data-url="https://analyzeid.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://analyzeid.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Krugle -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Krugle</h3><p class="text-gray-400 text-sm mt-1">Enterprise-grade source code search engine.</p></div>
+        <a data-tool data-url="http://www.krugle.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://www.krugle.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Open Hub -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">BlackDuck Open Hub</h3><p class="text-gray-400 text-sm mt-1">Search OSS projects, code, and contributors.</p></div>
+        <a data-tool data-url="https://www.openhub.net/p?ref=homepage&q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.openhub.net/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Codase -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Codase</h3><p class="text-gray-400 text-sm mt-1">Semantic code search engine for functions and APIs.</p></div>
+        <a data-tool data-url="http://www.codase.com/search?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://www.codase.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use function names, libraries, or keywords to discover code across repos.</li>
+      <li>Sourcegraph and GitHub Search are best for broad queries.</li>
+      <li>PublicWWW and NerdyData excel at web-facing source & stack detection.</li>
+      <li>Grep.app is useful for regex-based search across large codebases.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
