@@ -1,0 +1,1736 @@
+<section class="space-y-6" id="browserext-image-media">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Extensions — Image & Media</h2>
+      <p class="text-gray-300">
+        Handy add-ons for reverse image search, EXIF/metadata, screenshots, video helpers, and OSINT workflows.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="mediaQuery" type="text" placeholder="Enter image/video/page URL or keyword"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllImageMedia').click();}">
+      <div class="flex gap-2">
+        <button id="openAllImageMedia"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=a.getAttribute('data-url')||a.getAttribute('href');
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('mediaQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use image/video URLs for best results</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- === YOUR PROVIDED LINKS (all included, unmodified) === -->
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Email Extractor</h3><p class="text-gray-400 text-sm mt-1">Scrape emails on pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/email-extractor/naidmjmjlgpkbebchjabfjgcgjkgojbi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Mitaka</h3><p class="text-gray-400 text-sm mt-1">IOC finder in your browser.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/mitaka/bfjbejmeoibbdpfdbmbacmefcbannnbg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Hunchly 2.0</h3><p class="text-gray-400 text-sm mt-1">Web capture for investigations.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/hunchly-20/amfnegileeghgikpggcebehdepknalbf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Selection Search</h3><p class="text-gray-400 text-sm mt-1">Search highlighted text.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/selection-search/gipnlpdeieaidmmeaichnddnmjmcakoe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Email Tracker</h3><p class="text-gray-400 text-sm mt-1">Open & click tracking.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/email-tracker/bnompdfnhdbgdaoanapncknhmckenfog" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">GeoTrack Email Tracking</h3><p class="text-gray-400 text-sm mt-1">Email opens with geo.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/geotrack-email-tracking-w/ciajnfanflofkddjdanppgnlpkkdclln" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">EXIF Viewer Pro</h3><p class="text-gray-400 text-sm mt-1">View image metadata.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/exif-viewer-pro/mmbhfeiddhndihdjeganjggkmjapkffm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Fake News Debunker</h3><p class="text-gray-400 text-sm mt-1">Investigative add-on by InVID/WeVerify.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/fake-news-debunker-by-inv/mhccpoafgdgbhnjfhkcmgknndkeenfhe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">TinEye Reverse Image</h3><p class="text-gray-400 text-sm mt-1">Reverse image search.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/tineye-reverse-image-sear/haebnnbpedcbhciplfhjjkbafijpncjl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Search by Image</h3><p class="text-gray-400 text-sm mt-1">Meta reverse image search.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Fetcher</h3><p class="text-gray-400 text-sm mt-1">Lead/email enrichment.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/fetcher/hcjoaaeflhldlbmadokknllgaagbonla" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Take Webpage Screenshots</h3><p class="text-gray-400 text-sm mt-1">Full-page capture.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Wayback Machine</h3><p class="text-gray-400 text-sm mt-1">Find archived pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Web Cache Viewer</h3><p class="text-gray-400 text-sm mt-1">Quick cached copies.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/web-cache-viewer/pbkloffickinnlnmefmjmjbacohecpbd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Blockchair</h3><p class="text-gray-400 text-sm mt-1">Blockchain explorer helper.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/blockchair/fhhkkooikehnkaodebbfnkinedlllcfk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Instant Data Scraper</h3><p class="text-gray-400 text-sm mt-1">Auto-detect tables/lists.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/instant-data-scraper/ofaokhiedipichpaobibbnahnkdoiiah" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Data Scraper</h3><p class="text-gray-400 text-sm mt-1">Point-and-click scraping.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/data-scraper-easy-web-scr/nndknepjnldbdbepjfgmncbggmopgden" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Hunter — Email Finder</h3><p class="text-gray-400 text-sm mt-1">Find emails by domain.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/hunter-email-finder-exten/hgmhmanijnjhaffoampdlllchpolkdnj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Osiris Reputation (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Reputation lookups.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/osiris-osint-reputation" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Sputnik</h3><p class="text-gray-400 text-sm mt-1">OSINT helper.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/sputnik/manapjdamopgbpimgojkccikaabhmocd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- === IMAGE & MEDIA EXTENSIONS (extra to extend) === -->
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">RevEye (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Multi-engine reverse image.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/reveye-reverse-image-sear/keaaclcjhehbbapnphnmpiklalfhelgf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Image Search Options (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Right-click search menu.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/image-search-options" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Imagus</h3><p class="text-gray-400 text-sm mt-1">Hover to zoom images.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/imagus/immpkjjlgappgfkkfieppnmlhakdmaab" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Exify</h3><p class="text-gray-400 text-sm mt-1">Quick EXIF in a popup.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/exify/llhmhhnpmiikplpnkmbgbgmlenleecle" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">PhotosInt</h3><p class="text-gray-400 text-sm mt-1">OSINT image helper.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/photosint/gonhdjmkgfkokhkflfhkbiagbmoolhcd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Perceptual Image Analysis</h3><p class="text-gray-400 text-sm mt-1">Block matching, errors, etc.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/perceptual-image-analysis/gidmeabdffonnejjlkbglmppmfniakdf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Screenshot YouTube</h3><p class="text-gray-400 text-sm mt-1">Grab exact video frames.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/screenshot-youtube/gjoijpfmdhbjkkgnmahganhoinjjpohk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Frame by Frame</h3><p class="text-gray-400 text-sm mt-1">Step through video frames.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/frame-by-frame/cclnaabdfgnehogonpeddbgejclcjneh" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Video DownloadHelper</h3><p class="text-gray-400 text-sm mt-1">Fetch media streams.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/video-downloadhelper/lmjnegcaeklhafolokijcfjliaokphfk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Bulk Media Downloader</h3><p class="text-gray-400 text-sm mt-1">Batch save page media.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/bulk-media-downloader/ehfdcgbfcboceiclmjaofdannmjdeaoi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">IP Address & Domain Info</h3><p class="text-gray-400 text-sm mt-1">Lookup IPs and domain details.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/ip-address-and-domain-inf/lhgkegeccnckoiliokondpaaalbhafoa" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Shodan</h3><p class="text-gray-400 text-sm mt-1">Search for devices on the internet.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/shodan/jjalcfnidlmpjhdfepjhjbhnhkbgleap" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Pulsedive Threat Intel</h3><p class="text-gray-400 text-sm mt-1">Threat intelligence lookup tool.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/pulsedive-threat-intellig/gdbemlfgncdmmljmkkcemfedbbfgghcp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">CrowdScrape</h3><p class="text-gray-400 text-sm mt-1">Crowdsourced web scraping tool.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/crowdscrape/jjplaeklnlddpkbbdbnogmppffokemej" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">FOFA Pro View</h3><p class="text-gray-400 text-sm mt-1">Search FOFA intelligence data.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/fofa-pro-view" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">NoScript</h3><p class="text-gray-400 text-sm mt-1">Block JavaScript for security.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/noscript/doojmbjmlfjjnbmnoijecmcbfeoakpjm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Vulners Web Scanner</h3><p class="text-gray-400 text-sm mt-1">Check sites for vulnerabilities.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/vulners-web-scanner/dgdelbjijbkahooafjfnonijppnffhmd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">User-Agent Switcher</h3><p class="text-gray-400 text-sm mt-1">Change browser user-agent.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/user-agent-switcher-and-m/bhchdcejhohfmigjafbampogmaanbfkg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Extensity</h3><p class="text-gray-400 text-sm mt-1">Quick enable/disable extensions.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/extensity/jjmflmamggggndanpgfnpelongoepncg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Extension Manager</h3><p class="text-gray-400 text-sm mt-1">Manage installed extensions.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/extension-manager/gjldcdngmdknpinoemndlidpcabkggco" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">BuiltWith Profiler</h3><p class="text-gray-400 text-sm mt-1">Reveal site technologies used.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/builtwith-technology-prof/dapjbgnjinbpoindlpdmhochffioedbn" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Ghostery</h3><p class="text-gray-400 text-sm mt-1">Block trackers & ads.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/ghostery-%E2%80%93-privacy-ad-blo/mlomiejdfkolichcflejclcbmpeaniij" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">SimpleScraper</h3><p class="text-gray-400 text-sm mt-1">Fast, simple web scraping.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/simplescraper-%E2%80%94-a-fast-an/lnddbhdmiciimpkbilgpklcglkdegdkg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Unpaywall</h3><p class="text-gray-400 text-sm mt-1">Find free research papers.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/unpaywall/iplffkdpngmdjhlpjmppncnlhomiipha" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Scan WP</h3><p class="text-gray-400 text-sm mt-1">Detect WordPress themes & plugins.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/scan-wp-wordpress-theme-a/jgepgcdhakjacecafilmhdnifekocmcl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Canvas Fingerprint Defender</h3><p class="text-gray-400 text-sm mt-1">Protect against canvas fingerprinting.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/canvas-fingerprint-defend/lanfdkkpgfjfdikkncbnojekcppdebfp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Location Guard</h3><p class="text-gray-400 text-sm mt-1">Mask geolocation info.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Decentraleyes</h3><p class="text-gray-400 text-sm mt-1">Protect privacy by emulating CDN resources.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">LOC Extension</h3><p class="text-gray-400 text-sm mt-1">Inspect linked open data.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/loc/eojdckfcadamkapabechhbnkleligand" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Return YouTube Comment Username</h3><p class="text-gray-400 text-sm mt-1">Restores YouTube commenter usernames.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/return-youtube-comment-us/kamibelompadnaekbellinmgbphoidmj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">TikNote Video Downloader</h3><p class="text-gray-400 text-sm mt-1">Download TikTok videos easily.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/tiknote-video-downloader/jilgamolkonoalagcpgjjijaclacillb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Video Downloader Plus</h3><p class="text-gray-400 text-sm mt-1">Download embedded videos.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/video-downloader-plus/hkdmdpdhfaamhgaojpelccmeehpfljgf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Uniform Timezone Extension</h3><p class="text-gray-400 text-sm mt-1">Standardize timezone display.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/uniform-timezone-extensio/fhpdgikedeljapdckiegnjiendkhphlg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">OpenLink Structured Data</h3><p class="text-gray-400 text-sm mt-1">Explore structured linked data.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/openlink-structured-data/egdaiaihbdoiibopledjahjaihbmjhdj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Link Gopher</h3><p class="text-gray-400 text-sm mt-1">Extract all links from a page.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Save Page WE</h3><p class="text-gray-400 text-sm mt-1">Save web pages for offline use.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/save-page-we/dhhpefjklgkmgeafimnjhojgjamoafof" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Web Archives</h3><p class="text-gray-400 text-sm mt-1">Access archived versions of pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/web-archives/hkligngkgcpcolhcnkgccglchdafcnao" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">The Search Sidebar (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Sidebar for advanced searches.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/the-search-sidebar-by-webmynd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">SearchEngineTags (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Customize search engines.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/SearchEngineTags" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">AutoPager (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Automatically load next pages.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/autopager" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Fireshot (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Capture full-page screenshots.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/fireshot" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Firebug (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Classic web developer tool.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/firebug" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Scrapbook (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Save, organize, and search web pages.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/scrapbook" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">List Open URLs (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Extract and open all links in tabs.</p></div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/list-open-urls" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Archive Page</h3><p class="text-gray-400 text-sm mt-1">Archive & view cached pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/archive-page/gcaimhkfmliahedmeklebabdgagipbia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+        <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">LastPass Free Password Manager</h3><p class="text-gray-400 text-sm mt-1">Password manager & vault.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Link Redirect Trace</h3><p class="text-gray-400 text-sm mt-1">Check redirects & headers.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/link-redirect-trace/nnpljppamoaalgkieeciijbcccohlpoh" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">LunaPic Right Click Edit</h3><p class="text-gray-400 text-sm mt-1">Edit images online via LunaPic.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/lunapic-right-click-edit/oglcbfocdkemachifmnimbblndgmlhbi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Map Switcher</h3><p class="text-gray-400 text-sm mt-1">Switch between map services.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/map-switcher/fanpjcbgdinjeknjikpfnldfpnnpkelb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">MultiFind</h3><p class="text-gray-400 text-sm mt-1">Search multiple terms at once.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/multifind/amegoafkcikfmdbfeldmchinkjfdgoog" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">OpenSwitchMaps</h3><p class="text-gray-400 text-sm mt-1">Switch between OpenStreetMap styles.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/openswitchmaps/cfkddjlocfecchnemnnmmpdjcohgmkij" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Overload Search Advanced</h3><p class="text-gray-400 text-sm mt-1">Enhanced search operator tool.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/overload-search-advanced/knihkdaajdhpjgeiadaefmjmpbnlojbg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">GoogleSwitch</h3><p class="text-gray-400 text-sm mt-1">Switch between Google services.</p></div>
+        <a data-tool data-url="https://chromewebstore.google.com/detail/googleswitch/gleogimfdeaapagejhfmlgkgenfiaoha" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Page Marker</h3><p class="text-gray-400 text-sm mt-1">Draw & annotate web pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/page-marker-draw-on-web/jfiihjeimjpkpoaekpdpllpaeichkiod" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">PDF Mage</h3><p class="text-gray-400 text-sm mt-1">Save webpages as PDF.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/pdf-mage/gknphemhpcknkhegndlihchfonpdcben" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Print Friendly & PDF</h3><p class="text-gray-400 text-sm mt-1">Clean & save pages as PDF.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/print-friendly-pdf/ohlencieiipommannpdfcmfdpjjmeolj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">RadarAtlas</h3><p class="text-gray-400 text-sm mt-1">Map & radar visualization.</p></div>
+        <a data-tool data-url="https://chromewebstore.google.com/detail/radaratlas/kgionpkdifedafldjflcbeojkencnaja" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Sanitize It</h3><p class="text-gray-400 text-sm mt-1">Clean and protect web data.</p></div>
+        <a data-tool data-url="https://chromewebstore.google.com/detail/sanitize-it/cdihhogfljcidhcpjdhhelbmbhbeafgd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">ScrollMaps</h3><p class="text-gray-400 text-sm mt-1">Heatmap scroll tracking.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/scrollmaps/jifommjndpnefcfplgnbhabocomgdjjg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Simple Translate</h3><p class="text-gray-400 text-sm mt-1">Quickly translate text.</p></div>
+        <a data-tool data-url="https://chromewebstore.google.com/detail/simple-translate/ibplnjkanclpjokhdolnendpplpjiace" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Tampermonkey</h3><p class="text-gray-400 text-sm mt-1">Userscript manager.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Video DownloadHelper</h3><p class="text-gray-400 text-sm mt-1">Advanced video downloader.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/video-downloadhelper/lmjnegcaeklhafolokijcfjliaokphfk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Vortimo OSINT Tool</h3><p class="text-gray-400 text-sm mt-1">Open Source Intelligence browser helper.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/vortimo-osint-tool/mnakbpdnkedaegeiaoakkjafhoidklnf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Web Scraper</h3><p class="text-gray-400 text-sm mt-1">Free structured web scraper.</p></div>
+        <a data-tool data-url="https://chromewebstore.google.com/detail/web-scraper-free-web-scra/jnhgnonknehpejjnehehllkliplmbmhn" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">DeepL Translate (Edge)</h3><p class="text-gray-400 text-sm mt-1">Translate pages and text in Microsoft Edge.</p></div>
+    <a data-tool data-url="https://microsoftedge.microsoft.com/addons/detail/deepl-translate-reading-/fancfknaplihpclbhbpclnmmjcjanbaf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ClearURLs (Edge)</h3><p class="text-gray-400 text-sm mt-1">Automatically removes tracking elements from URLs.</p></div>
+    <a data-tool data-url="https://microsoftedge.microsoft.com/addons/detail/clearurls/mdkdmaickkfdekbjdoojfalpbkgaddei" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Sanitize It (Edge)</h3><p class="text-gray-400 text-sm mt-1">Clean sensitive data before sharing.</p></div>
+    <a data-tool data-url="https://microsoftedge.microsoft.com/addons/detail/sanitize-it/agaghmjjnhddaoneohbdgmemdmekanph" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Bookmarker by Start.me (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Save and organize bookmarks.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/bookmarker-by-start-me" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Bulk Media Downloader (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Batch download media files from web pages.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/bulk-media-downloader" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ChatGPT for Google (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Show ChatGPT responses alongside Google search results.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/chatgpt-for-google" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ClearURLs (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Remove tracking parameters from links.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/clearurls" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Cookie Quick Manager (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Manage cookies inside Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/cookie-quick-manager" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Copy Selected Links (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Copy multiple selected links from a page.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/copy-selected-links" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Don't Track Me Google (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Bypass Google’s redirect links.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/dont-track-me-google1" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">DownThemAll! (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Powerful download manager for Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-GB/firefox/addon/downthemall" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Exif Viewer (Firefox)</h3><p class="text-gray-400 text-sm mt-1">View EXIF metadata in images.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/exif-viewer" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Multi-Account Containers (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Separate your online identities into containers.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Firefox Translations</h3><p class="text-gray-400 text-sm mt-1">Translate web pages locally in Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/firefox-translations" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Fireshot (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Capture full webpage screenshots.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/fireshot" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">GHunt Companion (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Companion for GHunt OSINT tool.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/ghunt-companion" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Exify</h3><p class="text-gray-400 text-sm mt-1">Inspect image metadata in Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/exify/llhmhhnpmiikplpnkmbgbgmlenleecle" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">RevEye Reverse Image Search (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Search for images across multiple engines.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/reveye-reverse-image-sear/keaaclcjhehbbapnphnmpiklalfhelgf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">RevEye (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Reverse image search for Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/reveye-ris" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 20 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Image Search Options (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Add right-click reverse image search.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/image-search-options" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 21 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Screenshot YouTube</h3><p class="text-gray-400 text-sm mt-1">Take video screenshots from YouTube.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/screenshot-youtube/gjoijpfmdhbjkkgnmahganhoinjjpohk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 22 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">PhotosInt</h3><p class="text-gray-400 text-sm mt-1">OSINT tool for analyzing photos.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/photosint/gonhdjmkgfkokhkflfhkbiagbmoolhcd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 23 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Perceptual Image Analysis</h3><p class="text-gray-400 text-sm mt-1">Analyze image perceptual features.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/perceptual-image-analysis/gidmeabdffonnejjlkbglmppmfniakdf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 24 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Highlight This (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Highlight words automatically on pages.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/highlightthis" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 25 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Imagus (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Hover to zoom images.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/imagus" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 26 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Link Gopher (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Extract all links from a webpage.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/link-gopher" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 27 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Link Redirect Trace (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Check redirects and headers for any link.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/link-redirect-trace-addon" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 28 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">NoScript (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Block scripts for better privacy and security.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/noscript" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 29 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">OneTab (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Convert all tabs into a list to save memory.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/onetab" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 30 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">OpenSwitchMaps (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Switch quickly between map providers.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/openswitchmaps" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Privacy Badger (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Block trackers automatically.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Resurrect Pages (Firefox)</h3><p class="text-gray-400 text-sm mt-1">View cached or archived versions of dead pages.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/resurrect-pages" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Save Page WE (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Save a complete webpage as a single file.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/save-page-we" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Search by Image (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Right-click to search images with engines.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/search_by_image" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Google Lens Search (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Search images with Google Lens.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/search-on-google-lens" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">SingleFile (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Save a webpage into a single HTML file.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/single-file" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Tamper Data (Firefox)</h3><p class="text-gray-400 text-sm mt-1">HTTP/HTTPS request monitor and modifier.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/tamper-data-for-ff-quantum" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Tampermonkey (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Userscript manager for customizing web pages.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">HLS Stream Detector (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Detect HLS streams in webpages.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/hls-stream-detector" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">TransOver (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Translate text by hovering.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/transover-ff" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">uBlock Origin (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Efficient ad blocker.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Unpaywall (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Find free versions of research papers.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/unpaywall" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">User-Agent Switcher (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Change your browser’s user-agent.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Video DownloadHelper (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Download videos from websites.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">View Page Archive (Firefox)</h3><p class="text-gray-400 text-sm mt-1">View cached and archived page versions.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/view-page-archive" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Windscribe (Firefox)</h3><p class="text-gray-400 text-sm mt-1">VPN and privacy extension.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/windscribe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Jasper AI (Chrome)</h3><p class="text-gray-400 text-sm mt-1">AI content generator for Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/jasper-%E2%80%94-your-ai-content/bpiohchncadidhohcajcnoelomephkdd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ChatGPT Extension (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Use ChatGPT inside Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/chatgpt-chrome-extension/cdjifpfganmhoojfclednjdnnpooaojb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Bearly AI</h3><p class="text-gray-400 text-sm mt-1">AI reading and summarization assistant.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/bearlyai/lkennebljmnnpimcgdjlocbncpamgipp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 20 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Liner ChatGPT Copilot</h3><p class="text-gray-400 text-sm mt-1">Highlight & AI assistant for browsing.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/liner-chatgpt-ai-copilot/bmhcbmnbenmcecpmpepghooflbehcack" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 21 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Perplexity AI</h3><p class="text-gray-400 text-sm mt-1">AI-powered search and answering engine.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/perplexity-ai/ifhigdhiifbnjanhacoedbadhmlkjgae" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 22 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ChatGPT for Google (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Integrates ChatGPT into Google search.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 23 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">LinkedIn Overlay Remover (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Remove sign-in overlays on LinkedIn.</p></div>
+    <a data-tool data-url="http://addons.mozilla.org/nl/firefox/addon/linkedin-overlay-remover" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 24 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ThreatPinch Lookup</h3><p class="text-gray-400 text-sm mt-1">Enrich IPs, domains, and hashes with context.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/threatpinch-lookup/ljdgplocfnmnofbhpkjclbefmjoikgke" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 25 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Browserling Cross-Browser</h3><p class="text-gray-400 text-sm mt-1">Cross-browser testing inside Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/browserling-cross-browser/chfdigebbepdmeelcfiefkklfldmmgld" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 26 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">RocketReach (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Find emails and social profiles of professionals.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/rocketreach-chrome-extens/oiecklaabeielolbliiddlbokpfnmhba" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 27 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Privacy Badger (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Blocks spying ads and invisible trackers.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 28 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">DumpItBlue+</h3><p class="text-gray-400 text-sm mt-1">Extract hidden Facebook data.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/dumpitblue%2B/igmgknoioooacbcpcfgjigbaajpelbfe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 29 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Google Translate (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Translate selected text quickly.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/google-translate-for-firefox" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 30 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">IP & DNS Security Tools</h3><p class="text-gray-400 text-sm mt-1">Audit DNS and IP security inside Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/ip-dns-security-tools-hac/phjkepckmcnjohilmbjlcoblenhgpjmo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">OSINT Browser</h3><p class="text-gray-400 text-sm mt-1">Dedicated OSINT-focused browser.</p></div>
+    <a data-tool data-url="http://www.osintbrowser.com" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">PassiveRecon (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Passive reconnaissance extension.</p></div>
+    <a data-tool data-url="http://addons.mozilla.org/en-US/firefox/addon/passiverecon" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Plain Text Offenders (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Detect plaintext password exposures.</p></div>
+    <a data-tool data-url="http://addons.mozilla.org/en-US/firefox/addon/plain-text-offenders" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Plain Text Offenders Alert (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Alert system for plaintext offenders.</p></div>
+    <a data-tool data-url="http://chrome.google.com/webstore/detail/plain-text-offenders-aler/ggndaknbenjhnkddgjnjjcmomgaidhmd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Shodan (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Search for devices on Shodan.io.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/shodan_io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">StartMe (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Bookmark manager for OSINT workflows.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/startme" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Twitter Gadget</h3><p class="text-gray-400 text-sm mt-1">Enhanced Twitter browsing experience.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/twittergadget-chrome-exte/nabmmeeodpeneohkhpjpmaiidagmicbo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Zotero Connector</h3><p class="text-gray-400 text-sm mt-1">Save references to Zotero library.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ChatGPT Assistant (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Smart sidebar powered by ChatGPT.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/chatgpt-assistant-smart-s/opngpmnmajecahkfibkbdkfckibnpajd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Copyfish OCR</h3><p class="text-gray-400 text-sm mt-1">Extract text from images and PDFs.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/copyfish-%F0%9F%90%9F-free-ocr-soft/eenjdnjldapjajjofmldgmkjaienebbj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Project Naptha</h3><p class="text-gray-400 text-sm mt-1">Highlight and copy text from images.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/project-naptha/molncoemjfmpgdkbdlbjmhlcgniigdnf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Simple Search</h3><p class="text-gray-400 text-sm mt-1">Minimalist search UI extension.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/simple-search/bbpcngjcblhpkhadnbhgdjhmidojegha" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">You.com Search & Chat</h3><p class="text-gray-400 text-sm mt-1">AI search and chat assistant.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/youcom-search-chat-and-cr/fhplnehgjpmohhldfnjhibanpbiedofi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">YouTube Summary (ChatGPT)</h3><p class="text-gray-400 text-sm mt-1">Generate summaries of YouTube videos.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/youtube-summary-with-chat/nmmicjeknamkfloonkhhcjmomieiodli" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Bellingcat Filename Finder</h3><p class="text-gray-400 text-sm mt-1">Discover files by naming patterns.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/bellingcat-filename-finde/fdhodjpkigpaachejkipcghppfnnfdmp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Street View Tracker</h3><p class="text-gray-400 text-sm mt-1">Track updates on Google Street View.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/street-view-tracker/nlngoiabgfhbklfnidbhhcaakkojcocf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">YouTube Word Searcher</h3><p class="text-gray-400 text-sm mt-1">Search spoken words in YouTube videos.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/youtube-word-searcher/jichoejagacnbcinlgncghhdegdlhbcj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Auto Scroll Search</h3><p class="text-gray-400 text-sm mt-1">Auto-scroll and search long pages.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/auto-scroll-search-scroll/ieceeinfkigfaeoomfimmecebngempef" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">CopyTables</h3><p class="text-gray-400 text-sm mt-1">Easily copy tables from web pages.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/copytables/ekdpkppgmlalfkphpibadldikjimijon" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 20 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Hiya Deepfake Detector</h3><p class="text-gray-400 text-sm mt-1">Detect AI-generated deepfake voices.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/hiya-deepfake-voice-detec/akmieeldmgcllmokbpaibfelofjiilpc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 21 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Chaff</h3><p class="text-gray-400 text-sm mt-1">Add noise to web traffic for privacy.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/chaff/jgjhamliocfhehbocekgcddfjpgdjnje" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 22 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Netcraft Extension</h3><p class="text-gray-400 text-sm mt-1">Anti-phishing protection & site safety.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/netcraft-extension/bmejphbfclcpmpohkggcjeibfilpamia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 23 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Terms of Service; Didn’t Read</h3><p class="text-gray-400 text-sm mt-1">Summarizes website TOS for clarity.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/terms-of-service-didn%E2%80%99t-r/hjdoplcnndgiblooccencgcggcoihigg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 24 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Image Downloader</h3><p class="text-gray-400 text-sm mt-1">Save multiple images from a page.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/image-downloader-save-pho/lbohagbplppjcpllnhdichjldhfgkicb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 25 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Email Extract</h3><p class="text-gray-400 text-sm mt-1">Extract emails from web pages.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/email-extract/ejecpjcajdpbjbmlcojcohgenjngflac" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 26 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Email Extractor (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Scrape visible emails quickly.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/email-extractor/jdianbbpnakhcmfkcckaboohfgnngfcc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 27 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Picuki Switch</h3><p class="text-gray-400 text-sm mt-1">Alternative Instagram viewer.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/picuki-switch/elmbjjhgiifenlhffpjcjfkjmilbbfki" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 28 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Reddit Enhancement Suite</h3><p class="text-gray-400 text-sm mt-1">Enhance Reddit browsing features.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/reddit-enhancement-suite/kbmfpngjjgdllneeigpgjifpgocmfgmb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 29 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Sort for TikTok</h3><p class="text-gray-400 text-sm mt-1">Organize TikTok content sorting.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/sort-for-tiktok/piiiffonpmeolocfghlpeolmdabhiemi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+<!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Story Saver</h3><p class="text-gray-400 text-sm mt-1">Download Instagram and Facebook stories.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/story-saver/mafcolokinicfdmlidhaebadidhdehpk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">TG Search Engine</h3><p class="text-gray-400 text-sm mt-1">Search Telegram groups and channels.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/tg-search-engine-tg-group/ilpgiemienkecbgdhdbgdjkafodgfojl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">TikTok Downloader</h3><p class="text-gray-400 text-sm mt-1">Save TikTok videos easily.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/tiktok-downloader/ghhcamahihkbgfioeimocdmmiiejjnfe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">TT Downloader</h3><p class="text-gray-400 text-sm mt-1">Alternative TikTok video downloader.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/tt-downloader/blbckhiepgpniilpmlionnkjoeehhgao" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Old Twitter Layout 2023</h3><p class="text-gray-400 text-sm mt-1">Restore the old Twitter interface.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/old-twitter-layout-2023/jgejdcdoeeabklepnkdbglgccjpdgpmf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">VidIQ Vision for YouTube</h3><p class="text-gray-400 text-sm mt-1">YouTube SEO and video insights.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/vidiq-vision-for-youtube/pachckjkecffpdphbpmfolblodfkgbhl" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Country Flags & IP Whois</h3><p class="text-gray-400 text-sm mt-1">Show IP and domain info with flags.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/country-flags-ip-whois/bffjckjhidlcnenenacdahhpbacpgapo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Files Explorer</h3><p class="text-gray-400 text-sm mt-1">Manage and preview files in browser.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/files-explorer/cmibdnmeihbjkdgnohgjeelkofcnfhid" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Google Similar Pages</h3><p class="text-gray-400 text-sm mt-1">Find websites similar to the current one.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/google-similar-pages/pjnfggphgdjblhfjaphkjhfpiiekbbej" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">HTML Inspector</h3><p class="text-gray-400 text-sm mt-1">Inspect and debug HTML structures.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/html-inspector/fpaahdcndgfpbbddmgckaifkfljkfkhd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Linkclump</h3><p class="text-gray-400 text-sm mt-1">Open multiple links at once by dragging.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/linkclump/lfpjkncokllnfokkgpkobnkbkmelfefj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Page Monitor</h3><p class="text-gray-400 text-sm mt-1">Track website changes automatically.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/page-monitor/ogeebjpdeabhncjpfhgdibjajcajepgg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">SingleFile</h3><p class="text-gray-400 text-sm mt-1">Save web pages as a single HTML file.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/singlefile/mpiodijhokgodhhofbcjdecpffjipkle" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Tag Assistant Legacy</h3><p class="text-gray-400 text-sm mt-1">Debug and validate Google tags.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/tag-assistant-legacy-by-g/kejbdjndbnbjgmefkgdddjlbokphdefk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Teeto</h3><p class="text-gray-400 text-sm mt-1">AI-powered survey and polling extension.</p></div>
+    <a data-tool data-url="https://chromewebstore.google.com/detail/teeto/jkonpljnfkapenfcfdhmilkbmnbalnml" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">CSRF Spotter</h3><p class="text-gray-400 text-sm mt-1">Test sites for CSRF vulnerabilities.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/csrf-spotter" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Download Star</h3><p class="text-gray-400 text-sm mt-1">Manage and accelerate downloads.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/download-star" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Google Dork Builder</h3><p class="text-gray-400 text-sm mt-1">Create advanced Google search queries.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/google-dork-builder" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Google Translator for Firefox</h3><p class="text-gray-400 text-sm mt-1">Translate text directly in Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/google-translator-for-firefox" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 1 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Hackbar Quantum</h3><p class="text-gray-400 text-sm mt-1">Penetration testing toolbar for Firefox.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/hackbar-quantum" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Hacktools</h3><p class="text-gray-400 text-sm mt-1">Quick access to web pentesting tools.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/hacktools" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">HTTP Header Live</h3><p class="text-gray-400 text-sm mt-1">View HTTP headers of web requests live.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/http-header-live" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">HTTPS Everywhere</h3><p class="text-gray-400 text-sm mt-1">Force HTTPS connections automatically.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/https-everywhere" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 5 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">KeePassXC Browser</h3><p class="text-gray-400 text-sm mt-1">Password manager integration for KeePassXC.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 6 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Knoxss Community Edition</h3><p class="text-gray-400 text-sm mt-1">XSS vulnerability testing toolkit.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/knoxss-community-edition" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 7 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Mitaka</h3><p class="text-gray-400 text-sm mt-1">Search IPs, domains, hashes across many services.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/mitaka" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 8 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Show IP</h3><p class="text-gray-400 text-sm mt-1">Displays website IP address and geolocation.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/show-ip" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 9 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Wappalyzer</h3><p class="text-gray-400 text-sm mt-1">Identify technologies used on websites.</p></div>
+    <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/wappalyzer" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 10 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Intelligence Search</h3><p class="text-gray-400 text-sm mt-1">Advanced people and OSINT search tool.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/intelligence-search/dipfggodcibdmflidbceoaanadclgomm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 11 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Gotanda</h3><p class="text-gray-400 text-sm mt-1">OSINT and web research companion extension.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/gotanda/jbmdcdfnnpenkgliplbglfpninigbiml" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 12 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Magnifying Glass</h3><p class="text-gray-400 text-sm mt-1">Zoom into page content easily.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/magnifying-glass/elhdjgjjmodgmhkokebhegekjooiaofm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 13 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">VisualPing</h3><p class="text-gray-400 text-sm mt-1">Website change monitoring and alerts.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/visualping/pemhgklkefakciniebenbfclihhmmfcd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 14 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Nimbus Screenshot</h3><p class="text-gray-400 text-sm mt-1">Capture full-page and area screenshots.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/nimbus-screenshot-screen/bpconcjcammlapcogcnnelfmaeghhagj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 15 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Blockchain.info Address Search</h3><p class="text-gray-400 text-sm mt-1">Look up Bitcoin addresses.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/blockchaininfo-address-se/aipmpbhchlkopmpoaipbelfpniojcnkb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 16 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Breadcrumbs Blockchain</h3><p class="text-gray-400 text-sm mt-1">Blockchain investigation tool.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/breadcrumbs-blockchain-in/dlnalaneihafdkdcekejdekiclgdghka" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 17 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">MEGA</h3><p class="text-gray-400 text-sm mt-1">Secure cloud storage and file sharing.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/mega/bigefpfhnfcobdlfbedofhhaibnlghod" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 18 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Osiris OSINT Reputation</h3><p class="text-gray-400 text-sm mt-1">Reputation checks for IPs and domains.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/osiris-osint-reputation-i/jjdjccppehnjdennppcnlnaadcdlffdf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 19 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">ZoomEye Tools</h3><p class="text-gray-400 text-sm mt-1">Search devices and hosts on the internet.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/zoomeye-tools/bdoaeiibkccgkbjbmmmoemghacnkbklj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 20 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">FOFA Pro View</h3><p class="text-gray-400 text-sm mt-1">Search exposed assets with FOFA.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/fofa-pro-view/dobbfkjhgbkmmcooahlnllfopfmhcoln" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 21 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">HTTPS Everywhere (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Force HTTPS connections in Chrome.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 22 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Vytal</h3><p class="text-gray-400 text-sm mt-1">Spoof timezone, geolocation, and locale data.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/vytal/ncbknoohfjmcfneopnfkapmkblaenokb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 23 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">AdNauseam</h3><p class="text-gray-400 text-sm mt-1">Block ads and click them to confuse trackers.</p></div>
+    <a data-tool data-url="https://adnauseam.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 24 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Save to Pocket</h3><p class="text-gray-400 text-sm mt-1">Save web pages to Pocket for later.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/save-to-pocket/niloccemoadcdkdjlinkgdfekeahmflj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 25 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">Fake Profile Detector</h3><p class="text-gray-400 text-sm mt-1">Detect fake social media profiles.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/fake-profile-detector-dee/jbpcgcnnhmjmajjkgdaogpgefbnokpcc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+<!-- 26 -->
+<article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+  <div class="flex items-start justify-between gap-3">
+    <div><h3 class="font-semibold">FOCA Files Finder</h3><p class="text-gray-400 text-sm mt-1">Discover metadata in public documents.</p></div>
+    <a data-tool data-url="https://chrome.google.com/webstore/detail/foca-files-finder/mhobefinhafbleanihidiifaedcceoij" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+  </div>
+</article>
+
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Prefer original media URLs when possible (right-click → “Copy image address”).</li>
+      <li>Use multiple reverse-image engines (TinEye, RevEye, Search by Image) to cross-check.</li>
+      <li>Pull EXIF on originals; most platforms strip metadata on upload.</li>
+      <li>For video: capture reproducible timestamps; use frame-accurate tools for verification.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

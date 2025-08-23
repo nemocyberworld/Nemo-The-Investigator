@@ -1,0 +1,203 @@
+<section class="space-y-6" id="browser-extensions">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Extensions</h2>
+      <p class="text-gray-300">
+        Curated extensions for threat intelligence enrichment, lookups, and pivoting.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="tiNote" type="text" placeholder="Optional note (e.g., IOC, case ID)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllTI').click();}">
+      <div class="flex gap-2">
+        <button id="openAllTI"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#tiNote');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('tiNote').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Note
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Enter → open all (optional)</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Review permissions before installing</span>
+  </div>
+
+  <!-- Sub-category: Threat Intel -->
+  <h3 class="text-xl font-semibold mt-6">Threat Intel</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Shodan -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Shodan</h3>
+          <p class="text-gray-400 text-sm mt-1">Surface scan data & device exposure (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/shodan/jjalcfnidlmpjhdfepjhjbhnhkbgleap"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/shodan/jjalcfnidlmpjhdfepjhjbhnhkbgleap" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- FOFA Pro View -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FOFA Pro View</h3>
+          <p class="text-gray-400 text-sm mt-1">Asset search overlays for FOFA (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/fofa-pro-view/dobbfkjhgbkmmcooahlnllfopfmhcoln"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/fofa-pro-view/dobbfkjhgbkmmcooahlnllfopfmhcoln" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- ZoomEye Tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ZoomEye Tools</h3>
+          <p class="text-gray-400 text-sm mt-1">Quick pivots into ZoomEye datasets (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/zoomeye-tools/bdoaeiibkccgkbjbmmmoemghacnkbklj"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/zoomeye-tools/bdoaeiibkccgkbjbmmmoemghacnkbklj" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Pulsedive Threat Intelligence -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Pulsedive TI</h3>
+          <p class="text-gray-400 text-sm mt-1">IOC enrichment & risk lookup (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/pulsedive-threat-intellig/gdbemlfgncdmmljmkkcemfedbbfgghcp"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/pulsedive-threat-intellig/gdbemlfgncdmmljmkkcemfedbbfgghcp" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- ThreatPinch Lookup -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ThreatPinch Lookup</h3>
+          <p class="text-gray-400 text-sm mt-1">Hover-to-enrich IPs/domains/Hashes (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/threatpinch-lookup/ljdgplocfnmnofbhpkjclbefmjoikgke"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/threatpinch-lookup/ljdgplocfnmnofbhpkjclbefmjoikgke" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- OSIRIS Reputation (Firefox) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">OSIRIS Reputation (Firefox)</h3>
+          <p class="text-gray-400 text-sm mt-1">OSINT reputation checks for IOCs.</p>
+        </div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/osiris-osint-reputation"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://addons.mozilla.org/en-US/firefox/addon/osiris-osint-reputation" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- OSIRIS Reputation (Chrome) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">OSIRIS Reputation (Chrome)</h3>
+          <p class="text-gray-400 text-sm mt-1">Same OSIRIS IOC reputation tool for Chrome.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/osiris-osint-reputation-i/jjdjccppehnjdennppcnlnaadcdlffdf"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/osiris-osint-reputation-i/jjdjccppehnjdennppcnlnaadcdlffdf" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Sputnik -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sputnik</h3>
+          <p class="text-gray-400 text-sm mt-1">Social-network search helpers (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/sputnik/manapjdamopgbpimgojkccikaabhmocd"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/sputnik/manapjdamopgbpimgojkccikaabhmocd" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Intelligence Search -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Intelligence Search</h3>
+          <p class="text-gray-400 text-sm mt-1">Advanced people/graph queries helpers (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/intelligence-search/dipfggodcibdmflidbceoaanadclgomm"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/intelligence-search/dipfggodcibdmflidbceoaanadclgomm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- GHunt Companion -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">GHunt Companion</h3>
+          <p class="text-gray-400 text-sm mt-1">Convenience helper for GHunt workflows (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/ghunt-companion/dpdcofblfbmmnikcbmmiakkclocadjab"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/ghunt-companion/dpdcofblfbmmnikcbmmiakkclocadjab" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Many tools require an account/API key to unlock full results.</li>
+      <li>Use in a sanitized profile; avoid mixing personal browsing with investigations.</li>
+      <li>Respect platform ToS and local laws; enrich only lawful IOCs and datasets.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

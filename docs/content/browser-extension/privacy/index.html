@@ -1,0 +1,172 @@
+<section class="space-y-6" id="browser-extensions">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Extensions</h2>
+      <p class="text-gray-300">
+        Collection of browser extensions for privacy, security, and safer browsing.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="privQuery" type="text" placeholder="Optional note or label (not required)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllPrivacy').click();}">
+      <div class="flex gap-2">
+        <button id="openAllPrivacy"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#privQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=a.getAttribute('data-url')||a.getAttribute('href');
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('privQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Note
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Enter → open all (optional)</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Review permissions before installing</span>
+  </div>
+
+  <!-- Sub-category: Privacy -->
+  <h3 class="text-xl font-semibold mt-6">Privacy</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Ghostery -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Ghostery – Privacy Ad Blocker</h3>
+          <p class="text-gray-400 text-sm mt-1">Tracker & ad blocker with insights (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/ghostery-%E2%80%93-privacy-ad-blo/mlomiejdfkolichcflejclcbmpeaniij" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/ghostery-%E2%80%93-privacy-ad-blo/mlomiejdfkolichcflejclcbmpeaniij" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Privacy Badger -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Privacy Badger</h3>
+          <p class="text-gray-400 text-sm mt-1">Learns to block trackers automatically (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- ClearURLs -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ClearURLs</h3>
+          <p class="text-gray-400 text-sm mt-1">Removes tracking parameters from links (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Decentraleyes -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Decentraleyes</h3>
+          <p class="text-gray-400 text-sm mt-1">Local CDN emulation to reduce tracking (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/decentraleyes/ldpochfccmkkmhdbclfhpagapcfdljkj" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Canvas Fingerprint Defender -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Canvas Fingerprint Defender</h3>
+          <p class="text-gray-400 text-sm mt-1">Spoofs canvas fingerprinting (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/canvas-fingerprint-defend/lanfdkkpgfjfdikkncbnojekcppdebfp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/canvas-fingerprint-defend/lanfdkkpgfjfdikkncbnojekcppdebfp" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Location Guard -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Location Guard</h3>
+          <p class="text-gray-400 text-sm mt-1">Control & spoof geolocation (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/location-guard/cfohepagpmnodfdmjliccbbigdkfcgia" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- HTTPS Everywhere (legacy) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">HTTPS Everywhere</h3>
+          <p class="text-gray-400 text-sm mt-1">Force HTTPS where available (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- NoScript (Firefox) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">NoScript</h3>
+          <p class="text-gray-400 text-sm mt-1">Block scripts/objects by default (Firefox).</p>
+        </div>
+        <a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/noscript" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://addons.mozilla.org/en-US/firefox/addon/noscript" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- uBlock Origin -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">uBlock Origin</h3>
+          <p class="text-gray-400 text-sm mt-1">Efficient, general-purpose blocker (Chrome).</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Usage notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use responsibly and review extension permissions.</li>
+      <li>Some features may overlap—avoid redundant blockers to reduce breakage.</li>
+      <li>HTTPS upgrades may be built into modern browsers; behavior can vary by site.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

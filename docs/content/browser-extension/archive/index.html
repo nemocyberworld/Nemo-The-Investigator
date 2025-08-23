@@ -1,0 +1,132 @@
+<!-- Main Category: Browser Extension -->
+<section class="space-y-6" id="browser-extension-archive">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Extensions</h2>
+      <p class="text-gray-300">
+        Extensions for archiving, caching, and preserving web pages from multiple sources.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="archiveQuery" type="text" placeholder="Optional query (some tools support it)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllArchive').click();}">
+      <div class="flex gap-2">
+        <button id="openAllArchive"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#archiveQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
+              url=url.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnArchive'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('archiveQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for "Open All"</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Compare multiple archives (IA, local, cache)</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use offline save for sensitive material</span>
+  </div>
+
+  <!-- Sub-category: Archive -->
+  <h3 class="text-xl font-semibold mt-6">Archiving & Web Cache Extensions</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Wayback Machine</h3>
+      <p class="text-gray-400 text-sm mt-1">Save & view pages in Internet Archive.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Web Cache Viewer</h3>
+      <p class="text-gray-400 text-sm mt-1">View cached versions from Google, IA, archive.today.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/web-cache-viewer/pbkloffickinnlnmefmjmjbacohecpbd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/web-cache-viewer/pbkloffickinnlnmefmjmjbacohecpbd" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Archive Page</h3>
+      <p class="text-gray-400 text-sm mt-1">Save current page to multiple archives.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/archive-page/gcaimhkfmliahedmeklebabdgagipbia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/archive-page/gcaimhkfmliahedmeklebabdgagipbia" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Save Page WE</h3>
+      <p class="text-gray-400 text-sm mt-1">Firefox/Chrome extension for complete offline saves.</p>
+    </div><a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/save-page-we" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://addons.mozilla.org/en-US/firefox/addon/save-page-we" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Web Archives</h3>
+      <p class="text-gray-400 text-sm mt-1">Open archive links (IA, archive.today, Google cache).</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/web-archives/hkligngkgcpcolhcnkgccglchdafcnao" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/web-archives/hkligngkgcpcolhcnkgccglchdafcnao" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Go Back in Time</h3>
+      <p class="text-gray-400 text-sm mt-1">Quick lookup of old versions in archives.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/go-back-in-time/hgdahcpipmgehmaaankiglanlgljlakj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/go-back-in-time/hgdahcpipmgehmaaankiglanlgljlakj" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">View Page Archive (Firefox)</h3>
+      <p class="text-gray-400 text-sm mt-1">Directly access archived versions.</p>
+    </div><a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/view-page-archive" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://addons.mozilla.org/en-US/firefox/addon/view-page-archive" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extended archive tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">SingleFile</h3>
+      <p class="text-gray-400 text-sm mt-1">Save a complete webpage as a single HTML file.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/singlefile/mpiodijhokgodhhofbcjdecpffjipkle" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/singlefile/mpiodijhokgodhhofbcjdecpffjipkle" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Save to Internet Archive</h3>
+      <p class="text-gray-400 text-sm mt-1">Quickly submit pages to archive.org.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/save-to-internet-archive/hjdoplcnndgiblooccencgcggcoihigg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/save-to-internet-archive/hjdoplcnndgiblooccencgcggcoihigg" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Save as MHTML</h3>
+      <p class="text-gray-400 text-sm mt-1">Extension to export page as MHTML archive.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/save-as-mhtml/ehgfohjhbghadkeihjbfofphdgcpkogp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/save-as-mhtml/ehgfohjhbghadkeihjbfofphdgcpkogp" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Page Cacher</h3>
+      <p class="text-gray-400 text-sm mt-1">Capture & save full pages for offline use.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/page-cacher/bngjbdkccfjaogfjbkpdkkfhepbdbjjg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/page-cacher/bngjbdkccfjaogfjbkpdkkfhepbdbjjg" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Archive in multiple locations (IA, archive.today, Google cache) for redundancy.</li>
+      <li>Use offline save (SingleFile, Save Page WE) for sensitive content.</li>
+      <li>When investigating, compare timestamps across archives.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnArchive" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open archive extensions one by one.
+  </div>
+</section>

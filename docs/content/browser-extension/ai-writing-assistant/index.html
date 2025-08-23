@@ -1,0 +1,147 @@
+<!-- Main Category: Browser Extension -->
+<section class="space-y-6" id="browser-extension-ai-writing">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Browser Extensions</h2>
+      <p class="text-gray-300">
+        AI-powered writing assistants, summarizers, and productivity tools for browsers.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="aiWritingQuery" type="text" placeholder="Optional query (some tools use it)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllAIWriting').click();}">
+      <div class="flex gap-2">
+        <button id="openAllAIWriting"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#aiWritingQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
+              url=url.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarnAIWriting'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('aiWritingQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for "Open All"</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Test multiple AI assistants</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check free vs pro features</span>
+  </div>
+
+  <!-- Sub-category: AI Writing Assistant -->
+  <h3 class="text-xl font-semibold mt-6">AI Writing Assistant Extensions</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided list -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Jasper AI</h3>
+      <p class="text-gray-400 text-sm mt-1">AI content writing assistant.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/jasper-%E2%80%94-your-ai-content/bpiohchncadidhohcajcnoelomephkdd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/jasper-%E2%80%94-your-ai-content/bpiohchncadidhohcajcnoelomephkdd" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">ChatGPT Chrome Extension</h3>
+      <p class="text-gray-400 text-sm mt-1">Quick ChatGPT access in-browser.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/chatgpt-chrome-extension/cdjifpfganmhoojfclednjdnnpooaojb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/chatgpt-chrome-extension/cdjifpfganmhoojfclednjdnnpooaojb" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">BearlyAI</h3>
+      <p class="text-gray-400 text-sm mt-1">AI research & writing productivity tool.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/bearlyai/lkennebljmnnpimcgdjlocbncpamgipp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/bearlyai/lkennebljmnnpimcgdjlocbncpamgipp" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Liner Copilot</h3>
+      <p class="text-gray-400 text-sm mt-1">ChatGPT AI copilot for browsing & notes.</p>
+    </div><a data-tool data-url="https://chromewebstore.google.com/detail/liner-chatgpt-ai-copilot/bmhcbmnbenmcecpmpepghooflbehcack" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chromewebstore.google.com/detail/liner-chatgpt-ai-copilot/bmhcbmnbenmcecpmpepghooflbehcack" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Perplexity AI</h3>
+      <p class="text-gray-400 text-sm mt-1">AI search & writing companion.</p>
+    </div><a data-tool data-url="https://chromewebstore.google.com/detail/perplexity-ai/ifhigdhiifbnjanhacoedbadhmlkjgae" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chromewebstore.google.com/detail/perplexity-ai/ifhigdhiifbnjanhacoedbadhmlkjgae" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">ChatGPT for Google</h3>
+      <p class="text-gray-400 text-sm mt-1">Displays ChatGPT responses alongside search results.</p>
+    </div><a data-tool data-url="https://chromewebstore.google.com/detail/chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chromewebstore.google.com/detail/chatgpt-for-google/jgjaeacdkonaoafenlfkkkmbaopkbilf" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">ChatGPT Assistant</h3>
+      <p class="text-gray-400 text-sm mt-1">Smart writing assistant with prompts.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/chatgpt-assistant-smart-s/opngpmnmajecahkfibkbdkfckibnpajd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/chatgpt-assistant-smart-s/opngpmnmajecahkfibkbdkfckibnpajd" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">You.com Extension</h3>
+      <p class="text-gray-400 text-sm mt-1">AI-powered search & chat assistant.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/youcom-search-chat-and-cr/fhplnehgjpmohhldfnjhibanpbiedofi" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/youcom-search-chat-and-cr/fhplnehgjpmohhldfnjhibanpbiedofi" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">YouTube Summary with ChatGPT</h3>
+      <p class="text-gray-400 text-sm mt-1">Summarize videos instantly with ChatGPT.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/youtube-summary-with-chat/nmmicjeknamkfloonkhhcjmomieiodli" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/youtube-summary-with-chat/nmmicjeknamkfloonkhhcjmomieiodli" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extended AI writing extensions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">GrammarlyGO</h3>
+      <p class="text-gray-400 text-sm mt-1">Grammarly’s AI writing & editing assistant.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/grammarly-go-beta/kipjbhgniklcnglfaldilecjomjjojnk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/grammarly-go-beta/kipjbhgniklcnglfaldilecjomjjojnk" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">QuillBot</h3>
+      <p class="text-gray-400 text-sm mt-1">AI paraphrasing & summarization extension.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/quillbot-paraphraser-grammar-check/nnjjahlikiabnchcpehcpkdeckfgnohf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/quillbot-paraphraser-grammar-check/nnjjahlikiabnchcpehcpkdeckfgnohf" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Copy.ai</h3>
+      <p class="text-gray-400 text-sm mt-1">AI content generation for blogs, ads, social posts.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/copyai-ai-marketing-writi/kjjeemfdofehnbkpldmbgjepbnmjmgcf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/copyai-ai-marketing-writi/kjjeemfdofehnbkpldmbgjepbnmjmgcf" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Writesonic</h3>
+      <p class="text-gray-400 text-sm mt-1">AI-powered copywriting & chatbot tool.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/writesonic-ai-writer-chatbot/nnclccblnlhjhhgplmoijebkjldcjilo" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/writesonic-ai-writer-chatbot/nnclccblnlhjhhgplmoijebkjldcjilo" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div>
+      <h3 class="font-semibold">Rytr</h3>
+      <p class="text-gray-400 text-sm mt-1">AI writing assistant for content & emails.</p>
+    </div><a data-tool data-url="https://chrome.google.com/webstore/detail/rytr-ai-writing-assistant/ljobfblajbmmblkbjdpdmhkghoongbcf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/rytr-ai-writing-assistant/ljobfblajbmmblkbjdpdmhkghoongbcf" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Check permissions before installing AI extensions (some request broad data access).</li>
+      <li>Compare generated writing quality across assistants for best fit.</li>
+      <li>Use multiple tools: one for summarization, one for paraphrasing, one for long-form writing.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarnAIWriting" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open extensions one by one.
+  </div>
+</section>
