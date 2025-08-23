@@ -1,0 +1,150 @@
+<section class="space-y-6" id="thread-intel-bot-tools" data-main-category="Bot" data-sub-category="Thread Intel Bot">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Bot • Thread Intel Bot Tools</h2>
+      <p class="text-gray-300">
+        Investigate IOCs and infrastructure used by botnets & campaigns: IP/domain/URL/hash lookups, blacklists, sandboxing, and reputation feeds.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter IP / domain / URL / hash / email / @handle"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">IOC types: IP, domain, URL, file hash</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Pivot: blacklist → sandbox → infra graph</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Core reputation / TI -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">AlienVault OTX</h3><p class="text-gray-400 text-sm mt-1">Community threat intel (IOCs, botnets).</p></div><a data-tool data-url="https://otx.alienvault.com/browse/global/pulses?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://otx.alienvault.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ThreatFox (abuse.ch)</h3><p class="text-gray-400 text-sm mt-1">Malware/botnet IOCs.</p></div><a data-tool data-url="https://threatfox.abuse.ch/browse/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://threatfox.abuse.ch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">URLHaus (abuse.ch)</h3><p class="text-gray-400 text-sm mt-1">Malware distribution URLs.</p></div><a data-tool data-url="https://urlhaus.abuse.ch/browse.php?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Feodo Tracker</h3><p class="text-gray-400 text-sm mt-1">Trickbot/Botnet C2 tracking.</p></div><a data-tool data-url="https://feodotracker.abuse.ch/browse/#search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://feodotracker.abuse.ch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SSL Blacklist</h3><p class="text-gray-400 text-sm mt-1">Suspicious SSL certs/JA3 (abuse.ch).</p></div><a data-tool data-url="https://sslbl.abuse.ch/ssl-certificates/?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://sslbl.abuse.ch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Phishing intel -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">PhishTank</h3><p class="text-gray-400 text-sm mt-1">Community phishing database.</p></div><a data-tool data-url="https://phishtank.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://phishtank.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenPhish</h3><p class="text-gray-400 text-sm mt-1">Live phishing feeds.</p></div><a data-tool data-url="https://openphish.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://openphish.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">PhishStats</h3><p class="text-gray-400 text-sm mt-1">Search phishing indicators.</p></div><a data-tool data-url="https://phishstats.info/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://phishstats.info/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Blacklists / DNS / Abuse -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Spamhaus</h3><p class="text-gray-400 text-sm mt-1">IP/domain reputation & blocklists.</p></div><a data-tool data-url="https://check.spamhaus.org/listed/?searchterm={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://check.spamhaus.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">RiskDiscovery Blacklists</h3><p class="text-gray-400 text-sm mt-1">Aggregated IP/domain blacklists.</p></div><a data-tool data-url="https://riskdiscovery.com/blacklists/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://riskdiscovery.com/blacklists/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SANS ISC IP Info</h3><p class="text-gray-400 text-sm mt-1">Scanner/bot sightings & reports.</p></div><a data-tool data-url="https://isc.sans.edu/ipinfo.html?ip={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://isc.sans.edu/ipinfo.html" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Infra & scanning -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Shodan</h3><p class="text-gray-400 text-sm mt-1">Internet-exposed services & banners.</p></div><a data-tool data-url="https://www.shodan.io/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.shodan.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Censys</h3><p class="text-gray-400 text-sm mt-1">Hosts/certs search (CT + scan data).</p></div><a data-tool data-url="https://search.censys.io/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://search.censys.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SecurityTrails</h3><p class="text-gray-400 text-sm mt-1">DNS, subdomains, historical data.</p></div><a data-tool data-url="https://securitytrails.com/domain/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://securitytrails.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Reputation & enrichment -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Talos Reputation</h3><p class="text-gray-400 text-sm mt-1">Cisco Talos IP/domain lookup.</p></div><a data-tool data-url="https://talosintelligence.com/reputation_center/lookup?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://talosintelligence.com/reputation_center/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">AbuseIPDB</h3><p class="text-gray-400 text-sm mt-1">IP abuse reports & confidence.</p></div><a data-tool data-url="https://abuseipdb.com/check/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://abuseipdb.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Pulsedive</h3><p class="text-gray-400 text-sm mt-1">Threat intelligence search & risk.</p></div><a data-tool data-url="https://pulsedive.com/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://pulsedive.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Sandboxes / malware -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">VirusTotal</h3><p class="text-gray-400 text-sm mt-1">Multi-engine scan & relations.</p></div><a data-tool data-url="https://www.virustotal.com/gui/search/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.virustotal.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hybrid Analysis</h3><p class="text-gray-400 text-sm mt-1">Sandbox reports & IOC graph.</p></div><a data-tool data-url="https://www.hybrid-analysis.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.hybrid-analysis.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ANY.RUN</h3><p class="text-gray-400 text-sm mt-1">Interactive malware analysis.</p></div><a data-tool data-url="https://any.run/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://any.run/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MalwareBazaar</h3><p class="text-gray-400 text-sm mt-1">Samples & hashes (abuse.ch).</p></div><a data-tool data-url="https://bazaar.abuse.ch/browse.php?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://bazaar.abuse.ch/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Certificates / CT -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">crt.sh</h3><p class="text-gray-400 text-sm mt-1">Certificate Transparency search.</p></div><a data-tool data-url="https://crt.sh/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://crt.sh/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- URL / site scanners -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">urlscan.io</h3><p class="text-gray-400 text-sm mt-1">Fetch & analyze URLs and DOM.</p></div><a data-tool data-url="https://urlscan.io/search/#%22{q}%22" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://urlscan.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">URLVoid</h3><p class="text-gray-400 text-sm mt-1">Quick domain reputation.</p></div><a data-tool data-url="http://www.urlvoid.com/scan/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://www.urlvoid.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Historic / pivots -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ThreatMiner</h3><p class="text-gray-400 text-sm mt-1">Historical pivots across IOC types.</p></div><a data-tool data-url="https://www.threatminer.org/search.php?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.threatminer.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ThreatCrowd</h3><p class="text-gray-400 text-sm mt-1">Graph-based pivots (domains/IPs).</p></div><a data-tool data-url="https://www.threatcrowd.org/listSearch.php?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.threatcrowd.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">RiskIQ Community</h3><p class="text-gray-400 text-sm mt-1">Passive DNS & intel (login).</p></div><a data-tool data-url="https://community.riskiq.com/search/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://community.riskiq.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Tor / anonymity signals often abused by bots -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Tor Exit List</h3><p class="text-gray-400 text-sm mt-1">Active Tor exit addresses.</p></div><a data-tool data-url="https://check.torproject.org/exit-addresses" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://check.torproject.org/exit-addresses" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- General OSINT directories (handy) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IntelTechniques (Index)</h3><p class="text-gray-400 text-sm mt-1">Large OSINT link library.</p></div><a data-tool data-url="https://inteltechniques.com/tools/index.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://inteltechniques.com/tools/index.html" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OSINTTools.io</h3><p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p></div><a data-tool data-url="https://osinttools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://osinttools.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Network noise / scanners (bot infra overlap) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GreyNoise Viz</h3><p class="text-gray-400 text-sm mt-1">IP reputation & scanning context.</p></div><a data-tool data-url="https://viz.greynoise.io/ip/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://viz.greynoise.io/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- URL & news intelligence (context for campaigns) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Google Threat Intel (dorks)</h3><p class="text-gray-400 text-sm mt-1">Quick IOC Google scan.</p></div><a data-tool data-url="https://www.google.com/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.google.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with reputation/blacklists → pivot to sandbox & relationships (VirusTotal/Hybrid/ANY.RUN) → expand via infra scans (Shodan/Censys) → verify sightings (SANS ISC/GreyNoise).</li>
+      <li>Normalize queries: strip protocol for domains, use SHA256 for samples when possible, and quote URLs in urlscan.</li>
+      <li>Correlate time windows: look for synchronized registrations, hosting reuse, and JA3/JA4 overlaps (SSLBL).</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
