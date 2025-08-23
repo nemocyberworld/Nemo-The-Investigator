@@ -1,0 +1,242 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Blacklist & Reputation Check</h2>
+      <p class="text-gray-300">
+        Threat intelligence sources and community feeds for detecting malicious IPs, domains, URLs, and IOCs.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter IP, domain, URL, or hash"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use IPs, domains, hashes, or URLs as input</span>
+  </div>
+
+  <!-- Threat Intel Sources -->
+  <h3 class="text-xl font-semibold mt-6">🌐 Threat Intel Sources</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-2">
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">URLhaus (abuse.ch)</h3>
+          <p class="text-gray-400 text-sm mt-1">Malware distribution URLs feed.</p>
+        </div>
+        <a data-tool data-url="https://urlhaus.abuse.ch/search/{q}/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Feodo Tracker</h3>
+          <p class="text-gray-400 text-sm mt-1">Botnet C2 trackers (TrickBot, Emotet, etc.).</p>
+        </div>
+        <a data-tool data-url="https://feodotracker.abuse.ch/search/?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://feodotracker.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">SSL Blacklist (abuse.ch)</h3>
+          <p class="text-gray-400 text-sm mt-1">Known malicious SSL certificates & JA3 fingerprints.</p>
+        </div>
+        <a data-tool data-url="https://sslbl.abuse.ch/ssl-certificates/{q}/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://sslbl.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ThreatFox (abuse.ch)</h3>
+          <p class="text-gray-400 text-sm mt-1">IOC feed with malware, phishing, and botnet indicators.</p>
+        </div>
+        <a data-tool data-url="https://threatfox.abuse.ch/browse.php?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://threatfox.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MalwareBazaar (abuse.ch)</h3>
+          <p class="text-gray-400 text-sm mt-1">Malware sample database with hashes & downloads.</p>
+        </div>
+        <a data-tool data-url="https://bazaar.abuse.ch/browse.php?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://bazaar.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Tor Exit Nodes</h3>
+          <p class="text-gray-400 text-sm mt-1">List of current Tor exit relays.</p>
+        </div>
+        <a data-tool data-url="https://check.torproject.org/exit-addresses"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://check.torproject.org/exit-addresses" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Emerging Threats</h3>
+          <p class="text-gray-400 text-sm mt-1">IDS/IPS rules & IP blocklists for malware & exploits.</p>
+        </div>
+        <a data-tool data-url="https://rules.emergingthreats.net/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://rules.emergingthreats.net/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">AlienVault OTX</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven threat intel feeds.</p>
+        </div>
+        <a data-tool data-url="https://otx.alienvault.com/indicator/ip/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://otx.alienvault.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">RiskDiscovery Blacklists</h3>
+          <p class="text-gray-400 text-sm mt-1">Blacklist aggregation from multiple sources.</p>
+        </div>
+        <a data-tool data-url="https://riskdiscovery.com/blacklists/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://riskdiscovery.com/blacklists/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Radware Threat Intel</h3>
+          <p class="text-gray-400 text-sm mt-1">Radware’s global threat intelligence portal.</p>
+        </div>
+        <a data-tool data-url="https://security.radware.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://security.radware.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IPsum (GitHub)</h3>
+          <p class="text-gray-400 text-sm mt-1">Daily updated list of bad IP addresses.</p>
+        </div>
+        <a data-tool data-url="https://github.com/stamparm/ipsum"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">PhishTank</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven phishing site database.</p>
+        </div>
+        <a data-tool data-url="https://phishtank.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://phishtank.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extended sources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Spamhaus DROP</h3>
+          <p class="text-gray-400 text-sm mt-1">Drop lists of hijacked/malicious IP ranges.</p>
+        </div>
+        <a data-tool data-url="https://www.spamhaus.org/drop/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.spamhaus.org/drop/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-green-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Shadowserver</h3>
+          <p class="text-gray-400 text-sm mt-1">Public threat intelligence reports and feeds.</p>
+        </div>
+        <a data-tool data-url="https://www.shadowserver.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.shadowserver.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use multiple threat intel sources to validate indicators (IPs, URLs, hashes).</li>
+      <li>Feeds differ: some are community-driven (PhishTank), others curated (abuse.ch).</li>
+      <li>Integrate feeds with SIEM/SOAR for automation.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

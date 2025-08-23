@@ -1,0 +1,230 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Blacklist & Reputation Check</h2>
+      <p class="text-gray-300">
+        Public blocklists and reputation feeds for identifying malicious IPs, domains, and networks.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter IP, domain, or email"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use IPs, domains, or emails for best results</span>
+  </div>
+
+  <!-- Public Block Lists -->
+  <h3 class="text-xl font-semibold mt-6">📜 Public Block Lists</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-2">
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Apility.io</h3>
+          <p class="text-gray-400 text-sm mt-1">Threat intelligence API for bad IPs, domains & emails.</p>
+        </div>
+        <a data-tool data-url="https://apility.io/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://apility.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Autoshun</h3>
+          <p class="text-gray-400 text-sm mt-1">Community-driven blocklist of malicious hosts.</p>
+        </div>
+        <a data-tool data-url="https://www.autoshun.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.autoshun.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Blocklist.de</h3>
+          <p class="text-gray-400 text-sm mt-1">Abuse-driven blocklists (SSH, mail, web, etc.).</p>
+        </div>
+        <a data-tool data-url="https://www.blocklist.de/lists/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.blocklist.de/lists/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Botvrij.eu</h3>
+          <p class="text-gray-400 text-sm mt-1">Belgian botnet & malware blacklist project.</p>
+        </div>
+        <a data-tool data-url="http://botvrij.eu/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://botvrij.eu/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">CINS Score</h3>
+          <p class="text-gray-400 text-sm mt-1">Cybercrime IP reputation project & bad IPs list.</p>
+        </div>
+        <a data-tool data-url="http://cinsscore.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://cinsscore.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">iBlocklist</h3>
+          <p class="text-gray-400 text-sm mt-1">Peer-to-peer blocklists for firewalls & torrent clients.</p>
+        </div>
+        <a data-tool data-url="https://www.iblocklist.com/lists.php"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.iblocklist.com/lists.php" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">IPDeny</h3>
+          <p class="text-gray-400 text-sm mt-1">Country-based IP blocklists in CIDR format.</p>
+        </div>
+        <a data-tool data-url="http://www.ipdeny.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://www.ipdeny.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">SANS ISC</h3>
+          <p class="text-gray-400 text-sm mt-1">Suspicious domain list maintained by ISC.</p>
+        </div>
+        <a data-tool data-url="https://isc.sans.edu/suspicious_domains.html"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://isc.sans.edu/suspicious_domains.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Hosts-file.net</h3>
+          <p class="text-gray-400 text-sm mt-1">Malware domain hosts file for blocking.</p>
+        </div>
+        <a data-tool data-url="https://hosts-file.net/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://hosts-file.net/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">ThreatSTOP</h3>
+          <p class="text-gray-400 text-sm mt-1">Commercial blocklist service for networks & DNS.</p>
+        </div>
+        <a data-tool data-url="http://threatstop.com/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://threatstop.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extended blocklists -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">FireHOL IP Lists</h3>
+          <p class="text-gray-400 text-sm mt-1">Massive curated collection of IP blocklists.</p>
+        </div>
+        <a data-tool data-url="https://iplists.firehol.org/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://iplists.firehol.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Emerging Threats</h3>
+          <p class="text-gray-400 text-sm mt-1">Known malware, C2, and botnet blocklists.</p>
+        </div>
+        <a data-tool data-url="https://rules.emergingthreats.net/blockrules/"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://rules.emergingthreats.net/blockrules/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Feodo Tracker</h3>
+          <p class="text-gray-400 text-sm mt-1">Blocklists of Feodo/TrickBot/Emotet botnet C2 servers.</p>
+        </div>
+        <a data-tool data-url="https://feodotracker.abuse.ch/downloads/ipblocklist.txt"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://feodotracker.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Public blocklists are useful for enrichment & detection but vary in accuracy.</li>
+      <li>Cross-check IPs/domains across multiple sources for higher confidence.</li>
+      <li>Combine feeds with your own intel or SIEM for automated blocking.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

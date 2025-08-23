@@ -1,0 +1,181 @@
+<section class="space-y-6" id="osint-web-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Blacklist & Reputation Check</h2>
+      <p class="text-gray-300">
+        Tools for checking if IPs, domains, or URLs are blacklisted or flagged by reputation services.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter domain.com or IP"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use domains or IPs for best results</span>
+  </div>
+
+  <!-- Checker Tools -->
+  <h3 class="text-xl font-semibold mt-6">🛡️ Checker Tools</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-2">
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Blacklist Alert</h3>
+          <p class="text-gray-400 text-sm mt-1">Checks if IP/domain is blacklisted.</p>
+        </div>
+        <a data-tool data-url="http://blacklistalert.org/?q={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="http://blacklistalert.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">WhoisIP Blacklist</h3>
+          <p class="text-gray-400 text-sm mt-1">Blacklist check tool for IPs/domains.</p>
+        </div>
+        <a data-tool data-url="https://whoisip.ovh/blacklist/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://whoisip.ovh/blacklist" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">McAfee TrustedSource</h3>
+          <p class="text-gray-400 text-sm mt-1">Domain/IP reputation & category lookup.</p>
+        </div>
+        <a data-tool data-url="https://trustedsource.org/sources/index.pl"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://trustedsource.org/sources/index.pl" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Spamhaus Blocklist</h3>
+          <p class="text-gray-400 text-sm mt-1">DNSBL checks for IP/domain reputation.</p>
+        </div>
+        <a data-tool data-url="https://check.spamhaus.org/listed/?searchterm={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://check.spamhaus.org/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-red-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">MXToolbox Blacklist</h3>
+          <p class="text-gray-400 text-sm mt-1">Comprehensive blacklist scan for domain/IP.</p>
+        </div>
+        <a data-tool data-url="https://mxtoolbox.com/SuperTool.aspx?action=blacklist%3a{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://mxtoolbox.com/blacklists.aspx" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-yellow-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">VirusTotal</h3>
+          <p class="text-gray-400 text-sm mt-1">Multi-engine scanner for domains, IPs & URLs.</p>
+        </div>
+        <a data-tool data-url="https://www.virustotal.com/gui/search/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.virustotal.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-yellow-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Cisco Talos Intelligence</h3>
+          <p class="text-gray-400 text-sm mt-1">IP/domain reputation & threat intelligence.</p>
+        </div>
+        <a data-tool data-url="https://talosintelligence.com/reputation_center/lookup?search={q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://talosintelligence.com/reputation_center" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-yellow-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">URLVoid</h3>
+          <p class="text-gray-400 text-sm mt-1">Domain reputation & scoring from multiple services.</p>
+        </div>
+        <a data-tool data-url="https://www.urlvoid.com/scan/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://www.urlvoid.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-yellow-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">AbuseIPDB</h3>
+          <p class="text-gray-400 text-sm mt-1">Crowdsourced IP abuse & fraud reputation scoring.</p>
+        </div>
+        <a data-tool data-url="https://abuseipdb.com/check/{q}"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://abuseipdb.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Run domains/IPs across both blacklist checkers & reputation scoring tools.</li>
+      <li>Cross-validate — one service may list a threat, others may not.</li>
+      <li>Use scoring tools (VirusTotal, Talos) for deeper context & category tags.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
