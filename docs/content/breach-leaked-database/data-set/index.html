@@ -1,0 +1,150 @@
+<section class="space-y-6" id="breach-dataset-tools" data-main-category="Breach Leaked Database" data-sub-category="Data Set">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Data Set Catalogs</h2>
+      <p class="text-gray-300">
+        Discover open datasets, public corpora, sanctions/corporate registries, and research archives. Use keywords, entities, domains, or file types.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter keyword / org / person / domain / filetype:csv"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use quotes for exact phrases</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Filter by filetype:csv/parquet/json</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Respect licenses & PII handling rules</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Catalogs & meta-search -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Google Dataset Search</h3><p class="text-gray-400 text-sm mt-1">Meta-search across the web.</p></div><a data-tool data-url="https://datasetsearch.research.google.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://datasetsearch.research.google.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Data.gov (USA)</h3><p class="text-gray-400 text-sm mt-1">US open government data.</p></div><a data-tool data-url="https://catalog.data.gov/dataset?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.data.gov/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">data.europa.eu</h3><p class="text-gray-400 text-sm mt-1">EU open data portal.</p></div><a data-tool data-url="https://data.europa.eu/en/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.europa.eu/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">data.world</h3><p class="text-gray-400 text-sm mt-1">Community datasets & projects.</p></div><a data-tool data-url="https://data.world/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.world/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Cloud public datasets -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BigQuery Public Data</h3><p class="text-gray-400 text-sm mt-1">Google Cloud public datasets.</p></div><a data-tool data-url="https://cloud.google.com/bigquery/public-data" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://cloud.google.com/bigquery/public-data/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">AWS • Registry of Open Data</h3><p class="text-gray-400 text-sm mt-1">Open data on AWS.</p></div><a data-tool data-url="https://registry.opendata.aws/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://registry.opendata.aws/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Azure Open Datasets</h3><p class="text-gray-400 text-sm mt-1">Microsoft-curated datasets.</p></div><a data-tool data-url="https://azure.microsoft.com/en-us/products/open-datasets/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://azure.microsoft.com/en-us/products/open-datasets/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Research repos & ML -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Kaggle</h3><p class="text-gray-400 text-sm mt-1">User-shared datasets & notebooks.</p></div><a data-tool data-url="https://www.kaggle.com/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.kaggle.com/datasets" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">UCI ML Repository</h3><p class="text-gray-400 text-sm mt-1">Classic machine learning datasets.</p></div><a data-tool data-url="https://archive.ics.uci.edu/datasets?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.ics.uci.edu/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenML</h3><p class="text-gray-400 text-sm mt-1">ML datasets with tasks & flows.</p></div><a data-tool data-url="https://www.openml.org/search?type=data&sort=runs&status=active&query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.openml.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Open science repositories -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Zenodo</h3><p class="text-gray-400 text-sm mt-1">Open science deposits (CERN).</p></div><a data-tool data-url="https://zenodo.org/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://zenodo.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Figshare</h3><p class="text-gray-400 text-sm mt-1">Research data & media.</p></div><a data-tool data-url="https://figshare.com/search?q={q}&searchMode=1" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://figshare.com/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Dryad</h3><p class="text-gray-400 text-sm mt-1">Curated research data.</p></div><a data-tool data-url="https://datadryad.org/stash/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://datadryad.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Harvard Dataverse</h3><p class="text-gray-400 text-sm mt-1">General-purpose research data.</p></div><a data-tool data-url="https://dataverse.harvard.edu/dataverse/harvard?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dataverse.harvard.edu/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Sanctions, corporate & public-interest data -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenSanctions</h3><p class="text-gray-400 text-sm mt-1">Sanctions & PEP graph datasets.</p></div><a data-tool data-url="https://opensanctions.org/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://opensanctions.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenCorporates</h3><p class="text-gray-400 text-sm mt-1">Global company registry data.</p></div><a data-tool data-url="https://opencorporates.com/companies?utf8=✓&q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://opencorporates.com/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- News/event corpora (research-grade) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GDELT</h3><p class="text-gray-400 text-sm mt-1">Global events database.</p></div><a data-tool data-url="https://www.gdeltproject.org/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.gdeltproject.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Common Crawl</h3><p class="text-gray-400 text-sm mt-1">Petabyte-scale web crawl data.</p></div><a data-tool data-url="https://commoncrawl.org/the-data/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://commoncrawl.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Knowledge graphs & wikis -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Wikidata Query</h3><p class="text-gray-400 text-sm mt-1">Linked open data SPARQL.</p></div><a data-tool data-url="https://query.wikidata.org/#SELECT%20*%20WHERE%20%7B%20%3Fs%20%3Fp%20%7Bq%7D%20%7D%20LIMIT%20100" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://query.wikidata.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Wikipedia Dumps</h3><p class="text-gray-400 text-sm mt-1">Full project database dumps.</p></div><a data-tool data-url="https://dumps.wikimedia.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dumps.wikimedia.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Financial & development data -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">World Bank Data</h3><p class="text-gray-400 text-sm mt-1">Global development indicators.</p></div><a data-tool data-url="https://datacatalog.worldbank.org/search/dataset/All?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.worldbank.org/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IMF Data</h3><p class="text-gray-400 text-sm mt-1">Economics & finance datasets.</p></div><a data-tool data-url="https://www.imf.org/en/Data" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.imf.org/en/Data" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Regional portals (example: Bangladesh) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Bangladesh Open Data</h3><p class="text-gray-400 text-sm mt-1">National portal (BD).</p></div><a data-tool data-url="https://data.gov.bd/en/dataset?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.gov.bd/en/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Awesome lists & directories -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Awesome Public Datasets</h3><p class="text-gray-400 text-sm mt-1">GitHub curation (multi-domain).</p></div><a data-tool data-url="https://github.com/awesomedata/awesome-public-datasets" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/awesomedata/awesome-public-datasets" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Awesome Data Science</h3><p class="text-gray-400 text-sm mt-1">Datasets, tools & learning.</p></div><a data-tool data-url="https://github.com/bulutyazilim/awesome-datascience" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/bulutyazilim/awesome-datascience" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Awesome JSON Datasets</h3><p class="text-gray-400 text-sm mt-1">JSON-friendly data sources.</p></div><a data-tool data-url="https://github.com/jdorfman/awesome-json-datasets" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/jdorfman/awesome-json-datasets" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Awesome Big Data</h3><p class="text-gray-400 text-sm mt-1">Ecosystem & datasets.</p></div><a data-tool data-url="https://github.com/onurakpolat/awesome-bigdata" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/onurakpolat/awesome-bigdata" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- General dataset catalogs -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Dataset List (meta)</h3><p class="text-gray-400 text-sm mt-1">Directory to dataset catalogs.</p></div><a data-tool data-url="https://www.datasetlist.com/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.datasetlist.com/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">DataHub.io</h3><p class="text-gray-400 text-sm mt-1">Open datasets & APIs.</p></div><a data-tool data-url="https://datahub.io/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://datahub.io/search" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Academic & domain-specific -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ICPSR</h3><p class="text-gray-400 text-sm mt-1">Social & behavioral data archive.</p></div><a data-tool data-url="https://www.icpsr.umich.edu/web/pages/ICPSR/studies?start=0&sort=score%20desc&archive=ICPSR&q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.icpsr.umich.edu/" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OpenAlex</h3><p class="text-gray-400 text-sm mt-1">Scholarly graph (papers, data links).</p></div><a data-tool data-url="https://explore.openalex.org/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://explore.openalex.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Internet Archive datasets & dumps -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Internet Archive • Datasets</h3><p class="text-gray-400 text-sm mt-1">Collections & big dumps.</p></div><a data-tool data-url="https://archive.org/search.php?query={q}%20AND%20collection%3A(datasets)" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.org/" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with meta-search (Google Dataset Search) → refine in domain portals (Data.gov, EU, World Bank) → jump to research repos (Kaggle/Zenodo/Dataverse).</li>
+      <li>Use filters: <code>filetype:csv</code>, <code>parquet</code>, <code>json</code>, or date ranges to narrow results.</li>
+      <li>Check dataset licenses and privacy terms before downloading or sharing; avoid handling unlawfully obtained PII.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

@@ -1,0 +1,137 @@
+<section class="space-y-6" id="breach-misc-tools" data-main-category="Breach Leaked Database" data-sub-category="Misc">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Misc Utilities</h2>
+      <p class="text-gray-300">
+        Handy extensions & web tools for OSINT and breach research: mass link ops, redirects, capture, cleanup, decoding, archiving, and metadata.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter URL / text / regex / domain (used where supported)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Allow pop-ups to open many tools</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use plain domains (no protocol) when tools expect it</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Respect site TOS and handle PII lawfully</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested extensions/utilities -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Link Gopher (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Extract all links on a page.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Link Redirect Trace (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Follow 301/302 chains, headers.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/link-redirect-trace/nnpljppamoaalgkieeciijbcccohlpoh" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Linkclump (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Open/copy multiple links via drag.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/linkclump/lfpjkncokllnfokkgpkobnkbkmelfefj" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MultiFind (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Search many keywords at once.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/multifind/amegoafkcikfmdbfeldmchinkjfdgoog" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OneTab (Firefox)</h3><p class="text-gray-400 text-sm mt-1">Collapse many tabs into one list.</p></div><a data-tool data-url="https://addons.mozilla.org/en-US/firefox/addon/onetab" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SingleFile (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Save page to a single HTML file.</p></div><a data-tool data-url="https://chromewebstore.google.com/detail/singlefile/mpiodijhokgodhhofbcjdecpffjipkle" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">AdNauseam</h3><p class="text-gray-400 text-sm mt-1">Privacy extension (research use).</p></div><a data-tool data-url="https://adnauseam.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MEGA (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Cloud storage extension.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/mega/bigefpfhnfcobdlfbedofhhaibnlghod" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Files Explorer (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Local files in new tab.</p></div><a data-tool data-url="https://chromewebstore.google.com/detail/files-explorer/cmibdnmeihbjkdgnohgjeelkofcnfhid" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ClearURLs (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Strip tracking params from URLs.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Mass link/open & capture helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Copy All URLs</h3><p class="text-gray-400 text-sm mt-1">Copy/paste list of open tabs.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/copy-all-urls/djdmadneanknadilpjiknlnanaolmbfk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Open Multiple URLs</h3><p class="text-gray-400 text-sm mt-1">Open many URLs at once.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/open-multiple-urls/lplnjlfojfpbhonepblnijodkkhpcfnh" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Redirects / HTTP inspection (web) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">httpstatus.io</h3><p class="text-gray-400 text-sm mt-1">Check headers, redirects, status.</p></div><a data-tool data-url="https://httpstatus.io/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WhereGoes</h3><p class="text-gray-400 text-sm mt-1">Visualize redirect chains.</p></div><a data-tool data-url="https://wheregoes.com/trace/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Decoders / parsers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CyberChef</h3><p class="text-gray-400 text-sm mt-1">Decode/encode, parse, hash…</p></div><a data-tool data-url="https://gchq.github.io/CyberChef/#input={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Regex101</h3><p class="text-gray-400 text-sm mt-1">Build/test regex (PCRE/JS/Python).</p></div><a data-tool data-url="https://regex101.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Metadata / file forensics -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Exif.tools</h3><p class="text-gray-400 text-sm mt-1">View image EXIF metadata.</p></div><a data-tool data-url="https://exif.tools/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">PDF Candy (Meta)</h3><p class="text-gray-400 text-sm mt-1">Inspect/convert PDF files.</p></div><a data-tool data-url="https://pdfcandy.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Archiving / snapshots (quick access) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Wayback Machine</h3><p class="text-gray-400 text-sm mt-1">View snapshots of a URL.</p></div><a data-tool data-url="https://web.archive.org/web/*/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Archive.today</h3><p class="text-gray-400 text-sm mt-1">Instant page archiving.</p></div><a data-tool data-url="https://archive.today/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- URL/domain utilities -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Unshorten.link</h3><p class="text-gray-400 text-sm mt-1">Expand shortened URLs.</p></div><a data-tool data-url="https://unshorten.link/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">URL Encoder/Decoder</h3><p class="text-gray-400 text-sm mt-1">Quick encode/decode utility.</p></div><a data-tool data-url="https://www.urlencoder.org/?text={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- JSON / formatting helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">JSON Formatter</h3><p class="text-gray-400 text-sm mt-1">Pretty-print and validate JSON.</p></div><a data-tool data-url="https://jsonformatter.org/json-parser?data={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extraction & scraping helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">tableconvert.com</h3><p class="text-gray-400 text-sm mt-1">CSV/JSON/Markdown convert.</p></div><a data-tool data-url="https://tableconvert.com/?data={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Mikki’s Scraper (Chrome)</h3><p class="text-gray-400 text-sm mt-1">Quick DOM scraping to CSV.</p></div><a data-tool data-url="https://chrome.google.com/webstore/detail/scraper/mhjhobheabbfddgaemkfojbdgccjhcla" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Privacy / blocking (alt options) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">uBlock Origin</h3><p class="text-gray-400 text-sm mt-1">Efficient blocker (research safety).</p></div><a data-tool data-url="https://ublockorigin.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+    
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Privacy Badger</h3><p class="text-gray-400 text-sm mt-1">Block trackers automatically.</p></div><a data-tool data-url="https://privacybadger.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Extraction → cleanup → decode → verify: pull links (Link Gopher/Linkclump), strip trackers (ClearURLs), resolve redirects (Link Redirect Trace/httpstatus.io), and archive (SingleFile/Wayback).</li>
+      <li>When pasting content into CyberChef/JSON tools, avoid sensitive PII unless you trust the environment; prefer offline handling for secrets.</li>
+      <li>Use blockers/sandboxed profiles to reduce risk while visiting unknown pages related to breaches.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

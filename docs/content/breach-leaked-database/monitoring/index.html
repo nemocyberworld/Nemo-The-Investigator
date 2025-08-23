@@ -1,0 +1,222 @@
+<section class="space-y-6" id="breach-monitoring-tools" data-main-category="Breach Leaked Database" data-sub-category="Monitoring">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Monitoring & Alerts</h2>
+      <p class="text-gray-300">
+        Track breach/news pages, ransomware posts, paste dumps, and indicators. Set up page-change alerts, RSS, and light automation. Use keywords, domains, or URLs in the box.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter URL / domain / keyword (used where supported)"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Allow pop-ups to open many tools</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Prefer canonical URLs and stable selectors</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Follow site TOS; handle PII lawfully</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested extensions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Distill Web Monitor (Chrome)</h3>
+        <p class="text-gray-400 text-sm mt-1">Watch pages & get change alerts.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/distill-web-monitor/inlikjemeeknofckkjolnjbpehgadgge" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">VisualPing (Chrome)</h3>
+        <p class="text-gray-400 text-sm mt-1">Visual diff monitors for pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/visualping/pemhgklkefakciniebenbfclihhmmfcd" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Page Monitor (Chrome)</h3>
+        <p class="text-gray-400 text-sm mt-1">Simple text-change alerts.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/page-monitor/ogeebjpdeabhncjpfhgdibjajcajepgg" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Auto Refresh Plus</h3>
+        <p class="text-gray-400 text-sm mt-1">Timed reloads for volatile pages.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/auto-refresh-plus-page-mo/hgeljhfekpckiiplhkigfehkdpldcggm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Auto Tab Discard</h3>
+        <p class="text-gray-400 text-sm mt-1">Suspend idle tabs to save RAM/CPU.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/auto-tab-discard/jhnleheckmknfcgijgkadoemagpecfol" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">AutoScroll</h3>
+        <p class="text-gray-400 text-sm mt-1">Hands-free scrolling for feeds.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/autoscroll/occjjkgifpmdgodlplnacmkejpdionan" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Axiom (Browser Automation)</h3>
+        <p class="text-gray-400 text-sm mt-1">No-code workflows & scraping.</p></div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/axiom-browser-automation/cpgamigjcbffkaiciiepndmonbfdimbb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Page-change & watch services (web) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Distill.io (Web)</h3><p class="text-gray-400 text-sm mt-1">Cloud monitors, Slack/Email alerts.</p></div>
+      <a data-tool data-url="https://distill.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Visualping (Web)</h3><p class="text-gray-400 text-sm mt-1">Point-click area monitoring.</p></div>
+      <a data-tool data-url="https://visualping.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- RSS & feed helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">RSSHub</h3><p class="text-gray-400 text-sm mt-1">Generate RSS from many sites.</p></div>
+      <a data-tool data-url="https://docs.rsshub.app/en/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Feedly</h3><p class="text-gray-400 text-sm mt-1">Follow breach blogs & CVE feeds.</p></div>
+      <a data-tool data-url="https://feedly.com/i/discover" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Self-hosted monitors -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">changedetection.io</h3><p class="text-gray-400 text-sm mt-1">Self-hosted page diff monitor.</p></div>
+      <a data-tool data-url="https://github.com/dgtlmoon/changedetection.io" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Huginn</h3><p class="text-gray-400 text-sm mt-1">Automate web watching & alerts.</p></div>
+      <a data-tool data-url="https://github.com/huginn/huginn" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Uptime & keyword monitors -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">UptimeRobot</h3><p class="text-gray-400 text-sm mt-1">Ping/HTTP/keyword alerting.</p></div>
+      <a data-tool data-url="https://uptimerobot.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Better Stack Uptime</h3><p class="text-gray-400 text-sm mt-1">Incidents & keyword checks.</p></div>
+      <a data-tool data-url="https://betterstack.com/uptime" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Breach & ransomware trackers with feeds -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Ransomware.live (RSS)</h3><p class="text-gray-400 text-sm mt-1">Track group leak posts.</p></div>
+      <a data-tool data-url="https://www.ransomware.live/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Ransomwatch</h3><p class="text-gray-400 text-sm mt-1">Live leak site status & feeds.</p></div>
+      <a data-tool data-url="https://ransomwatch.telemetry.ltd/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Paste / dump monitoring helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">psbdmp (RSS/API)</h3><p class="text-gray-400 text-sm mt-1">Paste dumps; search <code>{q}</code>.</p></div>
+      <a data-tool data-url="https://psbdmp.ws/api/search/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Social & code change tracking -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">GitHub Release RSS</h3><p class="text-gray-400 text-sm mt-1">Monitor releases: owner/repo.</p></div>
+      <a data-tool data-url="https://github.com/{q}/releases.atom" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Email/domain breach notifications (official) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">HIBP • Domain Notifications</h3><p class="text-gray-400 text-sm mt-1">Verified domain alerts.</p></div>
+      <a data-tool data-url="https://haveibeenpwned.com/DomainSearch" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- General OSINT indexes -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">IntelTechniques (Index)</h3>
+        <p class="text-gray-400 text-sm mt-1">Huge OSINT/monitoring link library.</p></div>
+        <a data-tool data-url="https://inteltechniques.com/tools/index.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">OSINTTools.io</h3>
+        <p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p></div>
+        <a data-tool data-url="https://osinttools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Pick stable CSS selectors or small watch areas to reduce false positives in page-change monitors.</li>
+      <li>For noisy pages, prefer keyword monitors (e.g., “{q}”, brand, CVE, or domain) or RSS filters in Feedly.</li>
+      <li>Combine: ransomware feeds → paste searches (psbdmp) → official notifications (HIBP Domain) → internal runbooks.</li>
+      <li>Respect robots.txt and site TOS. Avoid high-frequency polling that can burden sites.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
+

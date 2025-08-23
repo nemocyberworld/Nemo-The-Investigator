@@ -1,0 +1,202 @@
+<section class="space-y-6" id="breach-search-engines" data-main-category="Breach Leaked Database" data-sub-category="Search Engines">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Search Engines</h2>
+      <p class="text-gray-300">
+        Search engines and leak indexes for finding breached credentials, leaked data, and exposed personal information.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. user@example.com, domain.com, username"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run all searches</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use emails, usernames, domains, IPs</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- 1 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Am I Breached?</h3><p class="text-gray-400 text-sm mt-1">Check breach exposure.</p></div><a data-tool data-url="https://amibreached.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 2 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BreachBase</h3><p class="text-gray-400 text-sm mt-1">Breach data lookup.</p></div><a data-tool data-url="https://breachbase.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 3 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BreachDirectory</h3><p class="text-gray-400 text-sm mt-1">Search leaked credentials.</p></div><a data-tool data-url="https://breachdirectory.org/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 4 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Breach.VIP</h3><p class="text-gray-400 text-sm mt-1">Exclusive leak index.</p></div><a data-tool data-url="https://breach.vip/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 5 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CheckLeaked</h3><p class="text-gray-400 text-sm mt-1">Leak search engine.</p></div><a data-tool data-url="https://checkleaked.cc/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 6 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CyberNews Leak Checker</h3><p class="text-gray-400 text-sm mt-1">Check if personal data leaked.</p></div><a data-tool data-url="https://cybernews.com/personal-data-leak-check/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 7 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">HackedList.io</h3><p class="text-gray-400 text-sm mt-1">Breach search & alerts.</p></div><a data-tool data-url="https://hackedlist.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 8 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Have I Been Sold?</h3><p class="text-gray-400 text-sm mt-1">Check if data sold in leaks.</p></div><a data-tool data-url="https://haveibeensold.app/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 9 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Have I Been Zuckered?</h3><p class="text-gray-400 text-sm mt-1">FB leaks checker.</p></div><a data-tool data-url="https://haveibeenzuckered.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 10 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IDStrong</h3><p class="text-gray-400 text-sm mt-1">Identity breach checks.</p></div><a data-tool data-url="https://idstrong.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 11 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Infostealers.info</h3><p class="text-gray-400 text-sm mt-1">Infostealer logs & exposure check.</p></div><a data-tool data-url="https://infostealers.info/en/info?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 12 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">InfoTrail</h3><p class="text-gray-400 text-sm mt-1">Breach and fraud data.</p></div><a data-tool data-url="https://infotrail.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 13 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IntelTechniques Breaches</h3><p class="text-gray-400 text-sm mt-1">Bazzell’s breach tools list.</p></div><a data-tool data-url="https://inteltechniques.com/tools/Breaches.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 14 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakBase.la</h3><p class="text-gray-400 text-sm mt-1">Breach and combo list search.</p></div><a data-tool data-url="https://leakbase.la/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 15 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakCheck.io</h3><p class="text-gray-400 text-sm mt-1">Search leaked data.</p></div><a data-tool data-url="https://leakcheck.io/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 16 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Leaked.Domains</h3><p class="text-gray-400 text-sm mt-1">Domain-based leak data.</p></div><a data-tool data-url="https://leaked.domains/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 17 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakedPassword</h3><p class="text-gray-400 text-sm mt-1">Check exposed passwords.</p></div><a data-tool data-url="https://leakedpassword.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 18 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Leak-Lookup</h3><p class="text-gray-400 text-sm mt-1">Lookup breach exposure.</p></div><a data-tool data-url="https://leak-lookup.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 19 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakPeek</h3><p class="text-gray-400 text-sm mt-1">Breach data browser.</p></div><a data-tool data-url="https://leakpeek.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 20 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakRadar</h3><p class="text-gray-400 text-sm mt-1">Leak radar monitoring.</p></div><a data-tool data-url="https://leakradar.io/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 21 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Leak.sx</h3><p class="text-gray-400 text-sm mt-1">Breach dump site.</p></div><a data-tool data-url="https://leak.sx/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 22 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LosePrivacy</h3><p class="text-gray-400 text-sm mt-1">Privacy exposure checker.</p></div><a data-tool data-url="https://loseprivacy.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 23 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Mozilla Monitor</h3><p class="text-gray-400 text-sm mt-1">Mozilla breach check.</p></div><a data-tool data-url="https://monitor.mozilla.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 24 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Myth.rip</h3><p class="text-gray-400 text-sm mt-1">Leak search engine.</p></div><a data-tool data-url="https://myth.rip/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 25 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">NuclearLeaks</h3><p class="text-gray-400 text-sm mt-1">Leak search by nuclearleaks.</p></div><a data-tool data-url="https://nuclearleaks.com/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 26 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OSINTLeak</h3><p class="text-gray-400 text-sm mt-1">Data leak engine.</p></div><a data-tool data-url="https://osintleak.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 27 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ScatteredSecrets</h3><p class="text-gray-400 text-sm mt-1">Search leaked secrets.</p></div><a data-tool data-url="https://scatteredsecrets.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 28 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Snusbase</h3><p class="text-gray-400 text-sm mt-1">Commercial breach DB search.</p></div><a data-tool data-url="https://snusbase.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 29 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Tracked.sh</h3><p class="text-gray-400 text-sm mt-1">Leaked credentials tracking.</p></div><a data-tool data-url="https://tracked.sh/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 30 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Scylla.so</h3><p class="text-gray-400 text-sm mt-1">Open breach search.</p></div><a data-tool data-url="https://scylla.so/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 31 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">XposedOrNot</h3><p class="text-gray-400 text-sm mt-1">Open API breach lookup.</p></div><a data-tool data-url="https://xposedornot.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 32 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WhiteIntel.io</h3><p class="text-gray-400 text-sm mt-1">Leak intelligence platform.</p></div><a data-tool data-url="https://whiteintel.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 33 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Zintel.cloud</h3><p class="text-gray-400 text-sm mt-1">Leak search cloud.</p></div><a data-tool data-url="https://zintel.cloud/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 34 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">LeakCheck.net</h3><p class="text-gray-400 text-sm mt-1">Credential leak check.</p></div><a data-tool data-url="https://leakcheck.net" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Open</a></div></article>
+
+    <!-- 35 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WeLeakInfo.io</h3><p class="text-gray-400 text-sm mt-1">Leak DB mirror.</p></div><a data-tool data-url="https://weleakinfo.io/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 36 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">DeHashed</h3><p class="text-gray-400 text-sm mt-1">Breach search DB.</p></div><a data-tool data-url="https://www.dehashed.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 37 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">HaveIBeenPwned</h3><p class="text-gray-400 text-sm mt-1">Unified breach search.</p></div><a data-tool data-url="https://haveibeenpwned.com/unifiedsearch/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 38 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ScamSearch.io</h3><p class="text-gray-400 text-sm mt-1">Scam & breach data.</p></div><a data-tool data-url="https://scamsearch.io/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 39 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">IntelX</h3><p class="text-gray-400 text-sm mt-1">IntelX leak search.</p></div><a data-tool data-url="https://intelx.io/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 40 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SpyCloud Portal</h3><p class="text-gray-400 text-sm mt-1">Enriched breach stats.</p></div><a data-tool data-url="https://portal.spycloud.com/endpoint/enriched-stats/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 41 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Library of Leaks</h3><p class="text-gray-400 text-sm mt-1">Searchable breach library.</p></div><a data-tool data-url="https://search.libraryofleaks.org/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 42 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ICIJ Offshore Leaks</h3><p class="text-gray-400 text-sm mt-1">Offshore leaks database.</p></div><a data-tool data-url="https://offshoreleaks.icij.org/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+    <!-- 43 -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OS-Surveillance</h3><p class="text-gray-400 text-sm mt-1">Surveillance data leaks.</p></div><a data-tool data-url="https://os-surveillance.io/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank">Search</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use multiple engines — coverage varies (HIBP, Snusbase, Dehashed, IntelX all differ).</li>
+      <li>Pivot across identifiers: email ↔ username ↔ domain ↔ phone.</li>
+      <li>Cross-check results in verified sources before reporting.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

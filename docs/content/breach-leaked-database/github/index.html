@@ -1,0 +1,125 @@
+<section class="space-y-6" id="breach-github-tools" data-main-category="Breach Leaked Database" data-sub-category="GitHub">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • GitHub Tooling</h2>
+      <p class="text-gray-300">
+        Curated GitHub projects for breach research, credential exposure checks, paste monitoring, and secret discovery. Use keywords to search related repos/issues.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter keyword / email / domain / repo:owner/name / dork"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use responsibly & legally</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Prefer test targets /your org</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Search GitHub with dorks (e.g., org:example file:*.json password)</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested repos -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">eBreached</h3><p class="text-gray-400 text-sm mt-1">Email breach lookup utilities.</p></div><a data-tool data-url="https://github.com/rdillon73/eBreached" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/rdillon73/eBreached" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">EmploLeaks</h3><p class="text-gray-400 text-sm mt-1">Employee data exposure research.</p></div><a data-tool data-url="https://github.com/infobyte/emploleaks" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/infobyte/emploleaks" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">FreeDatabreaches</h3><p class="text-gray-400 text-sm mt-1">Research list of breach sources.</p></div><a data-tool data-url="https://github.com/doormanBreach/FreeDatabreaches" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/doormanBreach/FreeDatabreaches" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">OperationArchive</h3><p class="text-gray-400 text-sm mt-1">Dark web / breach tracking notes.</p></div><a data-tool data-url="https://github.com/DarkWebInformer/OperationArchive" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/DarkWebInformer/OperationArchive" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">pwndb</h3><p class="text-gray-400 text-sm mt-1">Leaked credential search tooling.</p></div><a data-tool data-url="https://github.com/davidtavarez/pwndb" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/davidtavarez/pwndb" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">WhatBreach</h3><p class="text-gray-400 text-sm mt-1">Breach checking & parsing framework.</p></div><a data-tool data-url="https://github.com/Ekultek/WhatBreach" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/Ekultek/WhatBreach" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">CardPwn</h3><p class="text-gray-400 text-sm mt-1">Card leak research (forensics only).</p></div><a data-tool data-url="https://github.com/itsmehacker/CardPwn" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/itsmehacker/CardPwn" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GHunt</h3><p class="text-gray-400 text-sm mt-1">Google account OSINT (defensive).</p></div><a data-tool data-url="https://github.com/mxrch/ghunt" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/mxrch/ghunt" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">pastebin_scraper</h3><p class="text-gray-400 text-sm mt-1">Pastebin monitoring (research).</p></div><a data-tool data-url="https://github.com/Critical-Start/pastebin_scraper" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/Critical-Start/pastebin_scraper" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Scavenger</h3><p class="text-gray-400 text-sm mt-1">Search paste sites & breaches.</p></div><a data-tool data-url="https://github.com/rndinfosecguy/Scavenger" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/rndinfosecguy/Scavenger" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">pwnbin</h3><p class="text-gray-400 text-sm mt-1">Pastebin leak hunter.</p></div><a data-tool data-url="https://github.com/kahunalu/pwnbin" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/kahunalu/pwnbin" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">pwnedOrNot</h3><p class="text-gray-400 text-sm mt-1">HIBP-based email checks.</p></div><a data-tool data-url="https://github.com/thewhiteh4t/pwnedOrNot" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/thewhiteh4t/pwnedOrNot" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extended: secrets & GitHub dorking helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">gitleaks</h3><p class="text-gray-400 text-sm mt-1">Detect hardcoded secrets in repos.</p></div><a data-tool data-url="https://github.com/gitleaks/gitleaks" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">trufflehog</h3><p class="text-gray-400 text-sm mt-1">Search git history for secrets.</p></div><a data-tool data-url="https://github.com/trufflesecurity/trufflehog" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/trufflesecurity/trufflehog" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GitHound</h3><p class="text-gray-400 text-sm mt-1">Sensitive info & dorks on GitHub.</p></div><a data-tool data-url="https://github.com/tillson/git-hound" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/tillson/git-hound" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">shhgit</h3><p class="text-gray-400 text-sm mt-1">Live GitHub secret discovery.</p></div><a data-tool data-url="https://github.com/eth0izzle/shhgit" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/eth0izzle/shhgit" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GitDorker</h3><p class="text-gray-400 text-sm mt-1">Automate GitHub dork searches.</p></div><a data-tool data-url="https://github.com/obheda12/GitDorker" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/obheda12/GitDorker" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Account & email OSINT helpers -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">h8mail</h3><p class="text-gray-400 text-sm mt-1">Email OSINT & breach hunting.</p></div><a data-tool data-url="https://github.com/khast3x/h8mail" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/khast3x/h8mail" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">holehe</h3><p class="text-gray-400 text-sm mt-1">Check email usage across services.</p></div><a data-tool data-url="https://github.com/megadose/holehe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/megadose/holehe" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- GitHub native search surfaces -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GitHub Code Search</h3><p class="text-gray-400 text-sm mt-1">Search across code with dorks.</p></div><a data-tool data-url="https://github.com/search?q={q}&type=code" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/search" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">GitHub Issues Search</h3><p class="text-gray-400 text-sm mt-1">Look for leak reports in issues.</p></div><a data-tool data-url="https://github.com/search?q={q}&type=issues" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/search" target="_blank" rel="noopener">Open</a></div></article>
+
+    <!-- Extra: detections & pre-commit -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">detect-secrets</h3><p class="text-gray-400 text-sm mt-1">Yelp’s secret scanner (pre-commit).</p></div><a data-tool data-url="https://github.com/Yelp/detect-secrets" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/Yelp/detect-secrets" target="_blank" rel="noopener">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">gitLeaks-Action</h3><p class="text-gray-400 text-sm mt-1">CI action for secret detection.</p></div><a data-tool data-url="https://github.com/gitleaks/gitleaks-action" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/gitleaks/gitleaks-action" target="_blank" rel="noopener">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with native search (code/issues) using precise dorks; then automate with GitDorker/GitHound.</li>
+      <li>For credential exposure, combine HIBP-based tools (pwnedOrNot), email OSINT (h8mail/holehe), and paste monitoring (pwnbin/Scavenger).</li>
+      <li>Use secret scanners (gitleaks/trufflehog/detect-secrets) in CI to prevent future exposures.</li>
+      <li>Operate legally and ethically. Do not access or use data you’re not authorized to handle.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

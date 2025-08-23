@@ -1,0 +1,195 @@
+<section class="space-y-6" id="breach-archive-tools" data-main-category="Breach Leaked Database" data-sub-category="Archive">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Archive Collections</h2>
+      <p class="text-gray-300">
+        Public leak archives, FOIA libraries, and investigative data portals. Use keywords, names, domains, or file hashes to pivot across sources.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter keyword / name / domain / email / hash / case ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use quotes for exact phrases</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Pivot names ⇄ orgs ⇄ domains ⇄ hashes</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Requested leak archives -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">WikiLeaks</h3><p class="text-gray-400 text-sm mt-1">Document releases (search site).</p></div>
+      <a data-tool data-url="https://wikileaks.org/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://wikileaks.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Cryptome</h3><p class="text-gray-400 text-sm mt-1">Long-running disclosure archive.</p></div>
+      <a data-tool data-url="https://cryptome.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://cryptome.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Unicorn Riot • Discord Leaks</h3><p class="text-gray-400 text-sm mt-1">Discord communities archives.</p></div>
+      <a data-tool data-url="https://discordleaks.unicornriot.ninja/discord/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://discordleaks.unicornriot.ninja/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Duo Labs • Gawker</h3><p class="text-gray-400 text-sm mt-1">Analysis & data of Gawker breach.</p></div>
+      <a data-tool data-url="https://labs.duo.com/gawker" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://labs.duo.com/gawker" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DDoSecrets • Files</h3><p class="text-gray-400 text-sm mt-1">Browse leaked datasets.</p></div>
+      <a data-tool data-url="https://data.ddosecrets.com/file/?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://data.ddosecrets.com/file/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DDoSecrets • Index</h3><p class="text-gray-400 text-sm mt-1">Search leak index.</p></div>
+      <a data-tool data-url="https://search.ddosecrets.com/data/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://search.ddosecrets.com/data/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DDoSecrets • Whispers</h3><p class="text-gray-400 text-sm mt-1">Tips portal (context for leaks).</p></div>
+      <a data-tool data-url="https://whispers.ddosecrets.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://whispers.ddosecrets.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Major investigative & FOIA corpuses -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">OCCRP • Aleph</h3><p class="text-gray-400 text-sm mt-1">Global investigative datasets & leaks.</p></div>
+      <a data-tool data-url="https://aleph.occrp.org/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://aleph.occrp.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">ICIJ • Offshore Leaks</h3><p class="text-gray-400 text-sm mt-1">Panama/Paradise/Pandora datasets.</p></div>
+      <a data-tool data-url="https://offshoreleaks.icij.org/search?utf8=✓&q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://offshoreleaks.icij.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DocumentCloud</h3><p class="text-gray-400 text-sm mt-1">Millions of source documents.</p></div>
+      <a data-tool data-url="https://www.documentcloud.org/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.documentcloud.org/search" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">GWU • National Security Archive</h3><p class="text-gray-400 text-sm mt-1">Declassified/FOIA docs.</p></div>
+      <a data-tool data-url="https://nsarchive.gwu.edu/search?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://nsarchive.gwu.edu/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CIA • CREST Reading Room</h3><p class="text-gray-400 text-sm mt-1">Declassified records search.</p></div>
+      <a data-tool data-url="https://www.cia.gov/readingroom/search/site/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.cia.gov/readingroom/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">FBI • Vault</h3><p class="text-gray-400 text-sm mt-1">FOIA library (PDFs).</p></div>
+      <a data-tool data-url="https://vault.fbi.gov/search?SearchableText={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://vault.fbi.gov/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">MuckRock FOIA</h3><p class="text-gray-400 text-sm mt-1">Released records & requests.</p></div>
+      <a data-tool data-url="https://www.muckrock.com/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.muckrock.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Court & public records (often host leaked exhibits) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CourtListener • RECAP</h3><p class="text-gray-400 text-sm mt-1">Federal court filings & exhibits.</p></div>
+      <a data-tool data-url="https://www.courtlistener.com/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.courtlistener.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Web archiving (captures leaked posts/files) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Wayback Machine</h3><p class="text-gray-400 text-sm mt-1">Internet Archive snapshots.</p></div>
+      <a data-tool data-url="https://web.archive.org/web/*/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://web.archive.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">archive.today</h3><p class="text-gray-400 text-sm mt-1">Instant page snapshots.</p></div>
+      <a data-tool data-url="https://archive.today/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.today/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Journalism data hubs -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Bellingcat • Resources</h3><p class="text-gray-400 text-sm mt-1">Investigations & datasets.</p></div>
+      <a data-tool data-url="https://www.bellingcat.com/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.bellingcat.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Company/event specific corpuses (examples) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Enron Email Dataset</h3><p class="text-gray-400 text-sm mt-1">Public corporate email corpus.</p></div>
+      <a data-tool data-url="https://www.cs.cmu.edu/~enron/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.cs.cmu.edu/~enron/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Extra archival discovery -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Internet Archive • Collections</h3><p class="text-gray-400 text-sm mt-1">Search across IA collections.</p></div>
+      <a data-tool data-url="https://archive.org/search.php?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.org/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- General OSINT directories (for breadth) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">IntelTechniques (Index)</h3><p class="text-gray-400 text-sm mt-1">Massive OSINT link library.</p></div>
+        <a data-tool data-url="https://inteltechniques.com/tools/index.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://inteltechniques.com/tools/index.html" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">OSINTTools.io</h3><p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p></div>
+        <a data-tool data-url="https://osinttools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://osinttools.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start broad (Aleph/DocumentCloud/IA) → then targeted archives (DDoSecrets, WikiLeaks, Unicorn Riot).</li>
+      <li>Use exact phrases in quotes, and try multiple entity forms (legal name, alias, handle, domain, hash).</li>
+      <li>Respect laws and terms of use; avoid handling unlawful content and sensitive PII without authorization.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

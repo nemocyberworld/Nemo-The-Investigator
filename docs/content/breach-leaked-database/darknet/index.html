@@ -1,0 +1,194 @@
+<section class="space-y-6" id="breach-darknet-tools" data-main-category="Breach Leaked Database" data-sub-category="Darknet">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Darknet Intelligence</h2>
+      <p class="text-gray-300">
+        Track ransomware leaks, darknet mentions, and compromised data footprints. Use emails, domains, IPs, hashes, or keywords to pivot.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter email / domain / IP / hash / keyword"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Quote exact phrases for better hits</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Respect laws & policies; handle PII responsibly</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Ransomware.live</h3><p class="text-gray-400 text-sm mt-1">Aggregated ransomware leak site tracker.</p></div>
+        <a data-tool data-url="https://www.ransomware.live/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.ransomware.live/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">SOCRadar Labs</h3><p class="text-gray-400 text-sm mt-1">Ransomware/dark web research dashboards.</p></div>
+        <a data-tool data-url="https://socradar.io/labs/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://socradar.io/labs/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">DarkTracer</h3><p class="text-gray-400 text-sm mt-1">Ransomware leak monitoring (intel portal).</p></div>
+        <a data-tool data-url="https://darktracer.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://darktracer.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Rapid7 DB</h3><p class="text-gray-400 text-sm mt-1">Vuln & exploit database (context).</p></div>
+        <a data-tool data-url="https://rapid7.com/db/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://rapid7.com/db/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">GreyNoise Viz</h3><p class="text-gray-400 text-sm mt-1">IP reputation & scanning context.</p></div>
+        <a data-tool data-url="https://viz.greynoise.io/ip/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://viz.greynoise.io/ip/{q}" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Hudson Rock (Cavalier)</h3><p class="text-gray-400 text-sm mt-1">Preview creds exposure by email (endpoint).</p></div>
+        <a data-tool data-url="https://cavalier.hudsonrock.com/api/json/v2/preview/search-by-login/osint-tools?email={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hudsonrock.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Darknet search & discovery -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Ahmia (Tor Search)</h3><p class="text-gray-400 text-sm mt-1">Indexes public .onion sites (safe search).</p></div>
+        <a data-tool data-url="https://ahmia.fi/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ahmia.fi/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Intelligence X</h3><p class="text-gray-400 text-sm mt-1">Search engine indexing darknet & leaks.</p></div>
+        <a data-tool data-url="https://intelx.io/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://intelx.io/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Breach exposure footprint -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Have I Been Pwned</h3><p class="text-gray-400 text-sm mt-1">Public breach exposure (email/phone).</p></div>
+        <a data-tool data-url="https://haveibeenpwned.com/unifiedsearch/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://haveibeenpwned.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Paste/temporary sites (legit discovery only) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Pastebin (Search)</h3><p class="text-gray-400 text-sm mt-1">Discover mentions (respect TOS).</p></div>
+        <a data-tool data-url="https://pastebin.com/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://pastebin.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Ransomware intel (additional) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">RansomWatch</h3><p class="text-gray-400 text-sm mt-1">Ransomware group leak monitoring.</p></div>
+        <a data-tool data-url="https://ransomwatch.telemetry.ltd/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ransomwatch.telemetry.ltd/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">Ransomwhere</h3><p class="text-gray-400 text-sm mt-1">Ransomware payments tracking (research).</p></div>
+        <a data-tool data-url="https://ransomwhe.re/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://ransomwhe.re/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Compromise signals & network context -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">AbuseIPDB</h3><p class="text-gray-400 text-sm mt-1">IP abuse reports (bot/scanner clues).</p></div>
+        <a data-tool data-url="https://abuseipdb.com/check/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://abuseipdb.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Malware infra overlap (use carefully) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">URLHaus</h3><p class="text-gray-400 text-sm mt-1">Malware/botnet distribution URLs.</p></div>
+        <a data-tool data-url="https://urlhaus.abuse.ch/browse.php?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Brand/domain lookalikes (initial access) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">dnstwister (Typosquats)</h3><p class="text-gray-400 text-sm mt-1">Detect lookalike phishing domains.</p></div>
+        <a data-tool data-url="https://dnstwister.report/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dnstwister.report/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Extra discovery / news context -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">BleepingComputer (Search)</h3><p class="text-gray-400 text-sm mt-1">Ransomware & breach news.</p></div>
+        <a data-tool data-url="https://www.bleepingcomputer.com/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.bleepingcomputer.com/" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Workflow: leak trackers (Ransomware.live/RansomWatch) → darknet/search (Ahmia, Intelligence X) → exposure checks (HIBP, Hudson Rock preview) → infra & abuse context (GreyNoise/AbuseIPDB/URLHaus).</li>
+      <li>Normalize the query: use bare domains (no protocol), valid hashes (prefer SHA-256), and quote multi-word terms.</li>
+      <li>Only access and handle material you are legally allowed to view; follow site TOS and avoid distributing sensitive PII or unlawful content.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

@@ -1,0 +1,181 @@
+<section class="space-y-6" id="breach-research-tools" data-main-category="Breach Leaked Database" data-sub-category="Research">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Research Toolkit</h2>
+      <p class="text-gray-300">
+        Browser extensions and web utilities for verifying leaks, enriching indicators, archiving sources, and researching entities.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. user@example.com, domain.com, hash, filename"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use {q} for quick lookups</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Archive sources before engaging</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Correlate: filename → hash → VT/urlscan</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Your requested Chrome extensions -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Bellingcat Filename Finder</h3><p class="text-gray-400 text-sm mt-1">Find reused filenames across the web.</p></div>
+      <a data-tool data-url="https://chromewebstore.google.com/detail/bellingcat-filename-finde/fdhodjpkigpaachejkipcghppfnnfdmp" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Street View Tracker</h3><p class="text-gray-400 text-sm mt-1">Timeline navigation for GSV.</p></div>
+      <a data-tool data-url="https://chromewebstore.google.com/detail/street-view-tracker/nlngoiabgfhbklfnidbhhcaakkojcocf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Netcraft Extension</h3><p class="text-gray-400 text-sm mt-1">Site risk, hosting & phishing intel.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/netcraft-extension/bmejphbfclcpmpohkggcjeibfilpamia" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">FOCA Files Finder</h3><p class="text-gray-400 text-sm mt-1">Expose documents & metadata.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/foca-files-finder/mhobefinhafbleanihidiifaedcceoij" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Fake Profile Detector (Deeplook)</h3><p class="text-gray-400 text-sm mt-1">Detect inauthentic social profiles.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/fake-profile-detector-dee/jbpcgcnnhmjmajjkgdaogpgefbnokpcc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Fake News Debunker (InVID)</h3><p class="text-gray-400 text-sm mt-1">Video/image verification toolbox.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/fake-news-debunker-by-inv/mhccpoafgdgbhnjfhkcmgknndkeenfhe" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Hiya Deepfake Voice Detector</h3><p class="text-gray-400 text-sm mt-1">Screen suspicious audio samples.</p></div>
+      <a data-tool data-url="https://chromewebstore.google.com/detail/hiya-deepfake-voice-detec/akmieeldmgcllmokbpaibfelofjiilpc" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <!-- Web utilities for breach research -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">urlscan.io</h3><p class="text-gray-400 text-sm mt-1">Scan URLs; see requests, infra, screenshots.</p></div>
+      <a data-tool data-url="https://urlscan.io/search/#query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://urlscan.io/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">VirusTotal</h3><p class="text-gray-400 text-sm mt-1">Analyze files, URLs, IPs, and domains.</p></div>
+      <a data-tool data-url="https://www.virustotal.com/gui/search/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.virustotal.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Intelligence X</h3><p class="text-gray-400 text-sm mt-1">Multi-source search incl. leaks/pastes.</p></div>
+      <a data-tool data-url="https://intelx.io/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://intelx.io/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Wayback Machine</h3><p class="text-gray-400 text-sm mt-1">Historical snapshots of sites.</p></div>
+      <a data-tool data-url="https://web.archive.org/web/*/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://web.archive.org" target="_blank" rel="noopener">Archive</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Archive.today</h3><p class="text-gray-400 text-sm mt-1">Immutable page snapshots.</p></div>
+      <a data-tool data-url="https://archive.today/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://archive.today/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Image / EXIF / reverse search -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">RevEye Reverse Image</h3><p class="text-gray-400 text-sm mt-1">Search image across engines.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/reveye-reverse-image-sear/keplipaflmkikgnipiplnjmlipacpkgh" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">EXIF Viewer Pro</h3><p class="text-gray-400 text-sm mt-1">Inspect metadata from images.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/exif-viewer-pro/mmbhfeiddhndihdjeganjggkmjapkffm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <!-- Email / domain enrichment -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Hunter.io</h3><p class="text-gray-400 text-sm mt-1">Find emails by domain.</p></div>
+      <a data-tool data-url="https://hunter.io/search/{q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hunter.io/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Infra scanners / certs -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Shodan</h3><p class="text-gray-400 text-sm mt-1">Internet-exposed services & leaks context.</p></div>
+      <a data-tool data-url="https://www.shodan.io/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.shodan.io/" target="_blank" rel="noopener">Search</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Censys</h3><p class="text-gray-400 text-sm mt-1">Hosts, certs, ASNs for pivoting.</p></div>
+      <a data-tool data-url="https://search.censys.io/search?resource=hosts&q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://search.censys.io/" target="_blank" rel="noopener">Search</a>
+    </div></article>
+
+    <!-- File & hash intel -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Hybrid Analysis</h3><p class="text-gray-400 text-sm mt-1">Dynamic malware analysis.</p></div>
+      <a data-tool data-url="https://www.hybrid-analysis.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.hybrid-analysis.com/" target="_blank" rel="noopener">Search</a>
+    </div></article>
+
+    <!-- Social / platform checks -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Snowflake (Twitter/X) Search Helper</h3><p class="text-gray-400 text-sm mt-1">Search X by ID/time windows.</p></div>
+      <a data-tool data-url="https://chrome.google.com/webstore/detail/tweet-hunter-snowflake/idjijphgapkcegkmomkekmmhakgkfjkk" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Install</a>
+    </div></article>
+
+    <!-- Docs & PDF intel -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Google Dork Builder</h3><p class="text-gray-400 text-sm mt-1">Build queries to find exposed docs.</p></div>
+      <a data-tool data-url="https://dorksearch.com/#q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://dorksearch.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Preserve evidence first (Archive.today & Wayback), then interact with sources.</li>
+      <li>Pivot filenames → hashes → VT/urlscan → infra (Shodan/Censys) → ownership (Hunter/WHOIS).</li>
+      <li>Validate media with InVID/RevEye/EXIF before relying on contents.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

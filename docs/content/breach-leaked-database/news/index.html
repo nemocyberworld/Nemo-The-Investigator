@@ -1,0 +1,168 @@
+<section class="space-y-6" id="breach-news-tools" data-main-category="Breach Leaked Database" data-sub-category="News">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • News & Reporting</h2>
+      <p class="text-gray-300">
+        Track the latest breach disclosures, ransomware posts, investigations, and incident response write-ups. Use keywords, org names, CVEs, or domains.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter keyword / org / domain / CVE-YYYY-NNNN"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*170);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use quotes for exact org names</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Add site:domain.com to narrow</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Cross-check multiple sources</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Requested sources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Infosecurity Magazine (Breaches)</h3><p class="text-gray-400 text-sm mt-1">News & analysis of data breaches.</p></div>
+      <a data-tool data-url="https://www.infosecurity-magazine.com/data-breaches/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.infosecurity-magazine.com/data-breaches/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">The Hacker News</h3><p class="text-gray-400 text-sm mt-1">Security news, frequent breach coverage.</p></div>
+      <a data-tool data-url="https://thehackernews.com/search/label/Data%20Breach?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://thehackernews.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DataBreaches.net</h3><p class="text-gray-400 text-sm mt-1">Specialized breach reporting & analysis.</p></div>
+      <a data-tool data-url="https://www.databreaches.net/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://databreaches.net/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DDoSecrets • All Pages</h3><p class="text-gray-400 text-sm mt-1">Index of posted datasets (journalistic).</p></div>
+      <a data-tool data-url="https://ddosecrets.com/wiki/Special:AllPages" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Privacy Rights • Breach Chronology</h3><p class="text-gray-400 text-sm mt-1">Historic database of breaches.</p></div>
+      <a data-tool data-url="https://www.privacyrights.org/data-breaches?search={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.privacyrights.org/data-breaches" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Troy Hunt (Blog)</h3><p class="text-gray-400 text-sm mt-1">HIBP founder’s breach write-ups.</p></div>
+      <a data-tool data-url="https://www.troyhunt.com/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.troyhunt.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Extended, reputable sources -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">BleepingComputer</h3><p class="text-gray-400 text-sm mt-1">Ransomware & breach incident news.</p></div>
+      <a data-tool data-url="https://www.bleepingcomputer.com/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.bleepingcomputer.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">KrebsOnSecurity</h3><p class="text-gray-400 text-sm mt-1">In-depth investigations & breaches.</p></div>
+      <a data-tool data-url="https://krebsonsecurity.com/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://krebsonsecurity.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">The Record (Recorded Future)</h3><p class="text-gray-400 text-sm mt-1">Security news incl. ransomware.</p></div>
+      <a data-tool data-url="https://therecord.media/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://therecord.media/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">SecurityWeek</h3><p class="text-gray-400 text-sm mt-1">Enterprise breach coverage.</p></div>
+      <a data-tool data-url="https://www.securityweek.com/?s={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.securityweek.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Dark Reading</h3><p class="text-gray-400 text-sm mt-1">News & analysis on incidents.</p></div>
+      <a data-tool data-url="https://www.darkreading.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.darkreading.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">BankInfoSecurity</h3><p class="text-gray-400 text-sm mt-1">Financial sector breach news.</p></div>
+      <a data-tool data-url="https://www.bankinfosecurity.com/search?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.bankinfosecurity.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Ransomware trackers & blogs (context for news) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Ransomware.live</h3><p class="text-gray-400 text-sm mt-1">Aggregated leak-site tracking.</p></div>
+      <a data-tool data-url="https://www.ransomware.live/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Official notices / regulators -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">US HHS • HC3 & OCR</h3><p class="text-gray-400 text-sm mt-1">Healthcare sector breach posts.</p></div>
+      <a data-tool data-url="https://www.hhs.gov/about/news/index.html?search_api_fulltext={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Developer & social surfaces (leak rumors, advisories) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Reddit r/netsec (Search)</h3><p class="text-gray-400 text-sm mt-1">Community discussions & IOCs.</p></div>
+      <a data-tool data-url="https://www.reddit.com/r/netsec/search/?q={q}&restrict_sr=1&sort=new&t=year" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- General OSINT directories (for news pivots) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">IntelTechniques (Index)</h3><p class="text-gray-400 text-sm mt-1">Large OSINT link library.</p></div>
+        <a data-tool data-url="https://inteltechniques.com/tools/index.html" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3"><div>
+        <h3 class="font-semibold">OSINTTools.io</h3><p class="text-gray-400 text-sm mt-1">Directory of OSINT utilities.</p></div>
+        <a data-tool data-url="https://osinttools.io/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start broad (Hacker News/BleepingComputer/Record) → verify with specialized sources (DataBreaches.net, regulator notices).</li>
+      <li>Use <code>"brand name" AND (breach OR leak OR ransomware)</code> and add a date to narrow; pivot to ransomware trackers for confirmation.</li>
+      <li>Cross-reference multiple outlets and official statements before treating a claim as confirmed.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

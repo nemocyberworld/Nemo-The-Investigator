@@ -1,0 +1,228 @@
+<section class="space-y-6" id="breach-public-record-tools" data-main-category="Breach Leaked Database" data-sub-category="Public Record">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach • Public Record Tools</h2>
+      <p class="text-gray-300">
+        Government, legal, court, inmate, property, and voter record portals. Use names, case numbers, addresses, or entities.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="osintQuery" type="text" placeholder="Enter query, e.g. John Doe, Case #, Address"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
+      <div class="flex gap-2">
+        <button id="openAllOSINT"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#osintQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
+              const url=raw.replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*180);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('osintQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Some portals require accounts/fees</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use exact names and jurisdictions</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Respect privacy & applicable laws</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Username / meta directories -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">WhatsMyName</h3><p class="text-gray-400 text-sm mt-1">Find usernames across sites.</p></div>
+      <a data-tool data-url="https://whatsmyname.app/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Record index portals -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">SearchSystems Public Records</h3><p class="text-gray-400 text-sm mt-1">Directory of U.S. public records.</p></div>
+      <a data-tool data-url="http://publicrecords.searchsystems.net/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">OnlineSearches</h3><p class="text-gray-400 text-sm mt-1">Public records by state/county.</p></div>
+      <a data-tool data-url="http://publicrecords.onlinesearches.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Black Book Online</h3><p class="text-gray-400 text-sm mt-1">Large directory of free record lookups.</p></div>
+      <a data-tool data-url="https://www.blackbookonline.info/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">BRB Public Records</h3><p class="text-gray-400 text-sm mt-1">Free directory to public record sites.</p></div>
+      <a data-tool data-url="https://www.brbpub.com/freeresources/pubrecsitesSearch.aspx" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Corporate / filings -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">SEC EDGAR</h3><p class="text-gray-400 text-sm mt-1">Company filings & disclosures.</p></div>
+      <a data-tool data-url="https://www.sec.gov/edgar/searchedgar/webusers.htm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Courts: US & international -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CourtListener</h3><p class="text-gray-400 text-sm mt-1">US court opinions & filings.</p></div>
+      <a data-tool data-url="https://www.courtlistener.com/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.courtlistener.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">PACER</h3><p class="text-gray-400 text-sm mt-1">US federal court records (paid).</p></div>
+      <a data-tool data-url="https://pacer.uscourts.gov/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">US Courts • Locator</h3><p class="text-gray-400 text-sm mt-1">Find federal courts.</p></div>
+      <a data-tool data-url="http://www.uscourts.gov/court-locator" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CourtReference</h3><p class="text-gray-400 text-sm mt-1">Directory of US courts by state.</p></div>
+      <a data-tool data-url="http://www.courtreference.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">US Tax Court Dockets</h3><p class="text-gray-400 text-sm mt-1">Search Tax Court dockets.</p></div>
+      <a data-tool data-url="https://www.ustaxcourt.gov/UstcDockInq/Default.aspx" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Property / records -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CourthouseDirect</h3><p class="text-gray-400 text-sm mt-1">Property & court records (varies).</p></div>
+      <a data-tool data-url="http://www.courthousedirect.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">QPublic (Schneider)</h3><p class="text-gray-400 text-sm mt-1">Property/parcel search (county).</p></div>
+      <a data-tool data-url="https://qpublic.schneidercorp.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Government directories -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">USA.gov • State & Tribal</h3><p class="text-gray-400 text-sm mt-1">Directory of governments.</p></div>
+      <a data-tool data-url="https://www.usa.gov/state-tribal-governments" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Tribal Institute</h3><p class="text-gray-400 text-sm mt-1">Native American legal resources.</p></div>
+      <a data-tool data-url="http://www.tribal-institute.org/index.htm" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Canada / Netherlands / Archives -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">CanLII (Canada)</h3><p class="text-gray-400 text-sm mt-1">Canadian case law & statutes.</p></div>
+      <a data-tool data-url="https://www.canlii.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Rechtspraak (NL)</h3><p class="text-gray-400 text-sm mt-1">Dutch court judgments.</p></div>
+      <a data-tool data-url="https://hgr.rechtspraak.nl/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">US National Archives AAD</h3><p class="text-gray-400 text-sm mt-1">Access to Archival Databases.</p></div>
+      <a data-tool data-url="https://aad.archives.gov/aad/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Officiële Bekendmakingen (NL)</h3><p class="text-gray-400 text-sm mt-1">Dutch official publications.</p></div>
+      <a data-tool data-url="https://zoek.officielebekendmakingen.nl/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Arrests / inmates / mugshots -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Arrests.org</h3><p class="text-gray-400 text-sm mt-1">US arrest listings.</p></div>
+      <a data-tool data-url="http://www.arrests.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Family Watchdog</h3><p class="text-gray-400 text-sm mt-1">Sex offender registry search.</p></div>
+      <a data-tool data-url="http://www.familywatchdog.us/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">InmateAid</h3><p class="text-gray-400 text-sm mt-1">Inmate search & info.</p></div>
+      <a data-tool data-url="https://www.inmateaid.com/inmate-search?name={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.inmateaid.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">TheInmateLocator</h3><p class="text-gray-400 text-sm mt-1">US inmate locator index.</p></div>
+      <a data-tool data-url="http://theinmatelocator.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">JailBase</h3><p class="text-gray-400 text-sm mt-1">Arrests & mugshots (by county).</p></div>
+      <a data-tool data-url="http://www.jailbase.com/en/search/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">Mugshots.com</h3><p class="text-gray-400 text-sm mt-1">Mugshot search (US).</p></div>
+      <a data-tool data-url="http://mugshots.com/search.html?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="http://mugshots.com/search.html" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">TheInmateSearch</h3><p class="text-gray-400 text-sm mt-1">Inmate search directory.</p></div>
+      <a data-tool data-url="https://theinmatesearch.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Docket / monitoring -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">DocketAlarm</h3><p class="text-gray-400 text-sm mt-1">Court dockets & alerts.</p></div>
+      <a data-tool data-url="https://www.docketalarm.com/search/?query={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.docketalarm.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <!-- Voter / people -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">VoterRecords.com</h3><p class="text-gray-400 text-sm mt-1">US voter registration search.</p></div>
+      <a data-tool data-url="https://www.voterrecords.com/search/?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.voterrecords.com/" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover-border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3">
+      <div><h3 class="font-semibold">PeopleSearch.ph</h3><p class="text-gray-400 text-sm mt-1">Philippines people search.</p></div>
+      <a data-tool data-url="https://peoplesearch.ph/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a>
+    </div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Start with exact full name + jurisdiction; add DOB/case # to refine.</li>
+      <li>Use multiple sources: docket → property → corporate filings → voter.</li>
+      <li>Mind paywalls (PACER, DocketAlarm) and FOIA procedures where needed.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

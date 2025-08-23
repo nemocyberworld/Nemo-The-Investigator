@@ -1,0 +1,153 @@
+<section class="space-y-6" id="breach-leaked-social">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Breach & Leaked Database Tools</h2>
+      <p class="text-gray-300">
+        Sub-category: <span class="font-semibold text-indigo-400">Social Media</span><br>
+        Collection of tools and browser extensions to investigate leaked data, social footprints, and online activity.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="breachQuery" type="text" placeholder="Enter username, email, or ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllBreach').click();}">
+      <div class="flex gap-2">
+        <button id="openAllBreach"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#breachQuery');
+            const q=(input.value||'').trim();
+            if(!q){input.focus(); return;}
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              const url=(a.getAttribute('data-url')||a.getAttribute('href')).replaceAll('{q}', encodeURIComponent(q));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('breachQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use usernames, emails, or IDs</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Twitter Layout -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Old Twitter Layout 2023</h3>
+          <p class="text-gray-400 text-sm mt-1">Restore old Twitter/X layout for OSINT usability.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/old-twitter-layout-2023/jgejdcdoeeabklepnkdbglgccjpdgpmf"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/old-twitter-layout-2023/jgejdcdoeeabklepnkdbglgccjpdgpmf" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Reddit Enhancement Suite -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Reddit Enhancement Suite</h3>
+          <p class="text-gray-400 text-sm mt-1">Enhance Reddit OSINT with advanced filters & layouts.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/reddit-enhancement-suite/kbmfpngjjgdllneeigpgjifpgocmfgmb"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/reddit-enhancement-suite/kbmfpngjjgdllneeigpgjifpgocmfgmb" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Sort for TikTok -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Sort for TikTok</h3>
+          <p class="text-gray-400 text-sm mt-1">Organize TikTok results for targeted social analysis.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/sort-for-tiktok/piiiffonpmeolocfghlpeolmdabhiemi"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/sort-for-tiktok/piiiffonpmeolocfghlpeolmdabhiemi" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Picuki Switch -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">Picuki Switch</h3>
+          <p class="text-gray-400 text-sm mt-1">Instagram viewer alternative for OSINT purposes.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/picuki-switch/elmbjjhgiifenlhffpjcjfkjmilbbfki"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/picuki-switch/elmbjjhgiifenlhffpjcjfkjmilbbfki" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Telegram Group Search -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">TG Search Engine</h3>
+          <p class="text-gray-400 text-sm mt-1">Find public Telegram groups & channels quickly.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/tg-search-engine-tg-group/ilpgiemienkecbgdhdbgdjkafodgfojl"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/tg-search-engine-tg-group/ilpgiemienkecbgdhdbgdjkafodgfojl" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- VidIQ for YouTube -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h3 class="font-semibold">VidIQ Vision for YouTube</h3>
+          <p class="text-gray-400 text-sm mt-1">Analytics & metadata insights for YouTube OSINT.</p>
+        </div>
+        <a data-tool data-url="https://chrome.google.com/webstore/detail/vidiq-vision-for-youtube/pachckjkecffpdphbpmfolblodfkgbhl"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm"
+           href="https://chrome.google.com/webstore/detail/vidiq-vision-for-youtube/pachckjkecffpdphbpmfolblodfkgbhl" target="_blank" rel="noopener">Open</a>
+      </div>
+    </article>
+
+    <!-- Add more tools here -->
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use leaked usernames & emails across multiple social platforms.</li>
+      <li>Cross-check Telegram, Twitter/X, Instagram, TikTok, YouTube for linked identities.</li>
+      <li>Combine breach database hits with social footprint mapping.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
