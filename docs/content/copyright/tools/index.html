@@ -1,0 +1,195 @@
+<section class="space-y-6" id="copyright-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Copyright — Tools</h2>
+      <p class="text-gray-300">
+        Essential tools for copyright protection, plagiarism detection, DMCA takedowns, and monitoring unauthorized use of creative works.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="copyrightQuery" type="text" placeholder="Enter keyword, URL, or author name"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCopyright').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCopyright"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#copyrightQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{}')) url=url.replaceAll('{}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('copyrightQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Use URLs or text snippets for best results</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Many services offer free & paid plans</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Combine plagiarism checks with copyright registries</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided Tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Infringement Report</h3><p class="text-gray-400 text-sm mt-1">Automated DMCA & copyright complaint submission.</p></div>
+        <a data-tool data-url="https://infringement.report/get-started" href="https://infringement.report/get-started" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Plaghunter</h3><p class="text-gray-400 text-sm mt-1">Track image use across the web.</p></div>
+        <a data-tool data-url="https://www.plaghunter.com" href="https://www.plaghunter.com" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">DMCA.com</h3><p class="text-gray-400 text-sm mt-1">Takedown services for infringing content.</p></div>
+        <a data-tool data-url="https://www.dmca.com/" href="https://www.dmca.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Copyscape</h3><p class="text-gray-400 text-sm mt-1">Plagiarism detection for web content.</p></div>
+        <a data-tool data-url="https://www.copyscape.com/" href="https://www.copyscape.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Plagscan</h3><p class="text-gray-400 text-sm mt-1">Text plagiarism analysis tool.</p></div>
+        <a data-tool data-url="https://plagscan.com/" href="https://plagscan.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Turnitin</h3><p class="text-gray-400 text-sm mt-1">Academic plagiarism & originality checker.</p></div>
+        <a data-tool data-url="https://www.turnitin.com/" href="https://www.turnitin.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Pixsy</h3><p class="text-gray-400 text-sm mt-1">Image copyright monitoring & enforcement.</p></div>
+        <a data-tool data-url="https://www.pixsy.com/" href="https://www.pixsy.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Copytrack</h3><p class="text-gray-400 text-sm mt-1">Protect and claim compensation for photo use.</p></div>
+        <a data-tool data-url="https://www.copytrack.com/" href="https://www.copytrack.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Extended Tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Plagramme</h3><p class="text-gray-400 text-sm mt-1">Deep text plagiarism detection.</p></div>
+        <a data-tool data-url="https://plagramme.com/" href="https://plagramme.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Quetext</h3><p class="text-gray-400 text-sm mt-1">Quick plagiarism & citation checker.</p></div>
+        <a data-tool data-url="https://www.quetext.com/" href="https://www.quetext.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Grammarly Plagiarism Checker</h3><p class="text-gray-400 text-sm mt-1">Integrated plagiarism scan with writing assistance.</p></div>
+        <a data-tool data-url="https://www.grammarly.com/plagiarism-checker" href="https://www.grammarly.com/plagiarism-checker" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Plagiarism Detector</h3><p class="text-gray-400 text-sm mt-1">Free plagiarism detection tool.</p></div>
+        <a data-tool data-url="https://plagiarismdetector.net/" href="https://plagiarismdetector.net/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Small SEO Tools (Plagiarism Checker)</h3><p class="text-gray-400 text-sm mt-1">SEO-focused plagiarism checker.</p></div>
+        <a data-tool data-url="https://smallseotools.com/plagiarism-checker/" href="https://smallseotools.com/plagiarism-checker/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Copyright.gov</h3><p class="text-gray-400 text-sm mt-1">US Copyright Office official portal.</p></div>
+        <a data-tool data-url="https://www.copyright.gov/" href="https://www.copyright.gov/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">SafeCreative.org</h3><p class="text-gray-400 text-sm mt-1">Register and protect your creative works.</p></div>
+        <a data-tool data-url="https://www.safecreative.org/" href="https://www.safecreative.org/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Copyright protection notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use plagiarism detectors (Turnitin, Copyscape, Plagscan) for text & academic content.</li>
+      <li>Image rights can be monitored with Pixsy, Copytrack, and Plaghunter.</li>
+      <li>Register works officially at <strong>Copyright.gov</strong> or <strong>SafeCreative.org</strong> for legal protection.</li>
+      <li>DMCA.com and Infringement Report simplify takedown requests for stolen content.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
