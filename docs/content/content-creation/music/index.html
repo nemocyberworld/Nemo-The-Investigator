@@ -1,0 +1,109 @@
+<section class="space-y-6" id="music-creator">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Content Creation — Music</h2>
+      <p class="text-gray-300">
+        Platforms and tools for musicians and creators to share, distribute, and promote their music worldwide.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="musicQuery" type="text" placeholder="Enter artist name, username, or profile ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllMusic').click();}">
+      <div class="flex gap-2">
+        <button id="openAllMusic"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#musicQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{}')) url=url.replaceAll('{}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('musicQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Use artist usernames or profile handles</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run across all platforms</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Supports discovery, distribution & promotion</span>
+  </div>
+
+  <!-- Music tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MyMusicStaff</h3><p class="text-gray-400 text-sm mt-1">Music teacher & student management platform.</p></div><a data-tool data-url="https://{}.mymusicstaff.com" href="https://mymusicstaff.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">MuseScore</h3><p class="text-gray-400 text-sm mt-1">Share sheet music & compositions.</p></div><a data-tool data-url="https://musescore.com/user/{}" href="https://musescore.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BandLab</h3><p class="text-gray-400 text-sm mt-1">Cloud music creation & collaboration.</p></div><a data-tool data-url="https://www.bandlab.com/{}" href="https://www.bandlab.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Audiomack</h3><p class="text-gray-400 text-sm mt-1">Upload & stream free music.</p></div><a data-tool data-url="https://audiomack.com/{}" href="https://audiomack.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Jamendo</h3><p class="text-gray-400 text-sm mt-1">Independent artists sharing & licensing music.</p></div><a data-tool data-url="https://www.jamendo.com/artist/{}" href="https://www.jamendo.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Songkick</h3><p class="text-gray-400 text-sm mt-1">Track concerts & live shows.</p></div><a data-tool data-url="https://www.songkick.com/artists/{}" href="https://www.songkick.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Audius</h3><p class="text-gray-400 text-sm mt-1">Decentralized music streaming platform.</p></div><a data-tool data-url="https://audius.co/{}" href="https://audius.co/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- Extended music tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">SoundCloud</h3><p class="text-gray-400 text-sm mt-1">Upload & share tracks globally.</p></div><a data-tool data-url="https://soundcloud.com/{}" href="https://soundcloud.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">ReverbNation</h3><p class="text-gray-400 text-sm mt-1">Tools for independent musicians to grow.</p></div><a data-tool data-url="https://www.reverbnation.com/{}" href="https://www.reverbnation.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Mixcloud</h3><p class="text-gray-400 text-sm mt-1">Stream DJ mixes & radio shows.</p></div><a data-tool data-url="https://www.mixcloud.com/{}" href="https://www.mixcloud.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">BeatStars</h3><p class="text-gray-400 text-sm mt-1">Marketplace for beats & instrumentals.</p></div><a data-tool data-url="https://www.beatstars.com/{}" href="https://www.beatstars.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">DistroKid</h3><p class="text-gray-400 text-sm mt-1">Music distribution service to Spotify, Apple, etc.</p></div><a data-tool data-url="https://distrokid.com/" href="https://distrokid.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">TuneCore</h3><p class="text-gray-400 text-sm mt-1">Digital distribution & publishing for artists.</p></div><a data-tool data-url="https://www.tunecore.com/" href="https://www.tunecore.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Bandcamp</h3><p class="text-gray-400 text-sm mt-1">Sell music & connect directly with fans.</p></div><a data-tool data-url="https://{}.bandcamp.com" href="https://bandcamp.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Spotify Artist</h3><p class="text-gray-400 text-sm mt-1">Official Spotify artist pages.</p></div><a data-tool data-url="https://open.spotify.com/artist/{}" href="https://open.spotify.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Apple Music Artist</h3><p class="text-gray-400 text-sm mt-1">Apple Music artist profiles.</p></div><a data-tool data-url="https://music.apple.com/artist/{}" href="https://music.apple.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Deezer Artist</h3><p class="text-gray-400 text-sm mt-1">Artist pages on Deezer streaming platform.</p></div><a data-tool data-url="https://www.deezer.com/artist/{}" href="https://www.deezer.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Music Creator notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use platforms like SoundCloud, BandLab, and Audiomack for free sharing & discovery.</li>
+      <li>Jamendo, ReverbNation, and Bandcamp are strong for indie artists building an audience.</li>
+      <li>DistroKid, TuneCore, and CD Baby distribute to Spotify, Apple, and other stores.</li>
+      <li>Songkick helps track live performances and fan engagement.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

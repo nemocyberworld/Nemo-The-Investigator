@@ -1,0 +1,109 @@
+<section class="space-y-6" id="social-media-tools">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Content Creation — Social Media</h2>
+      <p class="text-gray-300">
+        Platforms and tools for creating, scheduling, managing, and enhancing social media content effectively.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="socialMediaQuery" type="text" placeholder="Enter brand, campaign, or handle"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllSocialMedia').click();}">
+      <div class="flex gap-2">
+        <button id="openAllSocialMedia"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#socialMediaQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{}')) url=url.replaceAll('{}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('socialMediaQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Use campaign names or handles</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run across tools</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Plan, design, and schedule posts smarter</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Provided tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Copy.ai Social Media</h3><p class="text-gray-400 text-sm mt-1">AI-driven copy for social media managers.</p></div><a data-tool data-url="https://www.copy.ai/social-media-managers" href="https://www.copy.ai/social-media-managers" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Canva</h3><p class="text-gray-400 text-sm mt-1">Graphic design platform for social media content.</p></div><a data-tool data-url="https://www.canva.com/" href="https://www.canva.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Unsplash</h3><p class="text-gray-400 text-sm mt-1">Free stock photos for social visuals.</p></div><a data-tool data-url="https://unsplash.com/" href="https://unsplash.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Unfold</h3><p class="text-gray-400 text-sm mt-1">Story templates for Instagram & TikTok.</p></div><a data-tool data-url="https://unfold.com/" href="https://unfold.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <!-- Extended tools -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Hootsuite</h3><p class="text-gray-400 text-sm mt-1">Manage & schedule posts across multiple networks.</p></div><a data-tool data-url="https://hootsuite.com/" href="https://hootsuite.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Buffer</h3><p class="text-gray-400 text-sm mt-1">Simple scheduling & analytics for social media.</p></div><a data-tool data-url="https://buffer.com/" href="https://buffer.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Later</h3><p class="text-gray-400 text-sm mt-1">Visual Instagram & TikTok scheduling.</p></div><a data-tool data-url="https://later.com/" href="https://later.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Sprout Social</h3><p class="text-gray-400 text-sm mt-1">Advanced social media management platform.</p></div><a data-tool data-url="https://sproutsocial.com/" href="https://sproutsocial.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Pallyy</h3><p class="text-gray-400 text-sm mt-1">Affordable scheduling tool for creators.</p></div><a data-tool data-url="https://pallyy.com/" href="https://pallyy.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Lumen5</h3><p class="text-gray-400 text-sm mt-1">Turn text into engaging videos.</p></div><a data-tool data-url="https://lumen5.com/" href="https://lumen5.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Animoto</h3><p class="text-gray-400 text-sm mt-1">Create social-friendly video content easily.</p></div><a data-tool data-url="https://animoto.com/" href="https://animoto.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Kapwing</h3><p class="text-gray-400 text-sm mt-1">Online collaborative editor for memes & videos.</p></div><a data-tool data-url="https://www.kapwing.com/" href="https://www.kapwing.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">VistaCreate</h3><p class="text-gray-400 text-sm mt-1">Graphic design tool for social campaigns.</p></div><a data-tool data-url="https://create.vista.com/" href="https://create.vista.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Snappa</h3><p class="text-gray-400 text-sm mt-1">Design graphics for posts & ads quickly.</p></div><a data-tool data-url="https://snappa.com/" href="https://snappa.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Piktochart</h3><p class="text-gray-400 text-sm mt-1">Infographics & visual storytelling tool.</p></div><a data-tool data-url="https://piktochart.com/" href="https://piktochart.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Adobe Express</h3><p class="text-gray-400 text-sm mt-1">Quick design & branding for creators.</p></div><a data-tool data-url="https://www.adobe.com/express/" href="https://www.adobe.com/express/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Bitly</h3><p class="text-gray-400 text-sm mt-1">Shorten, brand, and track social links.</p></div><a data-tool data-url="https://bitly.com/" href="https://bitly.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Social Media notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Use design tools like Canva, VistaCreate, and Snappa for quick branded content.</li>
+      <li>Manage campaigns across networks with Hootsuite, Buffer, and Sprout Social.</li>
+      <li>For videos, Lumen5, Animoto, and Kapwing make it simple to repurpose content.</li>
+      <li>Copy.ai and Unsplash help generate copy + visuals faster.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>

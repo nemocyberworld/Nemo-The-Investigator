@@ -1,0 +1,181 @@
+<section class="space-y-6" id="creator-support">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold">Content Creation — Creator Support</h2>
+      <p class="text-gray-300">
+        Platforms and tools that help creators receive financial support, crowdfund projects, and monetize their content directly from their audience.
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <input id="creatorSupportQuery" type="text" placeholder="Enter creator username or profile ID"
+             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCreatorSupport').click();}">
+      <div class="flex gap-2">
+        <button id="openAllCreatorSupport"
+          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          onclick="
+            const root=this.closest('section');
+            const input=root.querySelector('#creatorSupportQuery');
+            const q=(input.value||'').trim();
+            const links=[...root.querySelectorAll('a[data-tool]')];
+            let blocked=false;
+            links.forEach((a,i)=>{
+              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
+              if(url.includes('{}')) url=url.replaceAll('{}', encodeURIComponent(q||''));
+              setTimeout(()=>{
+                const w=window.open(url,'_blank','noopener');
+                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
+                if(i===links.length-1 && blocked){
+                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
+                }
+              }, i*200);
+            });
+          ">
+          Open All
+        </button>
+        <button
+          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
+          onclick="
+            const v=(document.getElementById('creatorSupportQuery').value||'');
+            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
+          ">
+          Copy Query
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick tips -->
+  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Use creator usernames</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run across all platforms</span>
+    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Supports crowdfunding & recurring donations</span>
+  </div>
+
+  <!-- Tools grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Buy Me a Coffee -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Buy Me a Coffee</h3><p class="text-gray-400 text-sm mt-1">Support creators with one-time or recurring tips.</p></div>
+        <a data-tool data-url="https://www.buymeacoffee.com/s/{}" href="https://www.buymeacoffee.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Kickstarter -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Kickstarter</h3><p class="text-gray-400 text-sm mt-1">Crowdfund creative projects globally.</p></div>
+        <a data-tool data-url="https://www.kickstarter.com/profile/{}/projects" href="https://www.kickstarter.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Patreon -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Patreon</h3><p class="text-gray-400 text-sm mt-1">Membership platform for ongoing creator support.</p></div>
+        <a data-tool data-url="https://www.patreon.com/{}" href="https://www.patreon.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Ko-fi -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Ko-fi</h3><p class="text-gray-400 text-sm mt-1">Donate or subscribe to creators with small contributions.</p></div>
+        <a data-tool data-url="https://ko-fi.com/{}" href="https://ko-fi.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- GoFundMe -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">GoFundMe</h3><p class="text-gray-400 text-sm mt-1">Fundraising campaigns for creators & causes.</p></div>
+        <a data-tool data-url="https://www.gofundme.com/f/{}" href="https://www.gofundme.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Indiegogo -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Indiegogo</h3><p class="text-gray-400 text-sm mt-1">Global crowdfunding platform for creators.</p></div>
+        <a data-tool data-url="https://www.indiegogo.com/individuals/{}" href="https://www.indiegogo.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Substack -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Substack</h3><p class="text-gray-400 text-sm mt-1">Subscription newsletters supporting writers & creators.</p></div>
+        <a data-tool data-url="https://{}.substack.com/" href="https://substack.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- OpenCollective -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">OpenCollective</h3><p class="text-gray-400 text-sm mt-1">Transparent collective funding for creators & projects.</p></div>
+        <a data-tool data-url="https://opencollective.com/{}" href="https://opencollective.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Liberapay -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Liberapay</h3><p class="text-gray-400 text-sm mt-1">Recurring donations platform for creators.</p></div>
+        <a data-tool data-url="https://liberapay.com/{}" href="https://liberapay.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Gumroad -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Gumroad</h3><p class="text-gray-400 text-sm mt-1">Sell digital products directly to your audience.</p></div>
+        <a data-tool data-url="https://{}.gumroad.com/" href="https://gumroad.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- Itch.io -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">Itch.io</h3><p class="text-gray-400 text-sm mt-1">Support indie game developers & buy games directly.</p></div>
+        <a data-tool data-url="https://{}.itch.io/" href="https://itch.io/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+    <!-- OnlyFans (creator side) -->
+    <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+      <div class="flex items-start justify-between gap-3">
+        <div><h3 class="font-semibold">OnlyFans</h3><p class="text-gray-400 text-sm mt-1">Subscription-based creator support platform.</p></div>
+        <a data-tool data-url="https://onlyfans.com/{}" href="https://onlyfans.com/" target="_blank" rel="noopener"
+           class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a>
+      </div>
+    </article>
+
+  </div>
+
+  <details class="mt-2">
+    <summary class="cursor-pointer text-sm text-gray-300">Creator Support notes</summary>
+    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
+      <li>Buy Me a Coffee, Ko-fi, Patreon, and Liberapay are best for ongoing audience tips.</li>
+      <li>Crowdfunding platforms like Kickstarter, Indiegogo, and GoFundMe help fund specific projects.</li>
+      <li>Substack, Gumroad, and Itch.io let creators directly monetize writing, software, or games.</li>
+      <li>OpenCollective provides transparent group support for creator collectives.</li>
+    </ul>
+  </details>
+
+  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
+    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
+  </div>
+</section>
