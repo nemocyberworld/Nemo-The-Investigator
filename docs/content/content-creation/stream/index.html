@@ -1,56 +1,3 @@
-<section class="space-y-6" id="stream-tools">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Content Creation — Stream</h2>
-      <p class="text-gray-300">
-        Platforms and tools for live streaming, overlays, engagement, and cross-platform broadcasting.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="streamQuery" type="text" placeholder="Enter streamer name or channel"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllStream').click();}">
-      <div class="flex gap-2">
-        <button id="openAllStream"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#streamQuery');
-            const q=(input.value||'').trim();
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
-              if(url.includes('{}')) url=url.replaceAll('{}', encodeURIComponent(q||''));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*200);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('streamQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Use streamer usernames</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to launch across all platforms</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Best for overlays, monetization, multi-streaming</span>
-  </div>
 
   <!-- Tools grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -88,18 +35,3 @@
     <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">XSplit</h3><p class="text-gray-400 text-sm mt-1">Professional live streaming & recording software.</p></div><a data-tool data-url="https://www.xsplit.com/" href="https://www.xsplit.com/" target="_blank" rel="noopener" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm">Open</a></div></article>
 
   </div>
-
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Streaming notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>OBS Studio & XSplit are professional-grade streaming software.</li>
-      <li>Streamlabs, StreamElements, and Melon provide overlays, alerts, and cloud tools.</li>
-      <li>Crossclip & Streamladder are great for repurposing Twitch clips into Shorts.</li>
-      <li>Restream & Lightstream help broadcast to multiple platforms simultaneously.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
-  </div>
-</section>

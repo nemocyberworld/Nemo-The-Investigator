@@ -1,56 +1,3 @@
-<section class="space-y-6" id="company-special-compliance">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Company Business — Special Compliance</h2>
-      <p class="text-gray-300">
-        Compliance, sanctions, financial identifiers, and regulatory lookup tools for risk management, AML checks, and corporate due diligence.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="complianceQuery" type="text" placeholder="Optional: company, bank, or identifier"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllCompliance').click();}">
-      <div class="flex gap-2">
-        <button id="openAllCompliance"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#complianceQuery');
-            const q=(input.value||'').trim();
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              let url=(a.getAttribute('data-url')||a.getAttribute('href')||'');
-              if(url.includes('{q}')) url=url.replaceAll('{q}', encodeURIComponent(q||''));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*200);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('complianceQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for this site</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Useful for AML/KYC, bank & VAT validation</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Press Enter to run bulk queries</span>
-  </div>
 
   <!-- Tools grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -93,17 +40,4 @@
 
   </div>
 
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Compliance notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>Use FCA, LEI, and VAT lookup for corporate compliance validation.</li>
-      <li>OFAC & EU sanctions are critical for AML/KYC checks.</li>
-      <li>Sort codes, IBAN, and Bank Codes are essential for financial compliance checks.</li>
-      <li>BlackBookOnline & ICP provide deeper profiling and credit compliance data.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
-  </div>
-</section>
+ 
