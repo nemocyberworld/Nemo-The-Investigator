@@ -1,60 +1,4 @@
-<!-- Main Category: Browser Extension -->
-<section class="space-y-6" id="browser-extension-ai-writing">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Browser Extensions</h2>
-      <p class="text-gray-300">
-        AI-powered writing assistants, summarizers, and productivity tools for browsers.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="aiWritingQuery" type="text" placeholder="Optional query (some tools use it)"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllAIWriting').click();}">
-      <div class="flex gap-2">
-        <button id="openAllAIWriting"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#aiWritingQuery');
-            const q=(input.value||'').trim();
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              let url=(a.getAttribute('data-url')||a.getAttribute('href'));
-              url=url.replaceAll('{q}', encodeURIComponent(q));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarnAIWriting'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*200);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('aiWritingQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Tip: Allow pop-ups for "Open All"</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Test multiple AI assistants</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Check free vs pro features</span>
-  </div>
-
-  <!-- Sub-category: AI Writing Assistant -->
-  <h3 class="text-xl font-semibold mt-6">AI Writing Assistant Extensions</h3>
 
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 
@@ -131,17 +75,3 @@
     </div><a data-tool data-url="https://chrome.google.com/webstore/detail/rytr-ai-writing-assistant/ljobfblajbmmblkbjdpdmhkghoongbcf" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://chrome.google.com/webstore/detail/rytr-ai-writing-assistant/ljobfblajbmmblkbjdpdmhkghoongbcf" target="_blank" rel="noopener">Open</a></div></article>
 
   </div>
-
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>Check permissions before installing AI extensions (some request broad data access).</li>
-      <li>Compare generated writing quality across assistants for best fit.</li>
-      <li>Use multiple tools: one for summarization, one for paraphrasing, one for long-form writing.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarnAIWriting" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open extensions one by one.
-  </div>
-</section>

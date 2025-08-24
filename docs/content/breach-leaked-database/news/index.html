@@ -1,57 +1,4 @@
-<section class="space-y-6" id="breach-news-tools" data-main-category="Breach Leaked Database" data-sub-category="News">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Breach • News & Reporting</h2>
-      <p class="text-gray-300">
-        Track the latest breach disclosures, ransomware posts, investigations, and incident response write-ups. Use keywords, org names, CVEs, or domains.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="osintQuery" type="text" placeholder="Enter keyword / org / domain / CVE-YYYY-NNNN"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
-      <div class="flex gap-2">
-        <button id="openAllOSINT"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#osintQuery');
-            const q=(input.value||'').trim();
-            if(!q){input.focus(); return;}
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
-              const url=raw.replaceAll('{q}', encodeURIComponent(q));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*170);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('osintQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use quotes for exact org names</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Add site:domain.com to narrow</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Cross-check multiple sources</span>
-  </div>
 
   <!-- Tools grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -152,17 +99,3 @@
     </article>
 
   </div>
-
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Technique notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>Start broad (Hacker News/BleepingComputer/Record) → verify with specialized sources (DataBreaches.net, regulator notices).</li>
-      <li>Use <code>"brand name" AND (breach OR leak OR ransomware)</code> and add a date to narrow; pivot to ransomware trackers for confirmation.</li>
-      <li>Cross-reference multiple outlets and official statements before treating a claim as confirmed.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
-  </div>
-</section>

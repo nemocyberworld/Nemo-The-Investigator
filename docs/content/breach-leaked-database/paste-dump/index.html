@@ -1,60 +1,4 @@
-<section class="space-y-6" id="breach-paste-dump-tools" data-main-category="Breach Leaked Database" data-sub-category="Paste Dump">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Breach • Paste Dump Tools & Monitoring</h2>
-      <p class="text-gray-300">
-        Search and monitor paste dump services where leaked data often appears. Includes paste sites and APIs for real-time monitoring.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="osintQuery" type="text" placeholder="Enter query, e.g. user@example.com, domain.com, password123"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllOSINT').click();}">
-      <div class="flex gap-2">
-        <button id="openAllOSINT"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#osintQuery');
-            const q=(input.value||'').trim();
-            if(!q){input.focus(); return;}
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              const raw=(a.getAttribute('data-url')||a.getAttribute('href'));
-              const url=raw.replaceAll('{q}', encodeURIComponent(q));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*180);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('osintQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Pastes are deleted fast → archive quickly</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use {q} for email/username/domain/IP</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">APIs allow automation & SIEM integration</span>
-  </div>
-
-  <!-- PASTE HOSTS -->
-  <h3 class="text-xl font-semibold text-indigo-400 mt-4">Paste Dump Sites</h3>
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 
     <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">Pastebin</h3><p class="text-gray-400 text-sm mt-1">Most common site for leaks/dumps.</p></div><a data-tool data-url="https://pastebin.com/search?q={q}" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
@@ -81,18 +25,3 @@
     <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-rose-600/50 transition"><div class="flex items-start justify-between gap-3"><div><h3 class="font-semibold">DumpMonitor</h3><p class="text-gray-400 text-sm mt-1">Twitter feed of live dumps.</p></div><a data-tool data-url="https://twitter.com/dumpmon" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" target="_blank" rel="noopener">Open</a></div></article>
 
   </div>
-
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>Pastes expire quickly → archive them with <code>wget</code> or <code>SingleFile</code>.</li>
-      <li>Use APIs (psbdmp, Leak-Lookup) for automation and alerts in SOC pipelines.</li>
-      <li>Tools like PwnBin and Scavenger scrape continuously for you.</li>
-      <li>DumpMonitor is passive, but provides real-time leak visibility.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open tools one by one.
-  </div>
-</section>
