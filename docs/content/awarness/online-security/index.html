@@ -1,56 +1,4 @@
-<section class="space-y-6" id="awareness-online-security">
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h2 class="text-2xl font-bold">Awareness — Online Security</h2>
-      <p class="text-gray-300">
-        Educational resources, privacy tools, and guides for staying secure online — covering VPNs, anonymity, website tracking, and cyber law awareness.
-      </p>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-2">
-      <input id="securityQuery" type="text" placeholder="Enter query (optional: domain, keyword)"
-             class="px-3 py-2 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-             onkeydown="if(event.key==='Enter'){document.getElementById('openAllSecurity').click();}">
-      <div class="flex gap-2">
-        <button id="openAllSecurity"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 font-semibold"
-          onclick="
-            const root=this.closest('section');
-            const input=root.querySelector('#securityQuery');
-            const q=(input.value||'').trim();
-            const links=[...root.querySelectorAll('a[data-tool]')];
-            let blocked=false;
-            links.forEach((a,i)=>{
-              const tpl=a.getAttribute('data-url')||a.getAttribute('href');
-              const url=tpl.replaceAll('{q}', encodeURIComponent(q));
-              setTimeout(()=>{
-                const w=window.open(url,'_blank','noopener');
-                if(!w||w.closed||typeof w.closed==='undefined') blocked=true;
-                if(i===links.length-1 && blocked){
-                  const warn=root.querySelector('#popupWarn'); if(warn) warn.classList.remove('hidden');
-                }
-              }, i*200);
-            });
-          ">
-          Open All
-        </button>
-        <button
-          class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700"
-          onclick="
-            const v=(document.getElementById('securityQuery').value||'');
-            if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(v); }
-          ">
-          Copy Query
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Quick tips -->
-  <div class="text-xs text-gray-400 flex flex-wrap gap-3">
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Always verify VPN providers</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Use HTTPS and secure DNS</span>
-    <span class="px-2 py-1 rounded-full border border-gray-700 bg-gray-900">Stay updated on security laws</span>
-  </div>
 
   <!-- Tools grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -216,19 +164,3 @@
 </article>
 
   </div>
-
-  <details class="mt-2">
-    <summary class="cursor-pointer text-sm text-gray-300">Awareness notes</summary>
-    <ul class="list-disc ml-6 text-gray-400 text-sm space-y-1 mt-2">
-      <li>Use trusted VPNs, but understand their limits — some log traffic.</li>
-      <li>Websites may block VPNs to enforce geo-restrictions or prevent abuse.</li>
-      <li>Stay updated on legal implications of online privacy and security.</li>
-      <li>Adopt tools like Tor and ProtonVPN to improve anonymity.</li>
-      <li>Check OWASP Top 10 for the most common web risks.</li>
-    </ul>
-  </details>
-
-  <div id="popupWarn" class="hidden text-amber-300 text-xs bg-amber-900/30 border border-amber-700 rounded p-2">
-    Your browser blocked some tabs. Please allow pop-ups for this site or open tools individually.
-  </div>
-</section>
