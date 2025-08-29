@@ -1753,3 +1753,189 @@
 
 
 </div>
+
+<!-- ================= CEH Practical Tools (Categorized) ================= -->
+<h2 class="mt-8 mb-4 text-xl font-bold">CEH Practical Tools (Categorized)</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+  <!-- Recon & Scanning -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Recon & Scanning</h3>
+        <p class="text-gray-400 text-sm mt-1">Network discovery, port/service enumeration.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Nmap</strong> – comprehensive port scanner and NSE scripts.</li>
+        </ul>
+      </div>
+      <a data-tool data-url="https://nmap.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://nmap.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- Password Attacks (Online/Offline) -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Password Attacks</h3>
+        <p class="text-gray-400 text-sm mt-1">Online & offline cracking/brute force.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Hydra</strong> – fast network login cracker for many protocols.</li>
+          <li><strong>John the Ripper</strong> – offline password cracker.</li>
+          <li><strong>Hashcat</strong> – GPU-accelerated hash cracking.</li>
+        </ul>
+      </div>
+      <div class="flex flex-col gap-2">
+        <a data-tool data-url="https://github.com/vanhauser-thc/thc-hydra" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/vanhauser-thc/thc-hydra" target="_blank" rel="noopener">Hydra</a>
+        <a data-tool data-url="https://www.openwall.com/john/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.openwall.com/john/" target="_blank" rel="noopener">John</a>
+        <a data-tool data-url="https://hashcat.net/hashcat/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hashcat.net/hashcat/" target="_blank" rel="noopener">Hashcat</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Web Application Testing -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Web Application Testing</h3>
+        <p class="text-gray-400 text-sm mt-1">SQL injection & WordPress security auditing.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>sqlmap</strong> – automated SQLi, DB takeover & dumping.</li>
+          <li><strong>WPScan</strong> – WordPress vulnerability scanner.</li>
+        </ul>
+      </div>
+      <div class="flex flex-col gap-2">
+        <a data-tool data-url="https://sqlmap.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://sqlmap.org/" target="_blank" rel="noopener">sqlmap</a>
+        <a data-tool data-url="https://wpscan.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://wpscan.com/" target="_blank" rel="noopener">WPScan</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Exploitation Framework -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Exploitation Framework</h3>
+        <p class="text-gray-400 text-sm mt-1">Payloads, exploits, post-exploitation modules.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Metasploit Framework</strong> – exploit development & automation.</li>
+        </ul>
+      </div>
+      <a data-tool data-url="https://www.metasploit.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.metasploit.com/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- Network Analysis / PCAP -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">Network Analysis / PCAP</h3>
+        <p class="text-gray-400 text-sm mt-1">Traffic capture, protocol inspection, dissectors.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Wireshark</strong> – graphical network protocol analyzer.</li>
+        </ul>
+      </div>
+      <a data-tool data-url="https://www.wireshark.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.wireshark.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+  <!-- LLMNR/NTLM Poisoning & Credential Capture -->
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">LLMNR/NTLM Poisoning</h3>
+        <p class="text-gray-400 text-sm mt-1">Network name resolution spoofing & credential capture.</p>
+        <ul class="text-gray-400 text-sm mt-2 list-disc pl-5 space-y-1">
+          <li><strong>Responder</strong> – LLMNR/NBT-NS/MDNS spoofing toolkit.</li>
+        </ul>
+      </div>
+      <a data-tool data-url="https://github.com/lgandx/Responder" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/lgandx/Responder" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+
+</div>
+
+<!-- ================= CEH Practical Tools (Categorized) ================= -->
+<h2 class="mt-8 mb-4 text-2xl font-bold text-white">CEH Practical Tools (Categorized)</h2>
+
+<!-- Recon & Scanning -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">Recon & Scanning</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h4 class="font-semibold">Nmap</h4>
+        <p class="text-gray-400 text-sm mt-1">Port scanner & service enumeration with NSE scripts.</p>
+      </div>
+      <a data-tool data-url="https://nmap.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://nmap.org/" target="_blank" rel="noopener">Open</a>
+    </div>
+  </article>
+</div>
+
+<!-- Password Attacks -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">Password Attacks</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">Hydra</h4>
+    <p class="text-gray-400 text-sm mt-1">Fast network login cracker.</p>
+    <a data-tool data-url="https://github.com/vanhauser-thc/thc-hydra" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/vanhauser-thc/thc-hydra" target="_blank" rel="noopener">Open</a>
+  </article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">John the Ripper</h4>
+    <p class="text-gray-400 text-sm mt-1">Offline password cracker.</p>
+    <a data-tool data-url="https://www.openwall.com/john/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.openwall.com/john/" target="_blank" rel="noopener">Open</a>
+  </article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">Hashcat</h4>
+    <p class="text-gray-400 text-sm mt-1">GPU-accelerated hash cracking.</p>
+    <a data-tool data-url="https://hashcat.net/hashcat/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://hashcat.net/hashcat/" target="_blank" rel="noopener">Open</a>
+  </article>
+</div>
+
+<!-- Web Application Testing -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">Web Application Testing</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">sqlmap</h4>
+    <p class="text-gray-400 text-sm mt-1">Automated SQL injection tool.</p>
+    <a data-tool data-url="https://sqlmap.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://sqlmap.org/" target="_blank" rel="noopener">Open</a>
+  </article>
+
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">WPScan</h4>
+    <p class="text-gray-400 text-sm mt-1">WordPress vulnerability scanner.</p>
+    <a data-tool data-url="https://wpscan.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://wpscan.com/" target="_blank" rel="noopener">Open</a>
+  </article>
+</div>
+
+<!-- Exploitation -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">Exploitation Framework</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">Metasploit Framework</h4>
+    <p class="text-gray-400 text-sm mt-1">Exploits, payloads & post-exploitation modules.</p>
+    <a data-tool data-url="https://www.metasploit.com/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.metasploit.com/" target="_blank" rel="noopener">Open</a>
+  </article>
+</div>
+
+<!-- Network Analysis -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">Network Analysis</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">Wireshark</h4>
+    <p class="text-gray-400 text-sm mt-1">Graphical network protocol analyzer.</p>
+    <a data-tool data-url="https://www.wireshark.org/" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://www.wireshark.org/" target="_blank" rel="noopener">Open</a>
+  </article>
+</div>
+
+<!-- LLMNR/NTLM Poisoning -->
+<h3 class="mt-6 mb-2 text-lg font-semibold text-indigo-400">LLMNR/NTLM Poisoning</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+  <article class="p-4 rounded-xl bg-gray-900 border border-gray-700 hover:border-indigo-600/50 transition">
+    <h4 class="font-semibold">Responder</h4>
+    <p class="text-gray-400 text-sm mt-1">LLMNR/NBT-NS/MDNS spoofing toolkit for credential capture.</p>
+    <a data-tool data-url="https://github.com/lgandx/Responder" class="px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 text-sm" href="https://github.com/lgandx/Responder" target="_blank" rel="noopener">Open</a>
+  </article>
+</div>
+
