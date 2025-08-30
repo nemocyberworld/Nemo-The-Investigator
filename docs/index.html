@@ -20,9 +20,6 @@
   </div>
 </header>
 
-
-
-
   <!-- Layout -->
   <div class="flex flex-1 overflow-hidden flex-col md:flex-row min-h-0">
     <!-- Sidebar -->
@@ -39,17 +36,185 @@
       <ul id="categoryList" class="space-y-2 text-sm"></ul>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-4 md:p-6 overflow-y-auto min-h-0">
-      <div id="walkthroughContent" class="bg-gray-800 p-6 rounded-xl shadow-md">
-        <h2 class="text-2xl font-bold mb-4">🧠 Welcome to Nemo's OSINT & Security Arsenal</h2>
-        <p class="text-gray-300 mb-4">
-          Select a category and subcategory from the left to view detailed OSINT tools and techniques.
-        </p>
-        <h3 class="text-xl font-semibold mt-6 mb-2">📂 Main Categories</h3>
-        <ul id="categoryOverview" class="list-disc ml-6 text-gray-400 space-y-1"></ul>
+<!-- Main Content -->
+<main id="mainArea" class="flex-1 p-4 md:p-6 overflow-y-auto min-h-0">
+  <!-- ===== Dashboard (default only) ===== -->
+  <div id="dashboard" class="flex flex-col lg:flex-row gap-6 items-stretch w-full">
+    
+    <!-- Left: Walkthrough (50%) -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow-md lg:w-1/2 w-full order-1 h-full">
+      <h2 class="text-2xl font-bold mb-4">🧠 Welcome to Nemo's OSINT & Security Arsenal</h2>
+      <p class="text-gray-300 mb-4">
+        Select a category and subcategory from the left to view detailed OSINT tools and techniques.
+      </p>
+      <h3 class="text-xl font-semibold mt-6 mb-2">📂 Main Categories</h3>
+      <ul id="categoryOverview" class="list-disc ml-6 text-gray-400 space-y-1"></ul>
+    </div>
+
+    <!-- Right Column (50%): Team + News -->
+    <div class="lg:w-1/2 w-full order-2 flex flex-col gap-6 h-full">
+      
+     <!-- Team Section -->
+<div id="teamSection" class="bg-gray-800/60 backdrop-blur p-6 rounded-xl shadow-md h-full border border-gray-700">
+  <h2 class="text-2xl font-bold mb-6">👥 Nemo's OSINT & Investigation Team (For Hire)</h2>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+
+    <!-- Saide Hossain -->
+    <div class="p-4 rounded-lg border border-gray-700 hover:border-purple-500 transition group">
+      <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400">Saide Hossain</h3>
+      <ul class="space-y-1 text-sm text-gray-300">
+        <li>📧 <a href="mailto:nemo14398@gmail.com" class="hover:text-purple-400">nemo14398@gmail.com</a></li>
+        <li>🔗 <a href="https://www.linkedin.com/in/saide-hossain-856b20363/" target="_blank" class="hover:text-blue-400">LinkedIn</a></li>
+        <li>📘 <a href="https://www.facebook.com/nemocyberworld/" target="_blank" class="hover:text-blue-400">Facebook</a></li>
+        <li>💬 <a href="https://wa.me/8801742271463" target="_blank" class="hover:text-green-400">WhatsApp: +8801742271463</a></li>
+      </ul>
+    </div>
+
+    <!-- Sajeeb Sarker -->
+    <div class="p-4 rounded-lg border border-gray-700 hover:border-purple-500 transition group">
+      <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400">Sajeeb Sarker</h3>
+      <ul class="space-y-1 text-sm text-gray-300">
+        <li>📧 <a href="mailto:sarkersajeeb444@gmail.com" class="hover:text-purple-400">sarkersajeeb444@gmail.com</a></li>
+        <li>💬 <a href="https://wa.me/8801752543351" target="_blank" class="hover:text-green-400">WhatsApp: +8801752543351</a></li>
+        <li>🔗 <a href="https://linkedin.com/in/sajsec" target="_blank" class="hover:text-blue-400">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <!-- Md Junayedul Islam Zarif -->
+    <div class="p-4 rounded-lg border border-gray-700 hover:border-purple-500 transition group">
+      <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400">Md Junayedul Islam Zarif</h3>
+      <ul class="space-y-1 text-sm text-gray-300">
+        <li>📧 <a href="mailto:bennstock2@gmail.com" class="hover:text-purple-400">bennstock2@gmail.com</a></li>
+        <li>🔗 <a href="https://linkedin.com/in/pentesterjunayed" target="_blank" class="hover:text-blue-400">LinkedIn</a></li>
+        <li>📘 <a href="https://www.facebook.com/md.junayedul.islamzarif" target="_blank" class="hover:text-blue-400">Facebook</a></li>
+      </ul>
+    </div>
+
+    <!-- Al Amin -->
+    <div class="p-4 rounded-lg border border-gray-700 hover:border-purple-500 transition group">
+      <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400">Al Amin</h3>
+      <ul class="space-y-1 text-sm text-gray-300">
+        <li>📧 <a href="mailto:ifardin97@gmail.com" class="hover:text-purple-400">ifardin97@gmail.com</a></li>
+        <li>📘 <a href="https://www.facebook.com/0xleopardsbd" target="_blank" class="hover:text-blue-400">Facebook</a></li>
+        <li>💬 <a href="https://wa.me/8801408680094" target="_blank" class="hover:text-green-400">WhatsApp: +8801408680094</a></li>
+      </ul>
+    </div>
+
+    <!-- Mariam Sayeed Choity -->
+    <div class="p-4 rounded-lg border border-gray-700 hover:border-purple-500 transition group lg:col-span-2">
+      <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-purple-400">Mariam Sayeed Choity</h3>
+      <ul class="space-y-1 text-sm text-gray-300">
+        <li>💬 <a href="https://wa.me/8801989528608" target="_blank" class="hover:text-green-400">WhatsApp: +8801989528608</a></li>
+        <li>📧 <a href="mailto:choitya85@gmail.com" class="hover:text-purple-400">choitya85@gmail.com</a></li>
+        <li>📘 <a href="https://www.facebook.com/share/1EQgGioiAF/" target="_blank" class="hover:text-blue-400">Facebook</a></li>
+        <li>🔗 <a href="https://www.linkedin.com/in/mst-choity-akter-572067316" target="_blank" class="hover:text-blue-400">LinkedIn</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+
+      <!-- News/Case Board (realistic + auto-animated + live-ish feeds) -->
+      <div id="opsSection" class="bg-gray-800 p-6 rounded-xl shadow-md h-full overflow-hidden ring-1 ring-gray-700/50 animated-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-bold flex items-center gap-2">
+            <span class="live-dot"></span> 🗞️ Case Intel & Ops Board
+          </h2>
+
+        </div>
+
+        <!-- News / Leads (auto-rotating) -->
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-2 flex items-center gap-2">📰 News & Leads <span class="badge glow">LIVE</span></h3>
+          <ul id="newsList" class="space-y-2 text-gray-300 list-disc ml-5">
+            <li class="news-item">[Init] Loading fresh intel…</li>
+          </ul>
+        </div>
+
+        <!-- Running Cases (animated entries) -->
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold mb-2">🚧 Running Cases</h3>
+          <ul class="space-y-3 text-gray-300">
+            <li class="entry slide-in-left">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">CASE-2025-07: Marketplace fraud</span>
+                <span class="chip chip-warn">Running</span>
+                <span class="chip chip-osint">OSINT</span>
+              </div>
+              <div class="text-sm text-gray-400">Owner: Saide • Status: In verification • Next: correlate phone → Telegram</div>
+            </li>
+            <li class="entry slide-in-right delay-150">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">CASE-2025-09: Phishing cluster</span>
+                <span class="chip chip-ok">Active</span>
+                <span class="chip chip-ioc">IOC</span>
+              </div>
+              <div class="text-sm text-gray-400">Owner: Sajeeb • Status: Infra mapping • Next: screenshot cert chain</div>
+            </li>
+            <li class="entry slide-in-left delay-300">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">CASE-2025-11: Breach tracking</span>
+                <span class="chip chip-alert">Alert</span>
+                <span class="chip chip-breach">Breach</span>
+              </div>
+              <div class="text-sm text-gray-400">Owner: Junayed • Status: Monitoring leaks • Next: hash/email triage</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Running Projects (staggered fade) -->
+        <div>
+          <h3 class="text-lg font-semibold mb-2">🛠️ Running Projects</h3>
+          <ul class="space-y-3 text-gray-300">
+            <li class="entry fade-up">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">Nemo OSINT Playbooks</span>
+                <span class="chip chip-beta">In Progress</span>
+              </div>
+              <div class="text-sm text-gray-400">ETA: Q4 • Task: Bangladesh deep dive</div>
+            </li>
+            <li class="entry fade-up delay-150">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">Leak Monitor</span>
+                <span class="chip chip-ok">Active</span>
+              </div>
+              <div class="text-sm text-gray-400">Task: add keywords & webhook</div>
+            </li>
+            <li class="entry fade-up delay-300">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-white">Threat Intel Dashboard</span>
+                <span class="chip chip-warn">Beta</span>
+              </div>
+              <div class="text-sm text-gray-400">Task: integrate OSINT breach sources</div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </main>
+      <!-- /opsSection -->
+    </div>
+    <!-- /Right column -->
+  </div>
+  <!-- ===== /Dashboard ===== -->
+
+  <!-- ===== Category View (hidden until a category is clicked) ===== -->
+  <div id="categoryView" class="hidden w-full">
+    <div class="bg-gray-800 p-4 md:p-6 rounded-xl shadow-md">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="categoryTitle" class="text-xl md:text-2xl font-bold">Loading…</h2>
+        <button id="backBtn" class="px-3 py-1.5 text-sm bg-gray-700 hover:bg-gray-600 rounded-md border border-gray-600">
+          ← Back to Dashboard
+        </button>
+      </div>
+      <div id="categoryContent" class="prose prose-invert max-w-none">
+        <!-- fetched category HTML goes here -->
+      </div>
+    </div>
+  </div>
+  <!-- ===== /Category View ===== -->
+</main>
+
   </div>
 
   <!-- Footer -->
@@ -226,7 +391,11 @@
   ];
 
   const categoryList = document.getElementById("categoryList");
-  const walkthroughContent = document.getElementById("walkthroughContent");
+  const dashboard = document.getElementById("dashboard");
+  const categoryView = document.getElementById("categoryView");
+  const categoryTitle = document.getElementById("categoryTitle");
+  const categoryContent = document.getElementById("categoryContent");
+  const backBtn = document.getElementById("backBtn");
   const categoryOverview = document.getElementById("categoryOverview");
   const searchInput = document.getElementById("searchInput");
 
@@ -244,14 +413,29 @@
       const res = await fetch(resolved, { cache: "no-store" });
       if (!res.ok) throw new Error("File not found");
       const html = await res.text();
-      walkthroughContent.innerHTML = html;
+      // show category-only view
+      categoryTitle.textContent = `${main} / ${sub}`;
+      categoryContent.innerHTML = html;
+      dashboard.classList.add("hidden");
+      categoryView.classList.remove("hidden");
     } catch (err) {
       console.error("Load error:", err);
-      walkthroughContent.innerHTML =
+      categoryTitle.textContent = `${main} / ${sub}`;
+      categoryContent.innerHTML =
         `<p class="text-red-400">⚠️ Error loading content: ${err.message}<br/>
          <span class='text-gray-400 text-xs'>Tried: ${resolved}</span></p>`;
+      dashboard.classList.add("hidden");
+      categoryView.classList.remove("hidden");
     }
   }
+
+  function showDashboard() {
+    categoryView.classList.add("hidden");
+    categoryContent.innerHTML = "";
+    dashboard.classList.remove("hidden");
+  }
+
+  backBtn.addEventListener("click", showDashboard);
 
   const grouped = {};
   walkthroughs.forEach(w => {
@@ -317,6 +501,136 @@
     });
     buildCategoryList(filtered);
   });
+</script>
+
+<!-- Realistic animations + live-ish fetching (kept with dashboard) -->
+<style>
+/* Card breathing + subtle tilt */
+.animated-card { animation: card-breathe 6s ease-in-out infinite; }
+@keyframes card-breathe {
+  0%,100% { box-shadow: 0 0 0px rgba(0,0,0,0); transform: perspective(1000px) rotateX(0) rotateY(0);}
+  50% { box-shadow: 0 12px 30px rgba(0,0,0,.35); transform: perspective(1000px) rotateX(.4deg) rotateY(-.4deg);}
+}
+
+/* LIVE dot */
+.live-dot{ width:.6rem;height:.6rem;border-radius:9999px; background:#22c55e; box-shadow:0 0 0 0 rgba(34,197,94,.7); animation:pulse 1.6s infinite; display:inline-block}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* Badges / chips */
+.badge{font-size:.7rem;padding:.1rem .45rem;border-radius:.375rem;background:#9333ea;color:#fff}
+.glow{box-shadow:0 0 10px rgba(147,51,234,.6)}
+.chip{font-size:.7rem;padding:.15rem .5rem;border-radius:.5rem;line-height:1rem}
+.chip-ok{background:#16a34a;color:#fff;animation:flip 4s ease-in-out infinite}
+.chip-warn{background:#ca8a04;color:#111;animation:flip 4.5s ease-in-out infinite}
+.chip-alert{background:#dc2626;color:#fff;animation:flip 5s ease-in-out infinite}
+.chip-beta{background:#2563eb;color:#fff;animation:flip 5.5s ease-in-out infinite}
+.chip-osint{background:#7c3aed;color:#fff}
+.chip-ioc{background:#0ea5e9;color:#111}
+.chip-breach{background:#f97316;color:#111}
+@keyframes flip{0%,100%{transform:rotateX(0)}50%{transform:rotateX(360deg)}}
+
+/* Entry motions */
+.entry{will-change: transform,opacity}
+.slide-in-left{animation:slideInLeft .9s ease both}
+.slide-in-right{animation:slideInRight .9s ease both}
+.fade-up{animation:fadeUp .9s ease both}
+.delay-150{animation-delay:.15s}
+.delay-300{animation-delay:.3s}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* News list auto-rotate (smooth lift for each li) */
+.news-item{opacity:0; transform:translateY(8px); animation:newsReveal .6s ease forwards}
+@keyframes newsReveal{to{opacity:1; transform:translateY(0)}}
+</style>
+
+<script>
+/* --- Simple “live” news feed with rotation & external sources (kept active while dashboard is visible) --- */
+(function opsBoard(){
+  const newsEl = document.getElementById('newsList');
+  if(!newsEl) return;
+  const ROTATE_MS = 3500;     // time between item rotations
+  const REFRESH_MS = 45000;   // fetch new items periodically
+
+  const staticSeeds = [
+    {t:"[Lead] New breach reported in regional ISP — potential pivot intel", u:"#"},
+    {t:"[Update] Court filing reveals timeline for suspect accounts", u:"#"},
+    {t:"[Tip] Fresh dump on paste site — check hashes & emails", u:"#"},
+    {t:"[OSINT] Darknet forum chatter indicates phishing kit sale", u:"#"},
+    {t:"[Breach] Corporate DB leak spotted on Telegram dump channel", u:"#"},
+    {t:"[Alert] Multiple CVEs exploited in the wild this week", u:"#"}
+  ];
+
+  function renderItems(items, append=false){
+    if(!append) newsEl.innerHTML = "";
+    items.forEach((it,i)=>{
+      const li = document.createElement('li');
+      li.className = 'news-item';
+      li.style.animationDelay = (i*80)+'ms';
+      li.innerHTML = it.u ? `<a class="underline hover:text-purple-300" href="${it.u}" target="_blank" rel="noopener">${it.t}</a>` : it.t;
+      newsEl.appendChild(li);
+    });
+  }
+
+  async function fetchFromHN(){
+    try{
+      const q = encodeURIComponent('breach OR ransomware OR CVE');
+      const url = `https://hn.algolia.com/api/v1/search?query=${q}&tags=story&hitsPerPage=5`;
+      const r = await fetch(url, {method:'GET'});
+      const j = await r.json();
+      return (j.hits||[]).map(h=>({t:`[HN] ${h.title}`, u:h.url || `https://news.ycombinator.com/item?id=${h.objectID}`}));
+    }catch{return []}
+  }
+
+  async function fetchFromGitHub(){
+    try{
+      const q = encodeURIComponent('CVE OR security breach created:>2025-01-01');
+      const url = `https://api.github.com/search/issues?q=${q}&per_page=5`;
+      const r = await fetch(url, {method:'GET'});
+      const j = await r.json();
+      return (j.items||[]).map(it=>({t:`[GH] ${it.title}`, u:it.html_url}));
+    }catch{return []}
+  }
+
+  async function refresh(){
+    let items = [...staticSeeds];
+    const [hn, gh] = await Promise.allSettled([fetchFromHN(), fetchFromGitHub()]);
+    if (hn.status === 'fulfilled') items = items.concat(hn.value);
+    if (gh.status === 'fulfilled') items = items.concat(gh.value);
+    // de-dup & trim
+    const seen = new Set(); const dedup = [];
+    for (const it of items){
+      const key = it.t.slice(0,120);
+      if(!seen.has(key)){ seen.add(key); dedup.push(it); }
+      if (dedup.length >= 12) break;
+    }
+    renderItems(dedup);
+  }
+
+  function rotate(){
+    const first = newsEl.querySelector('li');
+    if(!first) return;
+    first.style.transition = 'opacity .35s ease, transform .35s ease';
+    first.style.opacity = '0';
+    first.style.transform = 'translateY(-8px)';
+    setTimeout(()=>{
+      first.style.transition = '';
+      first.style.opacity = '';
+      first.style.transform = '';
+      newsEl.appendChild(first);
+      void first.offsetWidth;
+      first.classList.remove('news-item');
+      void first.offsetWidth;
+      first.classList.add('news-item');
+    }, 350);
+  }
+
+  renderItems(staticSeeds);
+  refresh();
+  setInterval(rotate, ROTATE_MS);
+  setInterval(refresh, REFRESH_MS);
+})();
 </script>
 
 </body>
